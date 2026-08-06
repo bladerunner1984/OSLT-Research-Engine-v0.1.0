@@ -1,0 +1,74 @@
+name: bootstrap import
+
+on:
+  push:
+    branches:
+      - agent/import-oslt-v0.1.0
+    paths:
+      - .github/workflows/bootstrap-import.yml
+
+permissions:
+  contents: write
+
+jobs:
+  import:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out import branch
+        uses: actions/checkout@v4
+        with:
+          ref: agent/import-oslt-v0.1.0
+          fetch-depth: 0
+
+      - name: Download verified bootstrap package
+        env:
+          PACKAGE_URL: https://serverityai-my.sharepoint.com/:u:/g/personal/mark_jennings_serverityai_onmicrosoft_com/IQBkTd-L3_SOQLjkRKkIdlDcAUFwKipIjkjVDeQKKBYVNKA
+        run: |
+          curl --fail --location --retry 3 --retry-all-errors \
+            "${PACKAGE_URL}?download=1" \
+            --output /tmp/oslt-bootstrap.zip
+          test -s /tmp/oslt-bootstrap.zip
+
+      - name: Verify package SHA-256
+        run: |
+          echo "c34cce45e4149b9b225ae91909d722a1c7259e4ba638ec93c24673cf637e759c  /tmp/oslt-bootstrap.zip" | sha256sum --check --strict
+
+      - name: Extract repository payload exactly
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from zipfile import ZipFile
+
+          archive = Path('/tmp/oslt-bootstrap.zip')
+          destination = Path.cwd()
+          prefix = 'OSLT_GITHUB_RESEARCH_ENGINE_BOOTSTRAP_v0_1_0/oslt-research-engine/'
+
+          with ZipFile(archive) as package:
+              members = [name for name in package.namelist() if name.startswith(prefix) and not name.endswith('/')]
+              if not members:
+                  raise SystemExit('Repository payload prefix was not found in bootstrap archive')
+
+              for member in members:
+                  relative = member[len(prefix):]
+                  if not relative or relative.startswith('/') or '..' in Path(relative).parts:
+                      raise SystemExit(f'Unsafe archive member: {member}')
+                  target = destination / relative
+                  target.parent.mkdir(parents=True, exist_ok=True)
+                  target.write_bytes(package.read(member))
+
+          print(f'Extracted {len(members)} repository files')
+          PY
+
+      - name: Remove one-use importer
+        run: rm -f .github/workflows/bootstrap-import.yml
+
+      - name: Commit imported repository
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet && { echo "No import changes detected"; exit 1; }
+          git commit -m "feat: import governed OSLT research engine v0.1.0"
+          git push origin HEAD:agent/import-oslt-v0.1.0
