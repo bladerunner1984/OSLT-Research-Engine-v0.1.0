@@ -11,6 +11,7 @@ from oslt_research.domain.models import (
     ReleasedClaim,
 )
 from oslt_research.evidence.provenance import canonical_json_hash
+from oslt_research.governance.review_records import AIMethodologicalReview, HumanReviewRecord
 
 
 #: Wording permitted and forbidden at each tier. The prohibitions are the operative
@@ -105,7 +106,7 @@ def assess_release(
     result: KernelResult,
     evidence: list[EvidenceObject],
     wording: str,
-    human_review_reference: str,
+    human_review: HumanReviewRecord | AIMethodologicalReview | str | None = None,
     counterevidence_lanes_searched: set[EvidenceLane] | None = None,
 ) -> ReleaseDecision:
     """Assemble a ReleasedClaim, or refuse and say which of the nine gates failed.
@@ -148,9 +149,25 @@ def assess_release(
     if not check.acceptable:
         failures.append(f"WORDING_EXCEEDS_CLAIM_TIER:{','.join(check.prohibited_hits)}")
 
-    # 9. human review where triggered
-    if not human_review_reference.strip():
-        failures.append("HUMAN_REVIEW_REFERENCE_MISSING")
+    # 9. human review where triggered.
+    #
+    # A bare string used to satisfy this, which meant the last gate in the system could be
+    # cleared by typing anything into it. It now requires a HumanReviewRecord carrying a
+    # named reviewer, their capacity and a decision. An AIMethodologicalReview is refused
+    # by type: a model review is A5_MODEL_PROPOSAL and this gate needs
+    # A2_HUMAN_GOVERNANCE_DECISION.
+    human_review_reference = ""
+    if isinstance(human_review, AIMethodologicalReview):
+        failures.append("AI_REVIEW_CANNOT_SATISFY_HUMAN_REVIEW_GATE")
+    elif isinstance(human_review, HumanReviewRecord):
+        if not human_review.can_authorise_release:
+            failures.append(f"HUMAN_REVIEW_DECISION_{human_review.decision.value}")
+        else:
+            human_review_reference = human_review.review_id
+    elif isinstance(human_review, str) and human_review.strip():
+        failures.append("HUMAN_REVIEW_REFERENCE_NOT_A_REVIEW_RECORD")
+    else:
+        failures.append("HUMAN_REVIEW_RECORD_MISSING")
 
     if failures:
         return ReleaseDecision(released=False, failures=failures)

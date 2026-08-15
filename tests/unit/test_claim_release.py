@@ -1,10 +1,17 @@
 from __future__ import annotations
 
+from datetime import date
+
 import pytest
 
 from oslt_research.domain.enums import AccessClass, ClaimTier, EvidenceLane
 from oslt_research.domain.models import EvidenceObject, ProvenanceRecord
 from oslt_research.evidence.provenance import admit_evidence
+from oslt_research.governance.review_records import (
+    AIMethodologicalReview,
+    HumanReviewRecord,
+    ReviewDecision,
+)
 from oslt_research.governance.claim_release import (
     REQUIRED_COUNTEREVIDENCE_LANES,
     assess_release,
@@ -34,12 +41,22 @@ def make_evidence(evidence_id: str, admitted: bool = True) -> EvidenceObject:
     return admit_evidence(item)
 
 
+APPROVED_REVIEW = HumanReviewRecord(
+    review_id="HR-2026-001",
+    claim_or_result_ref="KR-1",
+    reviewer_name="A Methodologist",
+    reviewer_role="Independent statistical reviewer",
+    decision=ReviewDecision.APPROVED,
+    reviewed_on=date(2026, 8, 15),
+)
+
+
 def release(result_factory, **overrides):
     defaults = dict(
         result=result_factory(),
         evidence=[make_evidence("EV-KR-1")],
         wording="Referral counts are associated with service capacity in this sample.",
-        human_review_reference="HR-2026-001",
+        human_review=APPROVED_REVIEW,
         counterevidence_lanes_searched=ALL_LANES,
     )
     defaults.update(overrides)
@@ -109,9 +126,9 @@ def test_no_counterevidence_search_at_all_blocks_release(result_factory):
 
 
 def test_missing_human_review_reference_blocks_release(result_factory):
-    decision = release(result_factory, human_review_reference="   ")
+    decision = release(result_factory, human_review=None)
     assert not decision.released
-    assert "HUMAN_REVIEW_REFERENCE_MISSING" in decision.failures
+    assert "HUMAN_REVIEW_RECORD_MISSING" in decision.failures
 
 
 def test_wording_above_the_tier_blocks_release(result_factory):
@@ -141,7 +158,7 @@ def test_all_failures_are_reported_together_not_just_the_first(result_factory):
     decision = release(
         result_factory,
         wording="This proves capacity causes referrals.",
-        human_review_reference="",
+        human_review=None,
         counterevidence_lanes_searched=set(),
     )
     assert not decision.released
@@ -163,3 +180,66 @@ def test_uncertainty_disclosure_names_the_limiting_dimension(
     assert decision.released, decision.failures
     assert "transportability" in decision.claim.uncertainty_disclosure
     assert "0.11" in decision.claim.uncertainty_disclosure
+
+
+# ------------------------------------------------- the human gate cannot be faked
+
+
+def test_ai_review_cannot_satisfy_the_human_gate(result_factory):
+    """Model agreement has zero evidential weight; the engine says so on every run."""
+
+    ai = AIMethodologicalReview(
+        review_id="AI-1",
+        subject_ref="KR-1",
+        model_name="some-model",
+        prompt_hash="b" * 64,
+        findings=["looks sound to me"],
+    )
+    decision = release(result_factory, human_review=ai)
+    assert not decision.released
+    assert "AI_REVIEW_CANNOT_SATISFY_HUMAN_REVIEW_GATE" in decision.failures
+    assert ai.can_authorise_release is False
+
+
+def test_a_bare_string_is_no_longer_accepted(result_factory):
+    """The last gate used to be clearable by typing anything into it."""
+
+    decision = release(result_factory, human_review="codex-review-123")
+    assert not decision.released
+    assert "HUMAN_REVIEW_REFERENCE_NOT_A_REVIEW_RECORD" in decision.failures
+
+
+def test_a_rejected_human_review_blocks_release(result_factory):
+    rejected = HumanReviewRecord(
+        review_id="HR-2",
+        claim_or_result_ref="KR-1",
+        reviewer_name="A Methodologist",
+        reviewer_role="Independent statistical reviewer",
+        decision=ReviewDecision.REJECTED,
+        reviewed_on=date(2026, 8, 15),
+    )
+    decision = release(result_factory, human_review=rejected)
+    assert not decision.released
+    assert "HUMAN_REVIEW_DECISION_REJECTED" in decision.failures
+
+
+def test_approval_with_conditions_permits_release(result_factory):
+    conditional = HumanReviewRecord(
+        review_id="HR-3",
+        claim_or_result_ref="KR-1",
+        reviewer_name="A Methodologist",
+        reviewer_role="Independent statistical reviewer",
+        decision=ReviewDecision.APPROVED_WITH_CONDITIONS,
+        reviewed_on=date(2026, 8, 15),
+        conditions=["state the limiting dimension in any public wording"],
+    )
+    assert release(result_factory, human_review=conditional).released
+
+
+def test_authority_levels_differ_by_three_steps():
+    ai = AIMethodologicalReview(review_id="AI-1", subject_ref="x", model_name="m",
+                                prompt_hash="c" * 64)
+    human = HumanReviewRecord(review_id="HR-1", claim_or_result_ref="x",
+                              reviewer_name="A Person", reviewer_role="Reviewer",
+                              decision=ReviewDecision.APPROVED, reviewed_on=date(2026, 8, 15))
+    assert human.authority_level > ai.authority_level
