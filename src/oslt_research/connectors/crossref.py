@@ -53,7 +53,7 @@ class CrossrefConnector(SourceConnector):
                 "type": item.get("type"),
                 "publisher": item.get("publisher"),
                 "container_title": item.get("container-title", []),
-                "reference_count": item.get("reference-count"),
+                "reference_count": item.get("references-count", item.get("reference-count")),
                 "is_referenced_by_count": item.get("is-referenced-by-count"),
                 "funder": item.get("funder", []),
                 "relation": item.get("relation", {}),
@@ -78,7 +78,7 @@ class CrossrefConnector(SourceConnector):
                     "cursor": cursor,
                     "select": (
                         "DOI,title,abstract,author,URL,published-print,published-online,issued,created,"
-                        "type,publisher,container-title,reference-count,is-referenced-by-count,funder,"
+                        "type,publisher,container-title,references-count,is-referenced-by-count,funder,"
                         "relation,update-to,license"
                     ),
                 }
