@@ -6,6 +6,8 @@ from collections.abc import Sequence
 from dataclasses import dataclass, field
 from typing import Any
 
+import time
+
 import httpx
 
 from oslt_research.domain.models import EvidenceObject
@@ -59,6 +61,41 @@ class _LookupKey:
     value: str
 
 
+#: Minimum seconds between calls to one host. OpenAlex refused 1,379 requests with HTTP
+#: 429 during an unthrottled enrichment run over 857 records, so 808 stayed unenriched not
+#: because no abstract existed but because the source stopped answering. Politeness here
+#: is not courtesy, it is the difference between getting the data and not.
+MIN_INTERVAL_SECONDS = 0.12
+
+#: Give up on a host for the rest of the run after this many consecutive 429s. Continuing
+#: to hammer a source that is refusing wastes the whole run and worsens the throttle.
+RATE_LIMIT_GIVE_UP_AFTER = 5
+
+
+class _HostThrottle:
+    """Paces calls per host and stops asking a host that is refusing."""
+
+    def __init__(self, min_interval: float = MIN_INTERVAL_SECONDS):
+        self.min_interval = min_interval
+        self._last: dict[str, float] = {}
+        self._consecutive_429: dict[str, int] = {}
+
+    def blocked(self, host: str) -> bool:
+        return self._consecutive_429.get(host, 0) >= RATE_LIMIT_GIVE_UP_AFTER
+
+    def wait(self, host: str) -> None:
+        elapsed = time.monotonic() - self._last.get(host, 0.0)
+        if elapsed < self.min_interval:
+            time.sleep(self.min_interval - elapsed)
+        self._last[host] = time.monotonic()
+
+    def record(self, host: str, status_code: int) -> None:
+        if status_code == 429:
+            self._consecutive_429[host] = self._consecutive_429.get(host, 0) + 1
+        else:
+            self._consecutive_429[host] = 0
+
+
 class AbstractEnricher:
     """Backfills abstracts for evidence whose content is title-only.
 
@@ -79,6 +116,7 @@ class AbstractEnricher:
         timeout: float = 30.0,
     ) -> None:
         self._client = client
+        self._throttle = _HostThrottle()
         self.min_content_length = min_content_length
         self.mailto = mailto
         self.timeout = timeout
@@ -153,7 +191,11 @@ class AbstractEnricher:
             "resultType": "core",
             "pageSize": 1,
         }
+        if self._throttle.blocked("europe_pmc"):
+            return None
+        self._throttle.wait("europe_pmc")
         response = client.get(EUROPE_PMC_SEARCH_URL, params=params)
+        self._throttle.record("europe_pmc", response.status_code)
         response.raise_for_status()
         payload = response.json()
         results = ((payload or {}).get("resultList") or {}).get("result") or []
@@ -185,7 +227,11 @@ class AbstractEnricher:
         if self.mailto:
             params["mailto"] = self.mailto
 
+        if self._throttle.blocked("openalex"):
+            return None
+        self._throttle.wait("openalex")
         response = client.get(OPENALEX_WORKS_URL, params=params)
+        self._throttle.record("openalex", response.status_code)
         response.raise_for_status()
         payload = response.json()
         for item in (payload or {}).get("results") or []:
