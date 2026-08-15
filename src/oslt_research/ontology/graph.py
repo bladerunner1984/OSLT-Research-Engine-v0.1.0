@@ -277,6 +277,18 @@ class InstitutionalOntologyGraph:
                 f"{len(admitted) - len(prior)} admitted relation(s) were not temporally "
                 "prior to the outcome and were excluded"
             )
+        # If almost everything predates the outcome, the temporal test is not testing.
+        # MD15 is a claim about ties that PRECEDE a change; an outcome date later than the
+        # whole corpus admits everything and turns ordering into a formality. Observed
+        # directly: the same graph returns MD15 against an arbitrary future date and MX09
+        # against a real documented one.
+        if admitted and len(prior) / len(admitted) > 0.9:
+            limitations.append(
+                f"TEMPORAL_TEST_NOT_DISCRIMINATING: {len(prior)} of {len(admitted)} admitted "
+                f"relations precede {outcome_date.isoformat()}, so the outcome date excludes "
+                "almost nothing. A verdict from this is a statement about the corpus, not "
+                "about ties preceding a change; use a dated real-world outcome"
+            )
 
         families = sorted({item.dependency_family for item in prior})
         domains: set[SystemDomain] = set()

@@ -490,3 +490,30 @@ def test_assessment_records_the_tier_it_was_run_at():
                                      minimum_resolution_tier=ResolutionTier.STRONG_IDENTIFIER)
     assert resolved.minimum_resolution_tier is ResolutionTier.STRONG_IDENTIFIER
     assert graph.assess_coupling(OUTCOME).minimum_resolution_tier is None
+
+
+def test_outcome_date_that_excludes_nothing_is_flagged():
+    """An outcome later than the whole corpus makes temporal ordering a formality."""
+
+    graph = InstitutionalOntologyGraph()
+    graph.add_entity(entity("F", SystemDomain.PHILANTHROPIC))
+    graph.add_entity(entity("A", SystemDomain.ADVOCACY))
+    graph.add_entity(entity("G", SystemDomain.CLINICAL))
+    graph.add_relation(relation("R1", "F", "A", family="f1", kind=RelationType.FUNDS))
+    graph.add_relation(relation("R2", "A", "G", family="f2", kind=RelationType.ADVISES))
+
+    late = graph.assess_coupling(date(2030, 1, 1))
+    assert any("TEMPORAL_TEST_NOT_DISCRIMINATING" in item for item in late.limitations)
+
+
+def test_a_discriminating_outcome_date_raises_no_such_warning():
+    graph = InstitutionalOntologyGraph()
+    graph.add_entity(entity("F", SystemDomain.PHILANTHROPIC))
+    graph.add_entity(entity("A", SystemDomain.ADVOCACY))
+    graph.add_entity(entity("G", SystemDomain.CLINICAL))
+    graph.add_relation(relation("R1", "F", "A", family="f1", valid_from=date(2010, 1, 1)))
+    graph.add_relation(relation("R2", "A", "G", family="f2", valid_from=date(2019, 1, 1)))
+    graph.add_relation(relation("R3", "F", "G", family="f1", valid_from=date(2025, 1, 1)))
+
+    assessment = graph.assess_coupling(date(2020, 1, 1))
+    assert not any("NOT_DISCRIMINATING" in item for item in assessment.limitations)
