@@ -129,9 +129,22 @@ ascertained domain. **Both remain live. Nothing here separates them.**
 **One negative institutional result.** The UK public-procurement network and the parliamentary
 advisory network share no organisation, across four registers, surviving identifier-level
 resolution against Companies House and the Charity Commission. `MX09` (isolated, non-coupled
-processes) is favoured over `MD15` (structural coupling). *Caveat:* that disposition was
-reached on a 337-relation graph; the persisted graph now holds 1,286 relations and has **not**
-been re-adjudicated. A successor should re-run it before citing it.
+processes) is favoured over `MD15` (structural coupling).
+
+**Re-adjudicated 2026-08-16 on the full 1,286-relation, 824-entity graph, and it stands.**
+The test was re-run at `STRONG_IDENTIFIER` against 29 enactment dates taken live from
+legislation.gov.uk, so no date was chosen by the analyst. Ten dates from 2018 onward return
+`MX09_ISOLATED_PROCESSES_BETTER`; the earlier dates return insufficient-relations or
+insufficient-independent-sources; **no date returns MD15.** The
+`TEMPORAL_TEST_NOT_DISCRIMINATING` guard did not fire (highest prior share 72.5%, under the
+90% threshold), so the temporal test was doing real work.
+
+The decisive fact is that of 18 connected components, **not one mixes relation types**. The
+four networks are disjoint rather than merely unbridged. Quadrupling the graph did not weaken
+the finding; it produced more disjoint components. Full detail, including the bounds that
+limit how far this absence claim can be pushed, is in `COUPLING_READJUDICATION.md` — read
+that section before citing this result, because the claim is bounded by five registers, by
+434 of 824 entities carrying no strong identifier, and by 647 entities of unknown domain.
 
 **Census 2021 gender identity** supplies the only national enumeration: 262,113 of 48,566,373
 aged 16+ (0.54%), a monotonic ~4.6× age gradient, and a female excess confined to 16–24 that
@@ -359,8 +372,10 @@ Keyed to what unblocks the most propositions per unit of effort.
 3. **Read the frozen Pilot 1 specification**
    (`studies/pilot_01_academic_knowledge/preregistration_v1.py`) and record a methodological
    opinion. It has had none. A few hours; it gates everything downstream of the freeze.
-4. **Re-run the MD15/MX09 coupling test on the current 1,286-relation graph** and record the
-   disposition. The published result rests on 337 relations and has not been re-adjudicated.
+4. ~~Re-run the MD15/MX09 coupling test on the current 1,286-relation graph.~~ **Done
+   2026-08-16** — the disposition stands; see `COUPLING_READJUDICATION.md`. What remains is
+   to widen the registers: the absence claim is bounded by having only five loaded, with no
+   company filings, board or personnel overlap, and no sub-award data.
 
 ### A month
 
