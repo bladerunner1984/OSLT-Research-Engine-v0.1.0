@@ -15,6 +15,7 @@ SOURCE_IDS = {
     "OpenAlex": "DS033",
     "Crossref": "DS034",
     "PubMed": "DS036",
+    "EuropePMC": "DS035",
     "ClinicalTrials.gov": "DS037",
     "Fixture": "FIXTURE",
 }
