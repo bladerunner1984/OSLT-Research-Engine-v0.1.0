@@ -10,6 +10,7 @@ from oslt_research.connectors.base import HarvestQuery, SourceConnector
 from oslt_research.domain.models import EvidenceObject, KernelResult
 from oslt_research.evidence.journal import ResearchComputationJournal
 from oslt_research.evidence.provenance import canonical_json_hash
+from oslt_research.evidence.study_family import StudyFamilyResolver
 from oslt_research.kernels.academic_knowledge import AcademicKnowledgeProductionKernel
 from oslt_research.persistence.sqlite import SQLiteStore
 
@@ -22,6 +23,7 @@ class PilotOneOutput:
     evidence: list[EvidenceObject]
     kernel_results: list[KernelResult]
     corpus_manifest_path: Path
+    family_resolution: object | None = None
 
 
 async def run_pilot_one(
@@ -31,6 +33,7 @@ async def run_pilot_one(
     query: HarvestQuery,
     store: SQLiteStore,
     output_root: str | Path,
+    cohort_lexicon: Iterable[str] = (),
 ) -> PilotOneOutput:
     output_root = Path(output_root)
     output_root.mkdir(parents=True, exist_ok=True)
@@ -54,6 +57,27 @@ async def run_pilot_one(
         )
 
     # Preserve source-specific records but collapse shared study families during analysis.
+    # Identifier equality only finds the same paper twice; research dependence (shared
+    # trial, cohort, dataset or research group) has to be resolved explicitly or the
+    # synthesis layer will read a single sample as many independent sources.
+    naive_families = len({item.dependency_family for item in evidence})
+    evidence, family_resolution = StudyFamilyResolver(
+        cohort_lexicon=tuple(cohort_lexicon)
+    ).apply(evidence)
+    journal.append(
+        "DEPENDENCY_FAMILIES_RESOLVED",
+        {
+            "naive_family_count": naive_families,
+            "resolved_family_count": family_resolution.family_count,
+            "collapse_rate": round(family_resolution.collapse_rate, 4),
+            "signal_counts": family_resolution.signal_counts,
+            "cohort_lexicon": list(cohort_lexicon),
+            "links": [link.__dict__ for link in family_resolution.links],
+        },
+    )
+    for item in evidence:
+        store.save_evidence(item)
+
     manifest = {
         "run_id": run_id,
         "created_at": datetime.now(timezone.utc).isoformat(),
@@ -61,6 +85,10 @@ async def run_pilot_one(
         "record_count": len(evidence),
         "admitted_count": sum(1 for item in evidence if item.admitted),
         "dependency_families": sorted({item.dependency_family for item in evidence}),
+        "naive_dependency_family_count": naive_families,
+        "dependency_collapse_rate": round(family_resolution.collapse_rate, 4),
+        "dependency_collapse_signals": family_resolution.signal_counts,
+        "cohort_lexicon": list(cohort_lexicon),
         "evidence_ids": [item.evidence_id for item in evidence],
         "connector_versions": {
             connector.source_name: connector.connector_version
@@ -87,4 +115,5 @@ async def run_pilot_one(
         evidence=evidence,
         kernel_results=results,
         corpus_manifest_path=manifest_path,
+        family_resolution=family_resolution,
     )
