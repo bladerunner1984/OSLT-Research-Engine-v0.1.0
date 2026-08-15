@@ -107,3 +107,69 @@ def test_http_error_propagates():
     transport = httpx.MockTransport(lambda request: httpx.Response(503))
     with pytest.raises(httpx.HTTPStatusError):
         RetractionConnector(client=httpx.Client(transport=transport)).sweep()
+
+
+# --------------------------------------------------- retraction blocks admission
+
+
+def test_a_retracted_work_is_refused_admission():
+    """A withdrawn finding is not evidence."""
+
+    from oslt_research.connectors.retractions import apply_retraction_status
+
+    sweep = connector_for(notice(target="10.1/original")).sweep()
+    updated, tally = apply_retraction_status(
+        [corpus_record("10.1/original")], sweep=sweep, connector=connector_for()
+    )
+    assert tally["retracted"] == 1
+    assert updated[0].admitted is False
+    assert "SOURCE_WORK_RETRACTED" in updated[0].admission_failures
+
+
+def test_a_corrigendum_is_flagged_but_keeps_admission():
+    """A corrigendum amends a finding; barring it would discard usable evidence."""
+
+    from oslt_research.connectors.retractions import apply_retraction_status
+
+    sweep = connector_for(
+        notice(target="10.1/original", update_type="corrigendum")
+    ).sweep()
+    updated, tally = apply_retraction_status(
+        [corpus_record("10.1/original")], sweep=sweep, connector=connector_for()
+    )
+    assert tally["corrected"] == 1
+    assert updated[0].admitted is True
+    assert updated[0].metadata["source_work_retracted"] is False
+
+
+def test_affected_records_are_moved_into_the_retraction_lane():
+    from oslt_research.connectors.retractions import apply_retraction_status
+
+    sweep = connector_for(notice(target="10.1/original")).sweep()
+    updated, _ = apply_retraction_status(
+        [corpus_record("10.1/original")], sweep=sweep, connector=connector_for()
+    )
+    assert updated[0].lane is EvidenceLane.CORRECTION_RETRACTION
+
+
+def test_the_reason_is_written_down_not_applied_silently():
+    from oslt_research.connectors.retractions import apply_retraction_status
+
+    sweep = connector_for(notice(doi="10.1/notice", target="10.1/original")).sweep()
+    updated, _ = apply_retraction_status(
+        [corpus_record("10.1/original")], sweep=sweep, connector=connector_for()
+    )
+    assert updated[0].metadata["retraction_notice_doi"] == "10.1/notice"
+    assert updated[0].metadata["retraction_update_type"] == "retraction"
+
+
+def test_unaffected_records_are_untouched():
+    from oslt_research.connectors.retractions import apply_retraction_status
+
+    original = corpus_record("10.1/clean")
+    sweep = connector_for(notice(target="10.1/other")).sweep()
+    updated, tally = apply_retraction_status(
+        [original], sweep=sweep, connector=connector_for()
+    )
+    assert tally["unaffected"] == 1
+    assert updated[0] == original

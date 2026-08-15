@@ -48,6 +48,14 @@ def assess_evidence_admission(evidence: EvidenceObject) -> AdmissionDecision:
             failures.append("TRE_RAW_PERSON_LEVEL_PAYLOAD_PROHIBITED")
     if not evidence.dependency_family:
         failures.append("DEPENDENCY_FAMILY_MISSING")
+    # A withdrawn finding is not evidence. The gate cannot discover a retraction on its
+    # own - the notice is a separate later document - so the fact is supplied as metadata
+    # by apply_retraction_status() and enforced here, where every other admission rule
+    # lives. Corrections and errata are deliberately NOT barred: a corrigendum amends a
+    # finding rather than withdrawing it, and refusing those would discard usable
+    # evidence.
+    if evidence.metadata.get("source_work_retracted"):
+        failures.append("SOURCE_WORK_RETRACTED")
     if evidence.content:
         actual = sha256_text(evidence.content)
         declared_content_hash = evidence.metadata.get("content_sha256")

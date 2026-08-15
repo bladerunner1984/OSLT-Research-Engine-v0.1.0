@@ -206,3 +206,56 @@ class RetractionConnector:
             if doi and doi in index:
                 hits.append((item, index[doi]))
         return hits
+
+
+def apply_retraction_status(
+    evidence: Iterable[EvidenceObject],
+    *,
+    sweep: RetractionSweep,
+    connector: "RetractionConnector | None" = None,
+) -> tuple[list[EvidenceObject], dict[str, int]]:
+    """Stamp retraction status onto a corpus and re-run admission.
+
+    Records whose source work has been retracted are flagged and lose admission. Records
+    carrying a correction or corrigendum are flagged too, but keep it: a corrigendum
+    amends a finding rather than withdrawing it, and treating the two alike would either
+    discard usable evidence or retain withdrawn evidence.
+
+    The flag is written to metadata rather than applied silently, so a later reader can
+    see why a record was refused and check it.
+    """
+
+    checker = connector or RetractionConnector()
+    index = sweep.by_retracted_doi()
+    matched = {
+        item.evidence_id: record
+        for item, record in checker.check_corpus(evidence, sweep=sweep)
+    }
+
+    updated: list[EvidenceObject] = []
+    tally: dict[str, int] = {"retracted": 0, "corrected": 0, "unaffected": 0}
+    for item in evidence:
+        record = matched.get(item.evidence_id)
+        if record is None:
+            tally["unaffected"] += 1
+            updated.append(item)
+            continue
+
+        metadata = {
+            **item.metadata,
+            "source_work_retracted": record.invalidates,
+            "retraction_notice_doi": record.notice_doi,
+            "retraction_update_type": record.update_type,
+        }
+        stamped = admit_evidence(
+            item.model_copy(
+                update={
+                    "metadata": metadata,
+                    "lane": EvidenceLane.CORRECTION_RETRACTION,
+                }
+            )
+        )
+        tally["retracted" if record.invalidates else "corrected"] += 1
+        updated.append(stamped)
+
+    return updated, tally
