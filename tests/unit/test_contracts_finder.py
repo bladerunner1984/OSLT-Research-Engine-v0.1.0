@@ -162,3 +162,30 @@ def test_http_error_propagates():
     connector = ContractsFinderConnector(client=httpx.Client(transport=transport))
     with pytest.raises(httpx.HTTPStatusError):
         connector.harvest_awards()
+
+
+def test_title_contains_filters_the_retrieved_page():
+    body = payload(
+        release(ocid="a"),
+        {**release(ocid="b"), "tender": {"title": "Gender identity service"}},
+    )
+    fragment = connector_for(body).harvest_awards(title_contains="gender identity")
+    assert len(fragment.relations) == 1
+    assert fragment.skip_reasons["TITLE_FILTER_EXCLUDED"] == 1
+
+
+def test_title_contains_is_case_insensitive():
+    body = payload({**release(), "tender": {"title": "GENDER IDENTITY clinic"}})
+    assert connector_for(body).harvest_awards(title_contains="gender identity").relations
+
+
+def test_no_filter_keeps_everything():
+    body = payload(release(ocid="a"), release(ocid="b"))
+    assert len(connector_for(body).harvest_awards().relations) == 2
+
+
+def test_connector_rejects_a_server_side_keyword_it_cannot_honour():
+    """The API ignores every keyword parameter, so accepting one would mislead."""
+
+    with pytest.raises(TypeError):
+        connector_for(payload()).harvest_awards(keyword="gender identity")

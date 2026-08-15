@@ -44,6 +44,14 @@ class ContractsFinderConnector:
     cannot support MD10 or MD15 and is refused.
 
     Requires no API key.
+
+    This endpoint has NO server-side text search. Verified against the live API: keyword,
+    keywords, searchCriteria.keyword and q all return byte-identical results to sending no
+    parameter at all. It returns the most recent notices and nothing else. The connector
+    therefore refuses to accept a search term it cannot honour, and offers client-side
+    `title_contains` instead - which filters only the page already retrieved and is not a
+    search of the register. Topic scoping here needs date paging plus local filtering, and
+    the caller has to know that.
     """
 
     source_name = "ContractsFinder"
@@ -93,14 +101,19 @@ class ContractsFinderConnector:
     def harvest_awards(
         self,
         *,
-        keyword: str | None = None,
+        title_contains: str | None = None,
         published_from: str | None = None,
         published_to: str | None = None,
         limit: int = 100,
     ) -> ContractGraphFragment:
+        """Harvest award notices.
+
+        `title_contains` filters the retrieved page locally, case-insensitively. It is not
+        a register search: notices outside the page fetched are never seen. Named for what
+        it does rather than what a caller might hope it does.
+        """
+
         params: dict[str, Any] = {"limit": min(limit, 100), "stages": "award"}
-        if keyword:
-            params["keyword"] = keyword
         if published_from:
             params["publishedFrom"] = published_from
         if published_to:
@@ -117,7 +130,13 @@ class ContractsFinderConnector:
         def skip(reason: str) -> None:
             skips[reason] = skips.get(reason, 0) + 1
 
+        needle = (title_contains or "").strip().casefold()
         for release in releases:
+            if needle:
+                title = str((release.get("tender") or {}).get("title") or "")
+                if needle not in title.casefold():
+                    skip("TITLE_FILTER_EXCLUDED")
+                    continue
             ocid = release.get("ocid") or release.get("id") or ""
             buyer = release.get("buyer") or {}
             buyer_name = (buyer.get("name") or "").strip()
@@ -129,7 +148,7 @@ class ContractsFinderConnector:
                 source_id="DS_CONTRACTS_FINDER",
                 source_uri=f"{self.base_url}?ocid={ocid}" if ocid else self.base_url,
                 published_at=release.get("date"),
-                retrieval_query=keyword or "",
+                retrieval_query=title_contains or "",
                 field_or_document_locator=str(ocid),
                 checksum_sha256=raw_hash,
                 access_class=AccessClass.OPEN,
