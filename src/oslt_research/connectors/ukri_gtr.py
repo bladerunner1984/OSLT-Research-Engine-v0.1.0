@@ -221,13 +221,13 @@ class UkriGatewayToResearchConnector:
     def harvest_grants(
         self,
         *,
-        term: str,
+        title_contains: str | None = None,
         page: int = 1,
         page_size: int = 25,
     ) -> GrantGraphFragment:
         """Harvest one page of GtR projects into funder-side grant edges."""
 
-        params: dict[str, Any] = {"q": term, "p": max(page, 1), "s": max(min(page_size, 100), 1)}
+        params: dict[str, Any] = {"p": max(page, 1), "s": max(min(page_size, 100), 1)}
         payload = self._get(self.base_url, params)
         raw_hash = sha256_text(json.dumps(payload, sort_keys=True, default=str))
         refreshed = (payload.get("headerData") or {}).get("lastRefreshDate")
@@ -242,7 +242,11 @@ class UkriGatewayToResearchConnector:
         def skip(reason: str) -> None:
             skips[reason] = skips.get(reason, 0) + 1
 
+        needle = (title_contains or "").strip().casefold()
         for project in projects:
+            if needle and needle not in clean_text(project.get("title")).casefold():
+                skip("TITLE_FILTER_EXCLUDED")
+                continue
             fund = project.get("fund") or {}
             funder = fund.get("funder") or {}
             funder_id = str(funder.get("id") or "").strip()
@@ -270,7 +274,7 @@ class UkriGatewayToResearchConnector:
                 source_id="DS_UKRI_GATEWAY_TO_RESEARCH",
                 source_uri=resource_url or self.base_url,
                 published_at=refreshed,
-                retrieval_query=f"q={term}&p={params['p']}&s={params['s']}",
+                retrieval_query=f"page={page} size={page_size} (no server-side search)",
                 field_or_document_locator=locator,
                 checksum_sha256=raw_hash,
                 access_class=AccessClass.OPEN,
