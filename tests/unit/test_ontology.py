@@ -19,7 +19,11 @@ from oslt_research.ontology.entities import (
     SystemDomain,
     normalise_name,
 )
-from oslt_research.ontology.graph import CouplingVerdict, InstitutionalOntologyGraph
+from oslt_research.ontology.graph import (
+    CouplingVerdict,
+    InstitutionalOntologyGraph,
+    ResolutionTier,
+)
 
 
 OUTCOME = date(2020, 1, 1)
@@ -415,3 +419,74 @@ def test_no_resolution_limitation_when_resolution_is_off():
     graph.add_relation(relation("R1", "A", "B", family="f", kind=RelationType.FUNDS))
     assessment = graph.assess_coupling(OUTCOME)
     assert not any("entity resolution" in item for item in assessment.limitations)
+
+
+# --------------------------------------------------------- resolution tiering
+
+
+def test_strong_identifier_merge_is_tiered_strongest():
+    graph = InstitutionalOntologyGraph()
+    graph.add_entity(entity("A", SystemDomain.COMMERCIAL, name="Acme",
+                            identifiers={"companies_house": "01234567"}))
+    graph.add_entity(entity("B", SystemDomain.UNKNOWN, name="Acme Ltd",
+                            identifiers={"companies_house": "01234567"}))
+    assert graph.merge_tier(["A", "B"]) is ResolutionTier.STRONG_IDENTIFIER
+    assert graph.resolve_duplicates(minimum_tier=ResolutionTier.STRONG_IDENTIFIER)
+
+
+def test_shared_counterparty_corroborates_a_name_match():
+    graph = InstitutionalOntologyGraph()
+    graph.add_entity(entity("A", SystemDomain.COMMERCIAL, name="Acme"))
+    graph.add_entity(entity("B", SystemDomain.UNKNOWN, name="Acme"))
+    graph.add_entity(entity("SHARED", SystemDomain.POLICY))
+    graph.add_relation(relation("R1", "SHARED", "A", family="f1"))
+    graph.add_relation(relation("R2", "SHARED", "B", family="f2"))
+    assert graph.merge_tier(["A", "B"]) is ResolutionTier.CORROBORATED_NAME
+    assert graph.resolve_duplicates(minimum_tier=ResolutionTier.CORROBORATED_NAME)
+
+
+def test_bare_name_match_is_the_weakest_tier_and_excluded_when_barred():
+    graph = InstitutionalOntologyGraph()
+    graph.add_entity(entity("A", SystemDomain.COMMERCIAL, name="Acme"))
+    graph.add_entity(entity("B", SystemDomain.UNKNOWN, name="Acme"))
+    assert graph.merge_tier(["A", "B"]) is ResolutionTier.NAME_ONLY
+    assert graph.resolve_duplicates(minimum_tier=ResolutionTier.NAME_ONLY)
+    assert graph.resolve_duplicates(minimum_tier=ResolutionTier.CORROBORATED_NAME) == {}
+    assert graph.resolve_duplicates(minimum_tier=ResolutionTier.STRONG_IDENTIFIER) == {}
+
+
+def test_a_verdict_resting_on_weak_merges_reverses_when_they_are_barred():
+    """The live four-register finding in miniature: MD15 survives only at NAME_ONLY."""
+
+    graph = InstitutionalOntologyGraph()
+    graph.add_entity(entity("BRIDGE_CF", SystemDomain.COMMERCIAL, name="Acme Health"))
+    graph.add_entity(entity("BRIDGE_PWE", SystemDomain.UNKNOWN, name="Acme Health"))
+    graph.add_entity(entity("BUYER", SystemDomain.POLICY))
+    graph.add_entity(entity("CTTE", SystemDomain.POLICY, name="A Committee"))
+    graph.add_entity(entity("SUP2", SystemDomain.COMMERCIAL))
+    graph.add_relation(relation("R1", "BUYER", "BRIDGE_CF", family="cf",
+                                kind=RelationType.CONTRACTS_WITH))
+    graph.add_relation(relation("R2", "BRIDGE_PWE", "CTTE", family="pwe",
+                                kind=RelationType.ADVISES))
+    graph.add_relation(relation("R3", "BUYER", "SUP2", family="fts",
+                                kind=RelationType.CONTRACTS_WITH))
+
+    weak = graph.assess_coupling(OUTCOME, resolve_entities=True,
+                                 minimum_resolution_tier=ResolutionTier.NAME_ONLY)
+    assert weak.verdict is CouplingVerdict.MD15_COUPLING_SUPPORTED
+
+    strict = graph.assess_coupling(OUTCOME, resolve_entities=True,
+                                   minimum_resolution_tier=ResolutionTier.STRONG_IDENTIFIER)
+    assert strict.verdict is CouplingVerdict.MX09_ISOLATED_PROCESSES_BETTER
+    assert strict.merges_applied == {}
+
+
+def test_assessment_records_the_tier_it_was_run_at():
+    graph = InstitutionalOntologyGraph()
+    graph.add_entity(entity("A", SystemDomain.POLICY))
+    graph.add_entity(entity("B", SystemDomain.COMMERCIAL))
+    graph.add_relation(relation("R1", "A", "B", family="f", kind=RelationType.FUNDS))
+    resolved = graph.assess_coupling(OUTCOME, resolve_entities=True,
+                                     minimum_resolution_tier=ResolutionTier.STRONG_IDENTIFIER)
+    assert resolved.minimum_resolution_tier is ResolutionTier.STRONG_IDENTIFIER
+    assert graph.assess_coupling(OUTCOME).minimum_resolution_tier is None

@@ -3,7 +3,7 @@ from __future__ import annotations
 from collections import defaultdict
 from datetime import date
 from enum import StrEnum
-from typing import Iterable
+from typing import Iterable, Sequence
 
 import networkx as nx
 from pydantic import BaseModel, ConfigDict, Field
@@ -11,6 +11,25 @@ from pydantic import BaseModel, ConfigDict, Field
 from oslt_research.domain.enums import ClaimTier
 
 from .entities import InstitutionalEntity, InstitutionalRelation, SystemDomain
+
+
+class ResolutionTier(StrEnum):
+    """How much a merge can be trusted.
+
+    Ordered weakest to strongest by MERGE_TIER_ORDER. A coupling verdict that only holds
+    at NAME_ONLY is a verdict about a naming coincidence until someone checks identifiers.
+    """
+
+    NAME_ONLY = "NAME_ONLY"
+    CORROBORATED_NAME = "CORROBORATED_NAME"
+    STRONG_IDENTIFIER = "STRONG_IDENTIFIER"
+
+
+MERGE_TIER_ORDER: dict[ResolutionTier, int] = {
+    ResolutionTier.NAME_ONLY: 0,
+    ResolutionTier.CORROBORATED_NAME: 1,
+    ResolutionTier.STRONG_IDENTIFIER: 2,
+}
 
 
 class CouplingVerdict(StrEnum):
@@ -34,6 +53,8 @@ class CouplingAssessment(BaseModel):
     systems_spanned: list[SystemDomain]
     independent_dependency_families: list[str]
     central_entity_id: str | None = None
+    merges_applied: dict[str, int] = Field(default_factory=dict)
+    minimum_resolution_tier: ResolutionTier | None = None
     claim_tier_ceiling: ClaimTier
     rationale: str
     limitations: list[str] = Field(default_factory=list)
@@ -84,14 +105,25 @@ class InstitutionalOntologyGraph:
 
     # -------------------------------------------------------- entity resolution
 
-    def resolve_duplicates(self) -> dict[str, list[str]]:
-        """Group entity ids that refer to the same organisation.
+    def resolve_duplicates(
+        self, *, minimum_tier: ResolutionTier = ResolutionTier.NAME_ONLY
+    ) -> dict[str, list[str]]:
+        """Group entity ids that refer to the same organisation, by evidence strength.
 
-        A shared strong identifier (Companies House, charity number, ROR, LEI) merges.
-        A matching normalised name merges only when jurisdiction also matches, because
-        name collisions between distinct legal bodies are common across jurisdictions.
+        Three tiers, and the caller decides how much weight a merge must carry:
+
+        STRONG_IDENTIFIER  a shared Companies House number, charity number, ROR or LEI.
+        CORROBORATED_NAME  same normalised name and jurisdiction, plus a second signal
+                           (a shared weak identifier, or an overlapping counterparty),
+                           so the match does not rest on the name alone.
+        NAME_ONLY          same normalised name and jurisdiction and nothing else. Two
+                           distinct bodies can share a name; this is a lead, not a join.
+
+        Requiring STRONG_IDENTIFIER lets a coupling verdict be recomputed using only
+        merges that would survive an identifier-level audit.
         """
 
+        threshold = MERGE_TIER_ORDER[minimum_tier]
         parent: dict[str, str] = {item: item for item in self.entities}
 
         def find(item: str) -> str:
@@ -112,21 +144,71 @@ class InstitutionalOntologyGraph:
                 by_identifier[identifier].append(entity_id)
             by_name[(entity.normalised_name(), entity.jurisdiction.casefold())].append(entity_id)
 
-        for group in list(by_identifier.values()) + list(by_name.values()):
+        for group in by_identifier.values():
             for other in group[1:]:
                 union(group[0], other)
+
+        if threshold < MERGE_TIER_ORDER[ResolutionTier.STRONG_IDENTIFIER]:
+            allow_bare_name = threshold == MERGE_TIER_ORDER[ResolutionTier.NAME_ONLY]
+            for group in by_name.values():
+                for index, left in enumerate(group):
+                    for right in group[index + 1 :]:
+                        if allow_bare_name or self._name_match_is_corroborated(left, right):
+                            union(left, right)
 
         clusters: dict[str, list[str]] = defaultdict(list)
         for entity_id in self.entities:
             clusters[find(entity_id)].append(entity_id)
         return {root: sorted(members) for root, members in clusters.items() if len(members) > 1}
 
+    def _counterparties(self) -> dict[str, set[str]]:
+        neighbours: dict[str, set[str]] = defaultdict(set)
+        for relation in self.relations.values():
+            neighbours[relation.source_entity_id].add(relation.target_entity_id)
+            neighbours[relation.target_entity_id].add(relation.source_entity_id)
+        return neighbours
+
+    def _weak_identifiers(self, entity_id: str) -> set[tuple[str, str]]:
+        entity = self.entities[entity_id]
+        everything = {
+            (namespace, value.strip().casefold())
+            for namespace, value in entity.identifiers.items()
+            if value.strip()
+        }
+        return everything - entity.strong_identifiers()
+
+    def _name_match_is_corroborated(self, left: str, right: str) -> bool:
+        """A second signal beyond the name: a shared weak id, or a shared counterparty.
+
+        Two records of the same name that also transact with the same third party are far
+        more likely to be one body than a coincidence of naming.
+        """
+
+        if self._weak_identifiers(left) & self._weak_identifiers(right):
+            return True
+        neighbours = self._counterparties()
+        return bool(neighbours[left] & neighbours[right])
+
+    def merge_tier(self, members: Sequence[str]) -> ResolutionTier:
+        """Strongest evidence supporting a merge of these entity ids."""
+
+        identifier_sets = [self.entities[m].strong_identifiers() for m in members]
+        if identifier_sets and set.intersection(*identifier_sets):
+            return ResolutionTier.STRONG_IDENTIFIER
+        for index, left in enumerate(members):
+            for right in members[index + 1 :]:
+                if self._name_match_is_corroborated(left, right):
+                    return ResolutionTier.CORROBORATED_NAME
+        return ResolutionTier.NAME_ONLY
+
     # ------------------------------------------------------------- mechanism
 
     def admitted_relations(self) -> list[InstitutionalRelation]:
         return [item for item in self.relations.values() if item.admitted]
 
-    def _canonical_map(self) -> tuple[dict[str, str], int, int]:
+    def _canonical_map(
+        self, minimum_tier: ResolutionTier
+    ) -> tuple[dict[str, str], dict[str, int]]:
         """Map every entity id to its resolved-cluster representative.
 
         Also returns how many clusters were merged and how many of those rested on a
@@ -135,16 +217,13 @@ class InstitutionalOntologyGraph:
         """
 
         mapping = {entity_id: entity_id for entity_id in self.entities}
-        clusters = self.resolve_duplicates()
-        name_only = 0
-        for members in clusters.values():
+        tally: dict[str, int] = defaultdict(int)
+        for members in self.resolve_duplicates(minimum_tier=minimum_tier).values():
             representative = members[0]
             for member in members:
                 mapping[member] = representative
-            identifier_sets = [self.entities[m].strong_identifiers() for m in members]
-            if not set.intersection(*identifier_sets) if identifier_sets else True:
-                name_only += 1
-        return mapping, len(clusters), name_only
+            tally[self.merge_tier(members).value] += 1
+        return mapping, dict(tally)
 
     def assess_coupling(
         self,
@@ -152,6 +231,7 @@ class InstitutionalOntologyGraph:
         relations: Iterable[InstitutionalRelation] | None = None,
         *,
         resolve_entities: bool = False,
+        minimum_resolution_tier: ResolutionTier = ResolutionTier.NAME_ONLY,
     ) -> CouplingAssessment:
         """Contest MD15 (structural coupling) against MX09 (isolated processes).
 
@@ -169,9 +249,9 @@ class InstitutionalOntologyGraph:
         # a tie that genuinely bridges them can never form a connected path. Resolution is
         # opt-in because merging on a weak match would invent the bridge instead.
         canonical: dict[str, str] = {}
-        merged_clusters = name_only_clusters = 0
+        merges: dict[str, int] = {}
         if resolve_entities:
-            canonical, merged_clusters, name_only_clusters = self._canonical_map()
+            canonical, merges = self._canonical_map(minimum_resolution_tier)
 
         def node_of(entity_id: str) -> str:
             return canonical.get(entity_id, entity_id)
@@ -179,15 +259,16 @@ class InstitutionalOntologyGraph:
         prior = [item for item in admitted if item.precedes(outcome_date)]
 
         limitations: list[str] = []
-        if resolve_entities and merged_clusters:
-            limitations.append(
-                f"entity resolution merged {merged_clusters} cluster(s) before assessment"
-            )
-            if name_only_clusters:
+        if resolve_entities and merges:
+            total = sum(merges.values())
+            breakdown = ", ".join(f"{count} {tier}" for tier, count in sorted(merges.items()))
+            limitations.append(f"entity resolution merged {total} cluster(s): {breakdown}")
+            weak = merges.get(ResolutionTier.NAME_ONLY.value, 0)
+            if weak:
                 limitations.append(
-                    f"{name_only_clusters} of those merged on normalised name alone with no "
-                    "corroborating strong identifier; any bridge depending on them is a weak "
-                    "join and the verdict should not outlive an identifier-level check"
+                    f"{weak} merged on normalised name alone with no corroborating identifier "
+                    "or shared counterparty; any bridge depending on them is a weak join and "
+                    "the verdict should not outlive an identifier-level check"
                 )
         if excluded:
             limitations.append(f"{excluded} relation(s) failed admission and were excluded")
@@ -223,6 +304,10 @@ class InstitutionalOntologyGraph:
                 systems_spanned=spanned,
                 independent_dependency_families=families,
                 central_entity_id=central,
+                merges_applied=merges,
+                minimum_resolution_tier=(
+                    minimum_resolution_tier if resolve_entities else None
+                ),
                 claim_tier_ceiling=ceiling,
                 rationale=rationale,
                 limitations=limitations,
