@@ -255,17 +255,31 @@ class InstitutionalOntologyGraph:
 
         diffusing = [component for component in components if qualifies(component)]
         if not diffusing:
-            largest = max((len(component) for component in components), default=0)
-            kinds = {item.relation_type.value for item in prior}
+            largest = max(components, key=len, default=set())
+            largest_kinds = sorted(
+                {
+                    connected.edges[edge]["relation"].relation_type.value
+                    for edge in connected.subgraph(largest).edges
+                }
+            )
+            corpus_kinds = sorted({item.relation_type.value for item in prior})
+            unreached = [kind for kind in corpus_kinds if kind not in largest_kinds]
             return build(
                 CouplingVerdict.MX09_ISOLATED_PROCESSES_BETTER,
                 ClaimTier.MODERATE_TRIANGULATED_CAUSAL_EVIDENCE,
-                "No connected component carries influence between systems. The largest "
-                f"holds {largest} entities and the relations use {len(kinds)} tie "
-                f"type(s) ({', '.join(sorted(kinds))}). A component built from a single "
-                "tie type is one mechanism repeated, and its domain spread follows from "
-                "that tie type rather than from diffusion. The MX09 rival, isolated "
-                "non-coupled processes, explains the pattern better.",
+                "No connected component carries influence between systems. The corpus "
+                f"holds {len(corpus_kinds)} tie type(s) ({', '.join(corpus_kinds)}) across "
+                f"{len(components)} components, but the largest component has "
+                f"{len(largest)} entities joined by only {', '.join(largest_kinds)}"
+                + (
+                    f"; {', '.join(unreached)} appear only in components that do not "
+                    "connect to it, so no path runs from one kind of tie to another. "
+                    if unreached
+                    else ". "
+                )
+                + "A component built from one tie type is one mechanism repeated, and its "
+                "domain spread follows from that tie type rather than from diffusion. The "
+                "MX09 rival, isolated non-coupled processes, explains the pattern better.",
             )
 
         return build(

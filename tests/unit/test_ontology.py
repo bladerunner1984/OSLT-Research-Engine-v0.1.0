@@ -326,3 +326,25 @@ def test_single_tie_type_component_is_not_coupling():
     assessment = graph.assess_coupling(OUTCOME)
     assert assessment.verdict is CouplingVerdict.MX09_ISOLATED_PROCESSES_BETTER
     assert "one mechanism repeated" in assessment.rationale
+
+
+def test_unreached_tie_types_are_named_in_the_rationale():
+    """Two tie types in separate components is not a diffusion path, and says so."""
+
+    graph = InstitutionalOntologyGraph()
+    for name, domain in (
+        ("B", SystemDomain.POLICY), ("S", SystemDomain.COMMERCIAL),
+        ("S2", SystemDomain.COMMERCIAL),
+        ("F", SystemDomain.POLICY), ("U", SystemDomain.ACADEMIC),
+    ):
+        graph.add_entity(entity(name, domain))
+    graph.add_relation(relation("R1", "B", "S", family="contracts-finder",
+                                kind=RelationType.CONTRACTS_WITH))
+    graph.add_relation(relation("R2", "S", "S2", family="find-a-tender",
+                                kind=RelationType.CONTRACTS_WITH))
+    graph.add_relation(relation("R3", "F", "U", family="gtr", kind=RelationType.FUNDS))
+
+    assessment = graph.assess_coupling(OUTCOME)
+    assert assessment.verdict is CouplingVerdict.MX09_ISOLATED_PROCESSES_BETTER
+    assert "FUNDS" in assessment.rationale
+    assert "do not connect to it" in assessment.rationale
