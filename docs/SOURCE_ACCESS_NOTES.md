@@ -73,6 +73,27 @@ PROSPERO records are not redistributed under an open licence anywhere found.
 
 ---
 
+## Degraded: OpenAlex (daily budget exhausted)
+
+OpenAlex returns HTTP 429 with `{"error":"Rate limit exceeded","message":"Insufficient budget..."}`.
+This is a **daily budget**, not a short rolling window. Confirmed by testing all four polite-pool
+conventions — `mailto` parameter, `User-Agent` header, both, and neither — which return the
+identical error. No client-side courtesy recovers an exhausted budget.
+
+**Cause:** an unthrottled enrichment run over 857 records drew 1,379 requests in minutes. The
+throttle added afterwards prevents recurrence but cannot restore the day's allowance, so a
+single unthrottled run cost roughly a day of access to a P0 source.
+
+**Consequence:** enrichment falls back to Europe PMC alone, which is healthy and carries abstract
+text inline. Coverage is lower than the two sources together would give, but the run completes.
+
+**Standing lesson:** a rate limit expressed as a *budget* is not the same as one expressed as a
+*window*. A window forgives in minutes; a budget does not forgive until it resets. Throttle from
+the first request against any source whose limit model is unknown, because discovering it is a
+budget after exhausting it is discovering it too late.
+
+---
+
 ## Standing rules learned from today's failures
 
 **1. Verify an API honours its query before trusting it.** Contracts Finder and UKRI GtR
