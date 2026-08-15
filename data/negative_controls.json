@@ -1,0 +1,976 @@
+{
+  "source": "data\\fingertips_w02_recovery.json",
+  "purpose": "negative controls for docs/REFERRAL_BASELINE.md comparators 1 and 2",
+  "rules": [
+    "complete, non-pooled series with >= 3 points only",
+    "missing points are never filled; the series is skipped",
+    "index-not-trend series excluded with a recorded reason",
+    "age bands are never merged and nesting levels are never summed",
+    "year bases are never aligned across indicators"
+  ],
+  "exclusions": [
+    {
+      "indicator_id": 91871,
+      "stratum": "Primary school age | Female",
+      "reason": "only 2 points, need 3"
+    },
+    {
+      "indicator_id": 91871,
+      "stratum": "Secondary school age | Female",
+      "reason": "only 2 points, need 3"
+    },
+    {
+      "indicator_id": 91871,
+      "stratum": "Primary school age | Male",
+      "reason": "only 2 points, need 3"
+    },
+    {
+      "indicator_id": 91871,
+      "stratum": "Secondary school age | Male",
+      "reason": "only 2 points, need 3"
+    }
+  ],
+  "indicators": {
+    "92622": {
+      "indicator_id": 92622,
+      "name": "Hospital admissions for diabetes (under 19 years)",
+      "year_type": "Financial",
+      "year_basis_note": "Financial years (2013/14 = 1 Apr 2013 to 31 Mar 2014).",
+      "strata": {
+        "0-18 yrs | Female": {
+          "first_period": "2013/14",
+          "last_period": "2024/25",
+          "n_periods": 12,
+          "first_value": 62.2282058046646,
+          "last_value": 47.8808881617851,
+          "ratio": 0.7694402810211824,
+          "cagr": -0.023544928699471,
+          "min_value": 47.8808881617851,
+          "max_value": 62.2282058046646,
+          "count_ratio": 0.8158609451385117,
+          "denominator_ratio": 1.0603304314348097,
+          "series_kind": "rate or proportion with published denominator",
+          "age": "0-18 yrs",
+          "sex": "Female",
+          "is_parent_band": true
+        },
+        "0-9 yrs | Female": {
+          "first_period": "2013/14",
+          "last_period": "2024/25",
+          "n_periods": 12,
+          "first_value": 28.30092,
+          "last_value": 29.8678411309281,
+          "ratio": 1.0553664379436463,
+          "cagr": 0.004910932125804068,
+          "min_value": 28.0104216552952,
+          "max_value": 37.17565,
+          "count_ratio": 1.0385038503850386,
+          "denominator_ratio": 0.9840219682369681,
+          "series_kind": "rate or proportion with published denominator",
+          "age": "0-9 yrs",
+          "sex": "Female",
+          "is_parent_band": false
+        },
+        "10-18 yrs | Female": {
+          "first_period": "2013/14",
+          "last_period": "2024/25",
+          "n_periods": 12,
+          "first_value": 102.51307,
+          "last_value": 66.1674769505915,
+          "ratio": 0.6454540572298879,
+          "cagr": -0.039018492522026604,
+          "min_value": 66.1674769505915,
+          "max_value": 102.51307,
+          "count_ratio": 0.7428777497295348,
+          "denominator_ratio": 1.1509381997404087,
+          "series_kind": "rate or proportion with published denominator",
+          "age": "10-18 yrs",
+          "sex": "Female",
+          "is_parent_band": false
+        },
+        "0-18 yrs | Male": {
+          "first_period": "2013/14",
+          "last_period": "2024/25",
+          "n_periods": 12,
+          "first_value": 52.2275685893356,
+          "last_value": 44.63672468329,
+          "ratio": 0.8546582942481534,
+          "cagr": -0.01417615356444546,
+          "min_value": 44.63672468329,
+          "max_value": 54.9152707724092,
+          "count_ratio": 0.9075215782983971,
+          "denominator_ratio": 1.061853122360145,
+          "series_kind": "rate or proportion with published denominator",
+          "age": "0-18 yrs",
+          "sex": "Male",
+          "is_parent_band": true
+        },
+        "0-9 yrs | Male": {
+          "first_period": "2013/14",
+          "last_period": "2024/25",
+          "n_periods": 12,
+          "first_value": 28.94662,
+          "last_value": 27.6455109092627,
+          "ratio": 0.9550514329224863,
+          "cagr": -0.004172188816334854,
+          "min_value": 25.40494,
+          "max_value": 36.85669,
+          "count_ratio": 0.9385245901639344,
+          "denominator_ratio": 0.9826952028101944,
+          "series_kind": "rate or proportion with published denominator",
+          "age": "0-9 yrs",
+          "sex": "Male",
+          "is_parent_band": false
+        },
+        "10-18 yrs | Male": {
+          "first_period": "2013/14",
+          "last_period": "2024/25",
+          "n_periods": 12,
+          "first_value": 79.87167,
+          "last_value": 61.7899148987124,
+          "ratio": 0.7736149112534194,
+          "cagr": -0.023064494397334045,
+          "min_value": 61.7899148987124,
+          "max_value": 80.22923,
+          "count_ratio": 0.8941798941798942,
+          "denominator_ratio": 1.1558462505568654,
+          "series_kind": "rate or proportion with published denominator",
+          "age": "10-18 yrs",
+          "sex": "Male",
+          "is_parent_band": false
+        },
+        "0-18 yrs | Persons": {
+          "first_period": "2013/14",
+          "last_period": "2024/25",
+          "n_periods": 12,
+          "first_value": 57.1065309720066,
+          "last_value": 46.5057802372269,
+          "ratio": 0.8143688549392687,
+          "cagr": -0.018494285774961594,
+          "min_value": 46.5057802372269,
+          "max_value": 57.9826676090967,
+          "count_ratio": 0.8641351429396477,
+          "denominator_ratio": 1.061110254522308,
+          "series_kind": "rate or proportion with published denominator",
+          "age": "0-18 yrs",
+          "sex": "Persons",
+          "is_parent_band": true
+        },
+        "0-9 yrs | Persons": {
+          "first_period": "2013/14",
+          "last_period": "2024/25",
+          "n_periods": 12,
+          "first_value": 28.63160376,
+          "last_value": 28.7613452462764,
+          "ratio": 1.004531408277508,
+          "cagr": 0.0004111001473736664,
+          "min_value": 26.75458642,
+          "max_value": 37.01238758,
+          "count_ratio": 0.9877984084880637,
+          "denominator_ratio": 0.9833424822825814,
+          "series_kind": "rate or proportion with published denominator",
+          "age": "0-9 yrs",
+          "sex": "Persons",
+          "is_parent_band": false
+        },
+        "10-18 yrs | Persons": {
+          "first_period": "2013/14",
+          "last_period": "2024/25",
+          "n_periods": 12,
+          "first_value": 90.91768243,
+          "last_value": 64.4682014466333,
+          "ratio": 0.7090832027781738,
+          "cagr": -0.030769620972090572,
+          "min_value": 64.4682014466333,
+          "max_value": 90.91768243,
+          "count_ratio": 0.8178932751438207,
+          "denominator_ratio": 1.1534517698016944,
+          "series_kind": "rate or proportion with published denominator",
+          "age": "10-18 yrs",
+          "sex": "Persons",
+          "is_parent_band": false
+        }
+      },
+      "sex_ratio": {
+        "0-18 yrs": {
+          "by_period": [
+            {
+              "period": "2013/14",
+              "female": 62.2282058046646,
+              "male": 52.2275685893356,
+              "f_to_m": 1.1914819603026865
+            },
+            {
+              "period": "2014/15",
+              "female": 60.3528413088545,
+              "male": 52.1091723993696,
+              "f_to_m": 1.1581999584699725
+            },
+            {
+              "period": "2015/16",
+              "female": 59.3857912842943,
+              "male": 52.3336074769213,
+              "f_to_m": 1.1347543987003563
+            },
+            {
+              "period": "2016/17",
+              "female": 59.7262748321104,
+              "male": 51.6320314987068,
+              "f_to_m": 1.1567678648012587
+            },
+            {
+              "period": "2017/18",
+              "female": 54.8497283403319,
+              "male": 49.3102095178806,
+              "f_to_m": 1.1123402004698963
+            },
+            {
+              "period": "2018/19",
+              "female": 53.6481486666745,
+              "male": 49.5478073322878,
+              "f_to_m": 1.0827552530607083
+            },
+            {
+              "period": "2019/20",
+              "female": 54.6378506025212,
+              "male": 51.1586852830843,
+              "f_to_m": 1.0680073246641326
+            },
+            {
+              "period": "2020/21",
+              "female": 48.829101946335,
+              "male": 49.7997869361388,
+              "f_to_m": 0.9805082501447533
+            },
+            {
+              "period": "2021/22",
+              "female": 61.1900269517262,
+              "male": 54.9152707724092,
+              "f_to_m": 1.1142625009593796
+            },
+            {
+              "period": "2022/23",
+              "female": 54.0619909740974,
+              "male": 50.7406724397517,
+              "f_to_m": 1.0654567307575467
+            },
+            {
+              "period": "2023/24",
+              "female": 51.0094834782281,
+              "male": 47.5724856064504,
+              "f_to_m": 1.072247599173411
+            },
+            {
+              "period": "2024/25",
+              "female": 47.8808881617851,
+              "male": 44.63672468329,
+              "f_to_m": 1.0726792456550822
+            }
+          ],
+          "first_f_to_m": 1.1914819603026865,
+          "last_f_to_m": 1.0726792456550822,
+          "female_ratio": 0.7694402810211824,
+          "male_ratio": 0.8546582942481534
+        },
+        "0-9 yrs": {
+          "by_period": [
+            {
+              "period": "2013/14",
+              "female": 28.30092,
+              "male": 28.94662,
+              "f_to_m": 0.9776934232735982
+            },
+            {
+              "period": "2014/15",
+              "female": 29.92635,
+              "male": 28.9835,
+              "f_to_m": 1.0325305777425087
+            },
+            {
+              "period": "2015/16",
+              "female": 30.94693,
+              "male": 29.36117,
+              "f_to_m": 1.054008746926638
+            },
+            {
+              "period": "2016/17",
+              "female": 28.93101,
+              "male": 28.38119,
+              "f_to_m": 1.0193726901514701
+            },
+            {
+              "period": "2017/18",
+              "female": 28.08144,
+              "male": 26.80145,
+              "f_to_m": 1.04775823696106
+            },
+            {
+              "period": "2018/19",
+              "female": 28.17475,
+              "male": 25.40494,
+              "f_to_m": 1.109026433441685
+            },
+            {
+              "period": "2019/20",
+              "female": 28.22186,
+              "male": 28.70196,
+              "f_to_m": 0.9832729193407
+            },
+            {
+              "period": "2020/21",
+              "female": 29.64236,
+              "male": 30.17848,
+              "f_to_m": 0.9822350231025552
+            },
+            {
+              "period": "2021/22",
+              "female": 37.17565,
+              "male": 36.85669,
+              "f_to_m": 1.0086540598192621
+            },
+            {
+              "period": "2022/23",
+              "female": 31.792550254596,
+              "male": 33.1967966463005,
+              "f_to_m": 0.9576993404916077
+            },
+            {
+              "period": "2023/24",
+              "female": 28.0104216552952,
+              "male": 29.3283297425318,
+              "f_to_m": 0.9550636501019226
+            },
+            {
+              "period": "2024/25",
+              "female": 29.8678411309281,
+              "male": 27.6455109092627,
+              "f_to_m": 1.0803866576732644
+            }
+          ],
+          "first_f_to_m": 0.9776934232735982,
+          "last_f_to_m": 1.0803866576732644,
+          "female_ratio": 1.0553664379436463,
+          "male_ratio": 0.9550514329224863
+        },
+        "10-18 yrs": {
+          "by_period": [
+            {
+              "period": "2013/14",
+              "female": 102.51307,
+              "male": 79.87167,
+              "f_to_m": 1.2834722248827402
+            },
+            {
+              "period": "2014/15",
+              "female": 96.97183,
+              "male": 79.97046,
+              "f_to_m": 1.2125956259348765
+            },
+            {
+              "period": "2015/16",
+              "female": 93.82755,
+              "male": 80.22923,
+              "f_to_m": 1.1694933380265522
+            },
+            {
+              "period": "2016/17",
+              "female": 97.04822,
+              "male": 79.88495,
+              "f_to_m": 1.2148498559490868
+            },
+            {
+              "period": "2017/18",
+              "female": 86.97605,
+              "male": 76.37398,
+              "f_to_m": 1.138817827747094
+            },
+            {
+              "period": "2018/19",
+              "female": 83.53178,
+              "male": 77.90505,
+              "f_to_m": 1.0722254847407195
+            },
+            {
+              "period": "2019/20",
+              "female": 84.81425,
+              "male": 76.82566,
+              "f_to_m": 1.1039833566024686
+            },
+            {
+              "period": "2020/21",
+              "female": 70.07608,
+              "male": 71.49134,
+              "f_to_m": 0.9802037561472482
+            },
+            {
+              "period": "2021/22",
+              "female": 86.84127,
+              "male": 74.11378,
+              "f_to_m": 1.1717290630703223
+            },
+            {
+              "period": "2022/23",
+              "female": 77.3487714576017,
+              "male": 68.9750441509986,
+              "f_to_m": 1.1214022754124162
+            },
+            {
+              "period": "2023/24",
+              "female": 74.6927345618391,
+              "male": 66.2364756863782,
+              "f_to_m": 1.1276677055630235
+            },
+            {
+              "period": "2024/25",
+              "female": 66.1674769505915,
+              "male": 61.7899148987124,
+              "f_to_m": 1.070845898704585
+            }
+          ],
+          "first_f_to_m": 1.2834722248827402,
+          "last_f_to_m": 1.070845898704585,
+          "female_ratio": 0.6454540572298879,
+          "male_ratio": 0.7736149112534194
+        }
+      }
+    },
+    "92623": {
+      "indicator_id": 92623,
+      "name": "Hospital admissions for epilepsy (under 19 years)",
+      "year_type": "Financial",
+      "year_basis_note": "Financial years (2013/14 = 1 Apr 2013 to 31 Mar 2014).",
+      "strata": {
+        "0-18 yrs | Female": {
+          "first_period": "2013/14",
+          "last_period": "2024/25",
+          "n_periods": 12,
+          "first_value": 74.1262657955619,
+          "last_value": 71.98072,
+          "ratio": 0.9710555256961243,
+          "cagr": -0.0026665863521359023,
+          "min_value": 64.7196427422807,
+          "max_value": 75.4908559323575,
+          "count_ratio": 1.029639762881897,
+          "denominator_ratio": 1.0603304314348097,
+          "series_kind": "rate or proportion with published denominator",
+          "age": "0-18 yrs",
+          "sex": "Female",
+          "is_parent_band": true
+        },
+        "0-9 yrs | Female": {
+          "first_period": "2013/14",
+          "last_period": "2024/25",
+          "n_periods": 12,
+          "first_value": 85.18296,
+          "last_value": 89.88828,
+          "ratio": 1.0552378081250053,
+          "cagr": 0.004899796943658163,
+          "min_value": 78.52458,
+          "max_value": 92.48086,
+          "count_ratio": 1.0383771929824561,
+          "denominator_ratio": 0.9840219682369681,
+          "series_kind": "rate or proportion with published denominator",
+          "age": "0-9 yrs",
+          "sex": "Female",
+          "is_parent_band": false
+        },
+        "10-18 yrs | Female": {
+          "first_period": "2013/14",
+          "last_period": "2024/25",
+          "n_periods": 12,
+          "first_value": 60.99768,
+          "last_value": 53.80123,
+          "ratio": 0.882020922762964,
+          "cagr": -0.011347804325893551,
+          "min_value": 48.05317,
+          "max_value": 60.99768,
+          "count_ratio": 1.0151515151515151,
+          "denominator_ratio": 1.1509381997404087,
+          "series_kind": "rate or proportion with published denominator",
+          "age": "10-18 yrs",
+          "sex": "Female",
+          "is_parent_band": false
+        },
+        "0-18 yrs | Male": {
+          "first_period": "2013/14",
+          "last_period": "2024/25",
+          "n_periods": 12,
+          "first_value": 81.3681047011413,
+          "last_value": 83.5574,
+          "ratio": 1.0269060623557573,
+          "cagr": 0.002416593334573225,
+          "min_value": 69.433604449787,
+          "max_value": 83.89917,
+          "count_ratio": 1.090423426988524,
+          "denominator_ratio": 1.061853122360145,
+          "series_kind": "rate or proportion with published denominator",
+          "age": "0-18 yrs",
+          "sex": "Male",
+          "is_parent_band": true
+        },
+        "0-9 yrs | Male": {
+          "first_period": "2013/14",
+          "last_period": "2024/25",
+          "n_periods": 12,
+          "first_value": 102.58847,
+          "last_value": 98.75121,
+          "ratio": 0.9625956016304756,
+          "cagr": -0.0034596281372689663,
+          "min_value": 84.27821,
+          "max_value": 102.72592,
+          "count_ratio": 0.9459381324082105,
+          "denominator_ratio": 0.9826952028101944,
+          "series_kind": "rate or proportion with published denominator",
+          "age": "0-9 yrs",
+          "sex": "Male",
+          "is_parent_band": false
+        },
+        "10-18 yrs | Male": {
+          "first_period": "2013/14",
+          "last_period": "2024/25",
+          "n_periods": 12,
+          "first_value": 56.17077,
+          "last_value": 68.21875,
+          "ratio": 1.2144884252076302,
+          "cagr": 0.01782268350021421,
+          "min_value": 53.02274,
+          "max_value": 68.21875,
+          "count_ratio": 1.4037617554858934,
+          "denominator_ratio": 1.1558462505568654,
+          "series_kind": "rate or proportion with published denominator",
+          "age": "10-18 yrs",
+          "sex": "Male",
+          "is_parent_band": false
+        },
+        "0-18 yrs | Persons": {
+          "first_period": "2013/14",
+          "last_period": "2024/25",
+          "n_periods": 12,
+          "first_value": 77.8433091115672,
+          "last_value": 78.42654,
+          "ratio": 1.0074923701868443,
+          "cagr": 0.0006788159089887724,
+          "min_value": 67.1362361931925,
+          "max_value": 79.6396609540675,
+          "count_ratio": 1.0690604808812625,
+          "denominator_ratio": 1.061110254522308,
+          "series_kind": "rate or proportion with published denominator",
+          "age": "0-18 yrs",
+          "sex": "Persons",
+          "is_parent_band": true
+        },
+        "0-9 yrs | Persons": {
+          "first_period": "2013/14",
+          "last_period": "2024/25",
+          "n_periods": 12,
+          "first_value": 94.11215751,
+          "last_value": 94.93406,
+          "ratio": 1.0087332233342188,
+          "cagr": 0.0007907951792573975,
+          "min_value": 82.08022905,
+          "max_value": 97.73423692,
+          "count_ratio": 0.9919302775984506,
+          "denominator_ratio": 0.9833424822825814,
+          "series_kind": "rate or proportion with published denominator",
+          "age": "0-9 yrs",
+          "sex": "Persons",
+          "is_parent_band": false
+        },
+        "10-18 yrs | Persons": {
+          "first_period": "2013/14",
+          "last_period": "2024/25",
+          "n_periods": 12,
+          "first_value": 58.52566544,
+          "last_value": 61.71622,
+          "ratio": 1.054515476859822,
+          "cagr": 0.00483724348751835,
+          "min_value": 50.60190121,
+          "max_value": 61.98104,
+          "count_ratio": 1.2163328197226502,
+          "denominator_ratio": 1.1534517698016944,
+          "series_kind": "rate or proportion with published denominator",
+          "age": "10-18 yrs",
+          "sex": "Persons",
+          "is_parent_band": false
+        }
+      },
+      "sex_ratio": {
+        "0-18 yrs": {
+          "by_period": [
+            {
+              "period": "2013/14",
+              "female": 74.1262657955619,
+              "male": 81.3681047011413,
+              "f_to_m": 0.9109990464669405
+            },
+            {
+              "period": "2014/15",
+              "female": 70.9637755150087,
+              "male": 78.8523555299618,
+              "f_to_m": 0.8999575857698298
+            },
+            {
+              "period": "2015/16",
+              "female": 73.94359303615,
+              "male": 80.0771084582959,
+              "f_to_m": 0.9234048838646538
+            },
+            {
+              "period": "2016/17",
+              "female": 69.0507002310459,
+              "male": 76.2601937626605,
+              "f_to_m": 0.9054619038334437
+            },
+            {
+              "period": "2017/18",
+              "female": 68.1431118200916,
+              "male": 78.6216880949307,
+              "f_to_m": 0.8667215557342538
+            },
+            {
+              "period": "2018/19",
+              "female": 73.0496255316146,
+              "male": 82.5849303770596,
+              "f_to_m": 0.8845394092855744
+            },
+            {
+              "period": "2019/20",
+              "female": 75.4908559323575,
+              "male": 83.5827613933771,
+              "f_to_m": 0.9031869092846126
+            },
+            {
+              "period": "2020/21",
+              "female": 64.7196427422807,
+              "male": 69.433604449787,
+              "f_to_m": 0.9321083538027276
+            },
+            {
+              "period": "2021/22",
+              "female": 69.9550848664329,
+              "male": 76.9128491505835,
+              "f_to_m": 0.909537036256083
+            },
+            {
+              "period": "2022/23",
+              "female": 70.14992,
+              "male": 77.618,
+              "f_to_m": 0.9037841737741246
+            },
+            {
+              "period": "2023/24",
+              "female": 72.45409,
+              "male": 83.89917,
+              "f_to_m": 0.8635853012610255
+            },
+            {
+              "period": "2024/25",
+              "female": 71.98072,
+              "male": 83.5574,
+              "f_to_m": 0.8614523668759441
+            }
+          ],
+          "first_f_to_m": 0.9109990464669405,
+          "last_f_to_m": 0.8614523668759441,
+          "female_ratio": 0.9710555256961243,
+          "male_ratio": 1.0269060623557573
+        },
+        "0-9 yrs": {
+          "by_period": [
+            {
+              "period": "2013/14",
+              "female": 85.18296,
+              "male": 102.58847,
+              "f_to_m": 0.8303365865579241
+            },
+            {
+              "period": "2014/15",
+              "female": 84.0524,
+              "male": 96.70936,
+              "f_to_m": 0.8691237332146547
+            },
+            {
+              "period": "2015/16",
+              "female": 87.34182,
+              "male": 97.52207,
+              "f_to_m": 0.8956108089174071
+            },
+            {
+              "period": "2016/17",
+              "female": 83.87561,
+              "male": 93.77632,
+              "f_to_m": 0.8944220673193403
+            },
+            {
+              "period": "2017/18",
+              "female": 78.52458,
+              "male": 96.50835,
+              "f_to_m": 0.8136558132016557
+            },
+            {
+              "period": "2018/19",
+              "female": 83.78764,
+              "male": 102.05728,
+              "f_to_m": 0.8209864107685408
+            },
+            {
+              "period": "2019/20",
+              "female": 92.48086,
+              "male": 102.72592,
+              "f_to_m": 0.9002680141487174
+            },
+            {
+              "period": "2020/21",
+              "female": 79.77004,
+              "male": 84.27821,
+              "f_to_m": 0.9465084747291144
+            },
+            {
+              "period": "2021/22",
+              "female": 85.43035,
+              "male": 93.68379,
+              "f_to_m": 0.9119010876908374
+            },
+            {
+              "period": "2022/23",
+              "female": 90.36114,
+              "male": 95.35315,
+              "f_to_m": 0.9476471411799191
+            },
+            {
+              "period": "2023/24",
+              "female": 88.69967,
+              "male": 100.46771,
+              "f_to_m": 0.8828674406931342
+            },
+            {
+              "period": "2024/25",
+              "female": 89.88828,
+              "male": 98.75121,
+              "f_to_m": 0.9102499098492058
+            }
+          ],
+          "first_f_to_m": 0.8303365865579241,
+          "last_f_to_m": 0.9102499098492058,
+          "female_ratio": 1.0552378081250053,
+          "male_ratio": 0.9625956016304756
+        },
+        "10-18 yrs": {
+          "by_period": [
+            {
+              "period": "2013/14",
+              "female": 60.99768,
+              "male": 56.17077,
+              "f_to_m": 1.0859327725078365
+            },
+            {
+              "period": "2014/15",
+              "female": 55.21132,
+              "male": 57.33864,
+              "f_to_m": 0.962899015393459
+            },
+            {
+              "period": "2015/16",
+              "female": 57.71726,
+              "male": 58.89354,
+              "f_to_m": 0.9800270114515107
+            },
+            {
+              "period": "2016/17",
+              "female": 51.08383,
+              "male": 54.97572,
+              "f_to_m": 0.9292071117940792
+            },
+            {
+              "period": "2017/18",
+              "female": 55.68366,
+              "male": 57.11536,
+              "f_to_m": 0.9749331878499934
+            },
+            {
+              "period": "2018/19",
+              "female": 60.45253,
+              "male": 59.7135,
+              "f_to_m": 1.012376263324039
+            },
+            {
+              "period": "2019/20",
+              "female": 56.08227,
+              "male": 61.70303,
+              "f_to_m": 0.9089062563054036
+            },
+            {
+              "period": "2020/21",
+              "female": 48.05317,
+              "male": 53.02274,
+              "f_to_m": 0.9062747417428825
+            },
+            {
+              "period": "2021/22",
+              "female": 53.425,
+              "male": 59.08326,
+              "f_to_m": 0.9042324340261522
+            },
+            {
+              "period": "2022/23",
+              "female": 49.0154,
+              "male": 59.18483,
+              "f_to_m": 0.8281750576963726
+            },
+            {
+              "period": "2023/24",
+              "female": 55.72523,
+              "male": 66.94936,
+              "f_to_m": 0.8323489574806989
+            },
+            {
+              "period": "2024/25",
+              "female": 53.80123,
+              "male": 68.21875,
+              "f_to_m": 0.7886575171781951
+            }
+          ],
+          "first_f_to_m": 1.0859327725078365,
+          "last_f_to_m": 0.7886575171781951,
+          "female_ratio": 0.882020922762964,
+          "male_ratio": 1.2144884252076302
+        }
+      }
+    },
+    "91871": {
+      "indicator_id": 91871,
+      "name": "School pupils with social, emotional and mental health needs",
+      "year_type": "Academic",
+      "year_basis_note": "ACADEMIC years (2015/16 = a school year, Sep-Jul). Period boundaries do NOT coincide with the financial years used by 92622, 92623, 93623 or the cancer baseline.",
+      "strata": {
+        "School age | Female": {
+          "first_period": "2020/21",
+          "last_period": "2024/25",
+          "n_periods": 5,
+          "first_value": 1.63246,
+          "last_value": 2.81101,
+          "ratio": 1.7219472452617521,
+          "cagr": 0.14552602552702476,
+          "min_value": 1.63246,
+          "max_value": 2.81101,
+          "count_ratio": 1.7412795079743133,
+          "denominator_ratio": 1.0112282463186077,
+          "series_kind": "rate or proportion with published denominator",
+          "age": "School age",
+          "sex": "Female",
+          "is_parent_band": true
+        },
+        "School age | Male": {
+          "first_period": "2020/21",
+          "last_period": "2024/25",
+          "n_periods": 5,
+          "first_value": 3.90944,
+          "last_value": 5.22314,
+          "ratio": 1.3360327821887534,
+          "cagr": 0.07511340936074284,
+          "min_value": 3.90944,
+          "max_value": 5.22314,
+          "count_ratio": 1.3543255109765329,
+          "denominator_ratio": 1.0136932885200538,
+          "series_kind": "rate or proportion with published denominator",
+          "age": "School age",
+          "sex": "Male",
+          "is_parent_band": true
+        },
+        "Primary school age | Persons": {
+          "first_period": "2015/16",
+          "last_period": "2024/25",
+          "n_periods": 10,
+          "first_value": 2.08399600274919,
+          "last_value": 3.55124,
+          "ratio": 1.7040531725181975,
+          "cagr": 0.06101213033652719,
+          "min_value": 2.08399600274919,
+          "max_value": 3.55124,
+          "count_ratio": 1.681825743397796,
+          "denominator_ratio": 0.9869564991293932,
+          "series_kind": "rate or proportion with published denominator",
+          "age": "Primary school age",
+          "sex": "Persons",
+          "is_parent_band": false
+        },
+        "School age | Persons": {
+          "first_period": "2015/16",
+          "last_period": "2024/25",
+          "n_periods": 10,
+          "first_value": 2.33182,
+          "last_value": 4.04183,
+          "ratio": 1.7333370500295906,
+          "cagr": 0.0630227468992508,
+          "min_value": 2.32249,
+          "max_value": 4.04183,
+          "count_ratio": 1.8381598131195698,
+          "denominator_ratio": 1.060472070909342,
+          "series_kind": "rate or proportion with published denominator",
+          "age": "School age",
+          "sex": "Persons",
+          "is_parent_band": true
+        },
+        "Secondary school age | Persons": {
+          "first_period": "2015/16",
+          "last_period": "2024/25",
+          "n_periods": 10,
+          "first_value": 2.35662854032889,
+          "last_value": 4.28746,
+          "ratio": 1.8193193906586758,
+          "cagr": 0.06875650734782957,
+          "min_value": 2.27499147556893,
+          "max_value": 4.28746,
+          "count_ratio": 2.091645959844267,
+          "denominator_ratio": 1.1496856972685694,
+          "series_kind": "rate or proportion with published denominator",
+          "age": "Secondary school age",
+          "sex": "Persons",
+          "is_parent_band": false
+        }
+      },
+      "sex_ratio": {
+        "School age": {
+          "by_period": [
+            {
+              "period": "2020/21",
+              "female": 1.63246,
+              "male": 3.90944,
+              "f_to_m": 0.41756875665056886
+            },
+            {
+              "period": "2021/22",
+              "female": 1.8469,
+              "male": 4.09191,
+              "f_to_m": 0.4513540131625573
+            },
+            {
+              "period": "2022/23",
+              "female": 2.1,
+              "male": 4.4,
+              "f_to_m": 0.47727272727272724
+            },
+            {
+              "period": "2023/24",
+              "female": 2.43897,
+              "male": 4.75171,
+              "f_to_m": 0.5132825866898443
+            },
+            {
+              "period": "2024/25",
+              "female": 2.81101,
+              "male": 5.22314,
+              "f_to_m": 0.5381839276756893
+            }
+          ],
+          "first_f_to_m": 0.41756875665056886,
+          "last_f_to_m": 0.5381839276756893,
+          "female_ratio": 1.7219472452617521,
+          "male_ratio": 1.3360327821887534
+        }
+      }
+    }
+  },
+  "pooled_excluded": 0,
+  "index_not_trend_excluded": 0
+}
