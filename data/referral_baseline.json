@@ -1,0 +1,60 @@
+{
+  "window": "2009/10 to 2024/25",
+  "n_periods": 16,
+  "referral_rate_per_100k": {
+    "first": 1643.44549513704,
+    "last": 4899.24696002799,
+    "ratio": 2.981082715870332,
+    "cagr": 0.07553595930682633
+  },
+  "diagnostic_yield_pct": {
+    "first": 10.8298571679382,
+    "last": 5.97994466920933,
+    "ratio": 0.5521720717529831,
+    "cagr": -0.038819475655892166,
+    "monotonic_decline": false
+  },
+  "absolute_referrals": {
+    "first": 899938.0,
+    "last": 3123758.0,
+    "ratio": 3.4710813411590578
+  },
+  "cancers_diagnosed": {
+    "first": 97462.0,
+    "last": 186799.0,
+    "ratio": 1.9166341753709137
+  },
+  "excluded_as_index_not_trend": [
+    91344
+  ],
+  "by_tumour_site": {
+    "91347": {
+      "name": "New cancer cases treated resulting from an urgent suspected cancer referral (Detection rate: % of all new cancer cases treated)",
+      "ratio": 1.2723582796094242
+    },
+    "91348": {
+      "name": "Urgent suspected cancer referrals for suspected breast cancer",
+      "ratio": 2.4328868886140116
+    },
+    "91349": {
+      "name": "Urgent suspected cancer referrals for suspected lower GI cancer",
+      "ratio": 3.0237579431780937
+    },
+    "91350": {
+      "name": "Urgent suspected cancer referrals for suspected lung cancer",
+      "ratio": 1.6747987226583838
+    },
+    "91351": {
+      "name": "Urgent suspected cancer referrals for suspected skin cancer",
+      "ratio": 4.121297297999298
+    },
+    "91845": {
+      "name": "Urgent suspected cancer referrals resulting in a diagnosis of cancer (Conversion rate: as % of all USC referrals)",
+      "ratio": 0.5521720717529831
+    },
+    "91882": {
+      "name": "Urgent suspected cancer referrals",
+      "ratio": 2.981082715870332
+    }
+  }
+}
