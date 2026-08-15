@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import re
+import subprocess
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -64,6 +65,30 @@ class PreflightReport:
             "passed": self.passed,
             "findings": [item.__dict__ for item in self.findings],
         }
+
+
+def _is_git_ignored(path: Path, root: Path) -> bool:
+    """True when git would refuse to track this path.
+
+    The secret gate exists to stop credentials entering the repository. A gitignored file
+    cannot enter it, so flagging one is a false positive - the same reasoning that removed
+    .venv from the scan. It matters here because the project ships a .env.example and
+    gitignores .env, so following its own documented setup used to fail its own gate.
+
+    Fails closed: if git cannot answer, the file is treated as scannable.
+    """
+
+    try:
+        result = subprocess.run(
+            ["git", "check-ignore", "--quiet", str(path)],
+            cwd=str(root),
+            capture_output=True,
+            timeout=5,
+            check=False,
+        )
+    except (OSError, subprocess.SubprocessError):
+        return False
+    return result.returncode == 0
 
 
 def _check_identity(root: Path) -> list[PreflightFinding]:
@@ -166,6 +191,8 @@ def _check_secret_filenames(root: Path) -> list[PreflightFinding]:
         if path.name == ".env.example":
             continue
         if path.name.startswith(".env"):
+            if _is_git_ignored(path, root):
+                continue
             findings.append(PreflightFinding("ENV_FILE_PRESENT", "FAIL", path.name, str(path)))
         elif any(pattern.search(path.name) for pattern in patterns):
             findings.append(
