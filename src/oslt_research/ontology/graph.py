@@ -126,10 +126,32 @@ class InstitutionalOntologyGraph:
     def admitted_relations(self) -> list[InstitutionalRelation]:
         return [item for item in self.relations.values() if item.admitted]
 
+    def _canonical_map(self) -> tuple[dict[str, str], int, int]:
+        """Map every entity id to its resolved-cluster representative.
+
+        Also returns how many clusters were merged and how many of those rested on a
+        normalised name alone. A name-only merge is the weakest join in this system, and
+        when a coupling verdict depends on one it has to be visible in the result.
+        """
+
+        mapping = {entity_id: entity_id for entity_id in self.entities}
+        clusters = self.resolve_duplicates()
+        name_only = 0
+        for members in clusters.values():
+            representative = members[0]
+            for member in members:
+                mapping[member] = representative
+            identifier_sets = [self.entities[m].strong_identifiers() for m in members]
+            if not set.intersection(*identifier_sets) if identifier_sets else True:
+                name_only += 1
+        return mapping, len(clusters), name_only
+
     def assess_coupling(
         self,
         outcome_date: date,
         relations: Iterable[InstitutionalRelation] | None = None,
+        *,
+        resolve_entities: bool = False,
     ) -> CouplingAssessment:
         """Contest MD15 (structural coupling) against MX09 (isolated processes).
 
@@ -142,10 +164,31 @@ class InstitutionalOntologyGraph:
 
         candidates = list(relations) if relations is not None else list(self.relations.values())
         admitted = [item for item in candidates if item.admitted]
+
+        # Without resolution the same body appearing in two registers stays two nodes, so
+        # a tie that genuinely bridges them can never form a connected path. Resolution is
+        # opt-in because merging on a weak match would invent the bridge instead.
+        canonical: dict[str, str] = {}
+        merged_clusters = name_only_clusters = 0
+        if resolve_entities:
+            canonical, merged_clusters, name_only_clusters = self._canonical_map()
+
+        def node_of(entity_id: str) -> str:
+            return canonical.get(entity_id, entity_id)
         excluded = len(candidates) - len(admitted)
         prior = [item for item in admitted if item.precedes(outcome_date)]
 
         limitations: list[str] = []
+        if resolve_entities and merged_clusters:
+            limitations.append(
+                f"entity resolution merged {merged_clusters} cluster(s) before assessment"
+            )
+            if name_only_clusters:
+                limitations.append(
+                    f"{name_only_clusters} of those merged on normalised name alone with no "
+                    "corroborating strong identifier; any bridge depending on them is a weak "
+                    "join and the verdict should not outlive an identifier-level check"
+                )
         if excluded:
             limitations.append(f"{excluded} relation(s) failed admission and were excluded")
         if len(admitted) != len(prior):
@@ -158,8 +201,10 @@ class InstitutionalOntologyGraph:
         domains: set[SystemDomain] = set()
         for item in prior:
             for endpoint in (item.source_entity_id, item.target_entity_id):
-                entity = self.entities.get(endpoint)
-                if entity is not None:
+                entity = self.entities.get(node_of(endpoint)) or self.entities.get(endpoint)
+                # UNKNOWN is excluded deliberately. An entity whose domain could not be
+                # determined must not be able to widen apparent cross-system spread.
+                if entity is not None and entity.system_domain is not SystemDomain.UNKNOWN:
                     domains.add(entity.system_domain)
         spanned = sorted(domains, key=lambda value: value.value)
 
@@ -202,8 +247,8 @@ class InstitutionalOntologyGraph:
 
         incident: dict[str, int] = defaultdict(int)
         for item in prior:
-            incident[item.source_entity_id] += 1
-            incident[item.target_entity_id] += 1
+            incident[node_of(item.source_entity_id)] += 1
+            incident[node_of(item.target_entity_id)] += 1
         central = next(
             (entity_id for entity_id, count in incident.items() if count == len(prior)), None
         )
@@ -234,7 +279,8 @@ class InstitutionalOntologyGraph:
         # test is connectivity, not a domain head-count.
         connected = nx.Graph()
         for item in prior:
-            connected.add_edge(item.source_entity_id, item.target_entity_id, relation=item)
+            connected.add_edge(node_of(item.source_entity_id), node_of(item.target_entity_id),
+                               relation=item)
         components = list(nx.connected_components(connected))
 
         def qualifies(component: set[str]) -> bool:
@@ -242,6 +288,7 @@ class InstitutionalOntologyGraph:
                 self.entities[node].system_domain
                 for node in component
                 if node in self.entities
+                and self.entities[node].system_domain is not SystemDomain.UNKNOWN
             }
             kinds = {
                 connected.edges[edge]["relation"].relation_type

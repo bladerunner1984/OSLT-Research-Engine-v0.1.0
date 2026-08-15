@@ -26,6 +26,9 @@ class SystemDomain(StrEnum):
     PHILANTHROPIC = "PHILANTHROPIC"
     DIGITAL = "DIGITAL"
     COMMERCIAL = "COMMERCIAL"
+    #: Domain genuinely not determinable from the source. Never counted towards
+    #: cross-system spread: guessing a domain would fabricate the diffusion MD15 tests for.
+    UNKNOWN = "UNKNOWN"
 
 
 class EntityRole(StrEnum):

@@ -348,3 +348,70 @@ def test_unreached_tie_types_are_named_in_the_rationale():
     assert assessment.verdict is CouplingVerdict.MX09_ISOLATED_PROCESSES_BETTER
     assert "FUNDS" in assessment.rationale
     assert "do not connect to it" in assessment.rationale
+
+
+def test_resolution_lets_a_shared_body_bridge_two_registers():
+    """The same organisation in two registers must be one node or no tie can bridge."""
+
+    graph = InstitutionalOntologyGraph()
+    graph.add_entity(entity("SUPPLIER_CF", SystemDomain.COMMERCIAL, name="Acme Health",
+                            identifiers={"companies_house": "01234567"}))
+    graph.add_entity(entity("ORG_PWE", SystemDomain.UNKNOWN, name="Acme Health",
+                            identifiers={"companies_house": "01234567"}))
+    graph.add_entity(entity("BUYER", SystemDomain.POLICY))
+    graph.add_entity(entity("CTTE", SystemDomain.POLICY, name="A Committee"))
+    graph.add_entity(entity("SUP2", SystemDomain.COMMERCIAL))
+    graph.add_relation(relation("R1", "BUYER", "SUPPLIER_CF", family="contracts-finder",
+                                kind=RelationType.CONTRACTS_WITH))
+    graph.add_relation(relation("R2", "ORG_PWE", "CTTE", family="parliament",
+                                kind=RelationType.ADVISES))
+    graph.add_relation(relation("R3", "BUYER", "SUP2", family="find-a-tender",
+                                kind=RelationType.CONTRACTS_WITH))
+
+    unresolved = graph.assess_coupling(OUTCOME)
+    assert unresolved.verdict is CouplingVerdict.MX09_ISOLATED_PROCESSES_BETTER
+
+    resolved = graph.assess_coupling(OUTCOME, resolve_entities=True)
+    assert resolved.verdict is CouplingVerdict.MD15_COUPLING_SUPPORTED
+    assert resolved.claim_tier_ceiling is ClaimTier.LIMITED_CAUSAL_EVIDENCE
+
+
+def test_unknown_domain_cannot_widen_the_span():
+    graph = InstitutionalOntologyGraph()
+    graph.add_entity(entity("A", SystemDomain.POLICY))
+    graph.add_entity(entity("B", SystemDomain.UNKNOWN))
+    graph.add_entity(entity("C", SystemDomain.UNKNOWN))
+    graph.add_entity(entity("D", SystemDomain.POLICY))
+    graph.add_relation(relation("R1", "A", "B", family="f1", kind=RelationType.ADVISES))
+    graph.add_relation(relation("R2", "C", "D", family="f2", kind=RelationType.FUNDS))
+
+    assessment = graph.assess_coupling(OUTCOME)
+    assert assessment.systems_spanned == [SystemDomain.POLICY]
+    assert assessment.verdict is CouplingVerdict.MX09_ISOLATED_PROCESSES_BETTER
+
+
+def test_name_only_merges_are_disclosed_as_a_limitation():
+    """A verdict resting on a weak join must say so in its own limitations."""
+
+    graph = InstitutionalOntologyGraph()
+    graph.add_entity(entity("A1", SystemDomain.COMMERCIAL, name="Acme Health"))
+    graph.add_entity(entity("A2", SystemDomain.UNKNOWN, name="Acme Health"))
+    graph.add_entity(entity("B", SystemDomain.POLICY))
+    graph.add_entity(entity("C", SystemDomain.POLICY, name="A Committee"))
+    graph.add_entity(entity("D", SystemDomain.COMMERCIAL))
+    graph.add_relation(relation("R1", "B", "A1", family="cf", kind=RelationType.CONTRACTS_WITH))
+    graph.add_relation(relation("R2", "A2", "C", family="pwe", kind=RelationType.ADVISES))
+    graph.add_relation(relation("R3", "B", "D", family="fts", kind=RelationType.CONTRACTS_WITH))
+
+    assessment = graph.assess_coupling(OUTCOME, resolve_entities=True)
+    assert any("normalised name alone" in item for item in assessment.limitations)
+    assert any("merged 1 cluster" in item for item in assessment.limitations)
+
+
+def test_no_resolution_limitation_when_resolution_is_off():
+    graph = InstitutionalOntologyGraph()
+    graph.add_entity(entity("A", SystemDomain.POLICY))
+    graph.add_entity(entity("B", SystemDomain.COMMERCIAL))
+    graph.add_relation(relation("R1", "A", "B", family="f", kind=RelationType.FUNDS))
+    assessment = graph.assess_coupling(OUTCOME)
+    assert not any("entity resolution" in item for item in assessment.limitations)
