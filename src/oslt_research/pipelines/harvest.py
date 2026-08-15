@@ -16,6 +16,7 @@ SOURCE_IDS = {
     "Crossref": "DS034",
     "PubMed": "DS036",
     "EuropePMC": "DS035",
+    "OpenAIRE": "DS041",
     "ClinicalTrials.gov": "DS037",
     "Fixture": "FIXTURE",
 }
