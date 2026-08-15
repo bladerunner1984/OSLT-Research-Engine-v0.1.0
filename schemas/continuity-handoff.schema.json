@@ -1,0 +1,63 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "active_task_id": {
+      "title": "Active Task Id",
+      "type": "string"
+    },
+    "artifact_hashes": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Artifact Hashes",
+      "type": "object"
+    },
+    "contradiction_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Contradiction Ids",
+      "type": "array",
+      "uniqueItems": true
+    },
+    "from_state_version": {
+      "title": "From State Version",
+      "type": "string"
+    },
+    "must_read_refs": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Must Read Refs",
+      "type": "array",
+      "uniqueItems": true
+    },
+    "rejected_path_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Rejected Path Ids",
+      "type": "array",
+      "uniqueItems": true
+    },
+    "to_state_version": {
+      "title": "To State Version",
+      "type": "string"
+    },
+    "unresolved_issue_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Unresolved Issue Ids",
+      "type": "array",
+      "uniqueItems": true
+    }
+  },
+  "required": [
+    "from_state_version",
+    "to_state_version",
+    "active_task_id"
+  ],
+  "title": "ContinuityHandoff",
+  "type": "object"
+}

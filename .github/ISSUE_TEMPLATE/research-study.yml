@@ -1,0 +1,31 @@
+name: Research study
+about: Propose a proposition-bound research study
+body:
+  - type: input
+    id: proposition
+    attributes:
+      label: Proposition ID(s)
+    validations:
+      required: true
+  - type: textarea
+    id: estimand
+    attributes:
+      label: Estimand and scope
+    validations:
+      required: true
+  - type: textarea
+    id: sources
+    attributes:
+      label: Data sources and access class
+    validations:
+      required: true
+  - type: textarea
+    id: falsifier
+    attributes:
+      label: Falsifier and rival explanation
+    validations:
+      required: true
+  - type: textarea
+    id: governance
+    attributes:
+      label: Ethics, privacy and human review

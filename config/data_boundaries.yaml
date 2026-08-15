@@ -1,0 +1,22 @@
+version: 1
+stores:
+  OPEN:
+    raw_central_storage: permitted_subject_to_licence
+    examples: [public_apis, public_documents, aggregate_statistics]
+  LICENSED:
+    raw_central_storage: only_with_licence_and_access_controls
+    examples: [licensed_bibliometrics, safeguarded_research_corpora]
+  PARTICIPANT_SECURE:
+    raw_central_storage: approved_secure_environment_only
+    examples: [consented_interviews, donated_platform_exports, clinical_documents]
+  TRE_SDE:
+    raw_central_storage: prohibited
+    examples: [nhs_microdata, ons_microdata, dfe_microdata]
+    allowed_cross_boundary_objects: [analysis_specification, code_hash, disclosure_checked_result]
+forbidden_repository_content:
+  - identifiable_health_data
+  - private_messages
+  - browsing_histories
+  - api_tokens
+  - oauth_credentials
+  - tre_microdata

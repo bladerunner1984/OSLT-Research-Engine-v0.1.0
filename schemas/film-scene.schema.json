@@ -1,0 +1,78 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "certainty_label": {
+      "title": "Certainty Label",
+      "type": "string"
+    },
+    "counterevidence_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Counterevidence Ids",
+      "type": "array"
+    },
+    "evidence_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Evidence Ids",
+      "type": "array"
+    },
+    "human_review_reference": {
+      "title": "Human Review Reference",
+      "type": "string"
+    },
+    "narrated_claim": {
+      "title": "Narrated Claim",
+      "type": "string"
+    },
+    "permitted_wording": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Permitted Wording",
+      "type": "array"
+    },
+    "prohibited_wording": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Prohibited Wording",
+      "type": "array"
+    },
+    "released_claim_id": {
+      "title": "Released Claim Id",
+      "type": "string"
+    },
+    "scene_id": {
+      "title": "Scene Id",
+      "type": "string"
+    },
+    "uncertainty_disclosure": {
+      "title": "Uncertainty Disclosure",
+      "type": "string"
+    },
+    "visual_source_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Visual Source Ids",
+      "type": "array"
+    }
+  },
+  "required": [
+    "scene_id",
+    "narrated_claim",
+    "released_claim_id",
+    "evidence_ids",
+    "counterevidence_ids",
+    "certainty_label",
+    "permitted_wording",
+    "prohibited_wording",
+    "uncertainty_disclosure",
+    "human_review_reference"
+  ],
+  "title": "FilmSceneRecord",
+  "type": "object"
+}

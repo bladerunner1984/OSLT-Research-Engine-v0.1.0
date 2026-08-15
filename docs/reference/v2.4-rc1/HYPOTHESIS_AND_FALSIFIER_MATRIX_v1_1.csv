@@ -1,0 +1,16 @@
+hypothesis_id,statement,primary_test,falsifier_ids,instrumenting_domains,is_null_candidate
+H0,Standard criteria plus ordinary assessment already capture the clinically meaningful information.,Incremental out-of-sample prediction; calibration; decision curve,,Diagnostic measurement,True
+H1,Multiple clinically meaningful latent or causally distinct subgroups exist.,Externally replicated heterogeneity and treatment-effect heterogeneity,H0,Diagnostic measurement;Outcomes,False
+H2,"Biological, pubertal, endocrine, developmental or heritable factors contribute.","Longitudinal, family and genomic models",H6;H8,Biological/physical;Genomic/family biology;Developmental,False
+H3,"Neurodevelopmental traits modify measurement, distress, communication or trajectory.",Interaction plus measurement-invariance analysis,H4,Neurodevelopmental,False
+H4,"Psychiatric and psychological factors modify presentation, distress or outcome.",Longitudinal multivariable models,H7,Psychiatric;Trauma/safeguarding,False
+H5,"Peer, digital, educational or cultural exposure contributes causally for some individuals.",Network and longitudinal causal models,H6,Digital/social media;Peer network,False
+H6,"Apparent influence is substantially explained by selection, disclosure, ascertainment or reverse causation.","Pre-exposure baseline, temporal ordering and network-selection models",H5,"Selection, disclosure and reverse-causation falsifiers",False
+H7,Minority stress primarily increases distress rather than establishing origin.,Mediation and moderation analysis,H4,Minority stress/discrimination,False
+H8,"Pubertal, body-image or sensory experience modifies onset or severity of distress.",Longitudinal pubertal and body-image trajectories,H2;H4,Body image/sexual development,False
+H9,"Family and interpersonal dynamics modify presentation, help-seeking or outcome.",Multilevel family models,H7,Family/interpersonal,False
+H10,"Clinician, parent, peer or institutional framing influences preference or decision.",Recorded consultations plus randomised vignette experiment,H6,Clinical conversation / linguistic dynamics;Clinician,False
+H11,Academic and guideline diffusion affects professional framing independently of case-mix.,Bibliometric lineage plus practice time-series,H13,Academic influence / bibliometrics,False
+H12,"Marketing, advocacy or influencer messaging affects beliefs or help-seeking for some individuals.",Exposure-response with self-selection control,H6,Persuasion / marketing / exposure dynamics;Marketing/media/advocacy,False
+H13,"Terminology, threshold or commissioning change alters recorded incidence or pathways.",Interrupted time series and difference-in-differences,H11,Historical psychiatric / policy corpus;Government/policy;Institutional/service,False
+H14,No single pathway explains all cases; subgroups differ materially.,Mixture and latent models with external validation,H0,Outcomes;Diagnostic measurement,False

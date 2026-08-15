@@ -1,0 +1,21 @@
+name: Engineering work package
+about: Implement a bounded OSLT engineering change
+body:
+  - type: textarea
+    id: objective
+    attributes:
+      label: Objective and acceptance condition
+    validations:
+      required: true
+  - type: textarea
+    id: boundaries
+    attributes:
+      label: Allowed and prohibited paths/data
+    validations:
+      required: true
+  - type: textarea
+    id: tests
+    attributes:
+      label: Required tests and mutation challenge
+    validations:
+      required: true

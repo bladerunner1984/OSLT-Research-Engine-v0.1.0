@@ -1,0 +1,125 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "completed_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Completed At"
+    },
+    "configuration_hashes": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Configuration Hashes",
+      "type": "object"
+    },
+    "connector_versions": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Connector Versions",
+      "type": "object"
+    },
+    "constitution_hash": {
+      "title": "Constitution Hash",
+      "type": "string"
+    },
+    "data_or_corpus_hashes": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Data Or Corpus Hashes",
+      "type": "object"
+    },
+    "environment": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Environment",
+      "type": "object"
+    },
+    "model_gateway": {
+      "title": "Model Gateway",
+      "type": "string"
+    },
+    "model_versions": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Model Versions",
+      "type": "object"
+    },
+    "objective": {
+      "title": "Objective",
+      "type": "string"
+    },
+    "preregistration_ref": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Preregistration Ref"
+    },
+    "prompt_hashes": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Prompt Hashes",
+      "type": "object"
+    },
+    "proposition_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Proposition Ids",
+      "type": "array"
+    },
+    "registry_hashes": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Registry Hashes",
+      "type": "object"
+    },
+    "repository_commit": {
+      "title": "Repository Commit",
+      "type": "string"
+    },
+    "run_id": {
+      "title": "Run Id",
+      "type": "string"
+    },
+    "started_at": {
+      "format": "date-time",
+      "title": "Started At",
+      "type": "string"
+    }
+  },
+  "required": [
+    "run_id",
+    "objective",
+    "proposition_ids",
+    "repository_commit",
+    "constitution_hash",
+    "configuration_hashes",
+    "registry_hashes",
+    "data_or_corpus_hashes",
+    "connector_versions",
+    "model_gateway"
+  ],
+  "title": "RunManifest",
+  "type": "object"
+}
