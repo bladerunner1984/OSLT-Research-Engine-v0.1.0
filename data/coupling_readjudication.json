@@ -1,0 +1,2916 @@
+{
+  "generated_by": "scripts/readjudicate_coupling.py",
+  "store": "C:\\Users\\mjenn\\oslt-research-engine\\runtime\\oslt.db",
+  "resolution_tier": "STRONG_IDENTIFIER",
+  "graph": {
+    "entities_in_store": 824,
+    "relations_in_store": 1286,
+    "relations_placed_in_graph": 1286,
+    "relations_unplaceable": 0,
+    "admitted_relations": 1286,
+    "entities_with_strong_identifier": 390,
+    "entities_without_strong_identifier": 434,
+    "relation_type_counts": {
+      "ADVISES": 227,
+      "CONTRACTS_WITH": 103,
+      "FUNDS": 926,
+      "ISSUES_GUIDANCE_TO": 30
+    },
+    "system_domain_counts": {
+      "ACADEMIC": 24,
+      "COMMERCIAL": 90,
+      "PHILANTHROPIC": 5,
+      "POLICY": 58,
+      "UNKNOWN": 647
+    },
+    "dependency_families": 5
+  },
+  "outcome_date_provenance": "LegislationConnector.outcome_dates() live from legislation.gov.uk",
+  "outcome_dates": [
+    "1990-01-01",
+    "1997-01-01",
+    "2001-01-01",
+    "2002-01-01",
+    "2003-01-01",
+    "2004-01-01",
+    "2005-01-01",
+    "2006-01-01",
+    "2007-01-01",
+    "2008-01-01",
+    "2009-01-01",
+    "2010-01-01",
+    "2011-01-01",
+    "2012-01-01",
+    "2013-01-01",
+    "2014-01-01",
+    "2015-01-01",
+    "2016-01-01",
+    "2017-01-01",
+    "2018-01-01",
+    "2019-01-01",
+    "2020-01-01",
+    "2021-01-01",
+    "2022-01-01",
+    "2023-01-01",
+    "2024-01-01",
+    "2025-01-01",
+    "2026-01-01"
+  ],
+  "verdicts": {
+    "1990-01-01": "INSUFFICIENT_ADMITTED_RELATIONS",
+    "1997-01-01": "INSUFFICIENT_ADMITTED_RELATIONS",
+    "2001-01-01": "INSUFFICIENT_ADMITTED_RELATIONS",
+    "2002-01-01": "INSUFFICIENT_ADMITTED_RELATIONS",
+    "2003-01-01": "INSUFFICIENT_ADMITTED_RELATIONS",
+    "2004-01-01": "INSUFFICIENT_ADMITTED_RELATIONS",
+    "2005-01-01": "INSUFFICIENT_ADMITTED_RELATIONS",
+    "2006-01-01": "INSUFFICIENT_ADMITTED_RELATIONS",
+    "2007-01-01": "INSUFFICIENT_ADMITTED_RELATIONS",
+    "2008-01-01": "INSUFFICIENT_ADMITTED_RELATIONS",
+    "2009-01-01": "INSUFFICIENT_ADMITTED_RELATIONS",
+    "2010-01-01": "INSUFFICIENT_ADMITTED_RELATIONS",
+    "2011-01-01": "INSUFFICIENT_INDEPENDENT_SOURCES",
+    "2012-01-01": "INSUFFICIENT_INDEPENDENT_SOURCES",
+    "2013-01-01": "INSUFFICIENT_INDEPENDENT_SOURCES",
+    "2014-01-01": "INSUFFICIENT_INDEPENDENT_SOURCES",
+    "2015-01-01": "INSUFFICIENT_INDEPENDENT_SOURCES",
+    "2016-01-01": "INSUFFICIENT_INDEPENDENT_SOURCES",
+    "2017-01-01": "INSUFFICIENT_INDEPENDENT_SOURCES",
+    "2018-01-01": "MX09_ISOLATED_PROCESSES_BETTER",
+    "2019-01-01": "MX09_ISOLATED_PROCESSES_BETTER",
+    "2020-01-01": "MX09_ISOLATED_PROCESSES_BETTER",
+    "2021-01-01": "MX09_ISOLATED_PROCESSES_BETTER",
+    "2022-01-01": "MX09_ISOLATED_PROCESSES_BETTER",
+    "2023-01-01": "MX09_ISOLATED_PROCESSES_BETTER",
+    "2024-01-01": "MX09_ISOLATED_PROCESSES_BETTER",
+    "2025-01-01": "MX09_ISOLATED_PROCESSES_BETTER",
+    "2026-01-01": "MX09_ISOLATED_PROCESSES_BETTER"
+  },
+  "results": {
+    "1990-01-01": {
+      "assessment": {
+        "verdict": "INSUFFICIENT_ADMITTED_RELATIONS",
+        "outcome_date": "1990-01-01",
+        "admitted_relations": 1286,
+        "excluded_relations": 0,
+        "temporally_prior_relations": 0,
+        "systems_spanned": [],
+        "independent_dependency_families": [],
+        "central_entity_id": null,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "minimum_resolution_tier": "STRONG_IDENTIFIER",
+        "claim_tier_ceiling": "DESCRIPTIVE_EVIDENCE_ONLY",
+        "rationale": "Fewer than two admitted, temporally prior relations; no mechanism claim of any kind is available.",
+        "limitations": [
+          "entity resolution merged 5 cluster(s): 5 STRONG_IDENTIFIER",
+          "1286 admitted relation(s) were not temporally prior to the outcome and were excluded"
+        ]
+      },
+      "components": {
+        "prior_relations": 0,
+        "components_total": 0,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "largest_components": [],
+        "qualifying_components": []
+      }
+    },
+    "1997-01-01": {
+      "assessment": {
+        "verdict": "INSUFFICIENT_ADMITTED_RELATIONS",
+        "outcome_date": "1997-01-01",
+        "admitted_relations": 1286,
+        "excluded_relations": 0,
+        "temporally_prior_relations": 0,
+        "systems_spanned": [],
+        "independent_dependency_families": [],
+        "central_entity_id": null,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "minimum_resolution_tier": "STRONG_IDENTIFIER",
+        "claim_tier_ceiling": "DESCRIPTIVE_EVIDENCE_ONLY",
+        "rationale": "Fewer than two admitted, temporally prior relations; no mechanism claim of any kind is available.",
+        "limitations": [
+          "entity resolution merged 5 cluster(s): 5 STRONG_IDENTIFIER",
+          "1286 admitted relation(s) were not temporally prior to the outcome and were excluded"
+        ]
+      },
+      "components": {
+        "prior_relations": 0,
+        "components_total": 0,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "largest_components": [],
+        "qualifying_components": []
+      }
+    },
+    "2001-01-01": {
+      "assessment": {
+        "verdict": "INSUFFICIENT_ADMITTED_RELATIONS",
+        "outcome_date": "2001-01-01",
+        "admitted_relations": 1286,
+        "excluded_relations": 0,
+        "temporally_prior_relations": 0,
+        "systems_spanned": [],
+        "independent_dependency_families": [],
+        "central_entity_id": null,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "minimum_resolution_tier": "STRONG_IDENTIFIER",
+        "claim_tier_ceiling": "DESCRIPTIVE_EVIDENCE_ONLY",
+        "rationale": "Fewer than two admitted, temporally prior relations; no mechanism claim of any kind is available.",
+        "limitations": [
+          "entity resolution merged 5 cluster(s): 5 STRONG_IDENTIFIER",
+          "1286 admitted relation(s) were not temporally prior to the outcome and were excluded"
+        ]
+      },
+      "components": {
+        "prior_relations": 0,
+        "components_total": 0,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "largest_components": [],
+        "qualifying_components": []
+      }
+    },
+    "2002-01-01": {
+      "assessment": {
+        "verdict": "INSUFFICIENT_ADMITTED_RELATIONS",
+        "outcome_date": "2002-01-01",
+        "admitted_relations": 1286,
+        "excluded_relations": 0,
+        "temporally_prior_relations": 0,
+        "systems_spanned": [],
+        "independent_dependency_families": [],
+        "central_entity_id": null,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "minimum_resolution_tier": "STRONG_IDENTIFIER",
+        "claim_tier_ceiling": "DESCRIPTIVE_EVIDENCE_ONLY",
+        "rationale": "Fewer than two admitted, temporally prior relations; no mechanism claim of any kind is available.",
+        "limitations": [
+          "entity resolution merged 5 cluster(s): 5 STRONG_IDENTIFIER",
+          "1286 admitted relation(s) were not temporally prior to the outcome and were excluded"
+        ]
+      },
+      "components": {
+        "prior_relations": 0,
+        "components_total": 0,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "largest_components": [],
+        "qualifying_components": []
+      }
+    },
+    "2003-01-01": {
+      "assessment": {
+        "verdict": "INSUFFICIENT_ADMITTED_RELATIONS",
+        "outcome_date": "2003-01-01",
+        "admitted_relations": 1286,
+        "excluded_relations": 0,
+        "temporally_prior_relations": 0,
+        "systems_spanned": [],
+        "independent_dependency_families": [],
+        "central_entity_id": null,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "minimum_resolution_tier": "STRONG_IDENTIFIER",
+        "claim_tier_ceiling": "DESCRIPTIVE_EVIDENCE_ONLY",
+        "rationale": "Fewer than two admitted, temporally prior relations; no mechanism claim of any kind is available.",
+        "limitations": [
+          "entity resolution merged 5 cluster(s): 5 STRONG_IDENTIFIER",
+          "1286 admitted relation(s) were not temporally prior to the outcome and were excluded"
+        ]
+      },
+      "components": {
+        "prior_relations": 0,
+        "components_total": 0,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "largest_components": [],
+        "qualifying_components": []
+      }
+    },
+    "2004-01-01": {
+      "assessment": {
+        "verdict": "INSUFFICIENT_ADMITTED_RELATIONS",
+        "outcome_date": "2004-01-01",
+        "admitted_relations": 1286,
+        "excluded_relations": 0,
+        "temporally_prior_relations": 0,
+        "systems_spanned": [],
+        "independent_dependency_families": [],
+        "central_entity_id": null,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "minimum_resolution_tier": "STRONG_IDENTIFIER",
+        "claim_tier_ceiling": "DESCRIPTIVE_EVIDENCE_ONLY",
+        "rationale": "Fewer than two admitted, temporally prior relations; no mechanism claim of any kind is available.",
+        "limitations": [
+          "entity resolution merged 5 cluster(s): 5 STRONG_IDENTIFIER",
+          "1286 admitted relation(s) were not temporally prior to the outcome and were excluded"
+        ]
+      },
+      "components": {
+        "prior_relations": 0,
+        "components_total": 0,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "largest_components": [],
+        "qualifying_components": []
+      }
+    },
+    "2005-01-01": {
+      "assessment": {
+        "verdict": "INSUFFICIENT_ADMITTED_RELATIONS",
+        "outcome_date": "2005-01-01",
+        "admitted_relations": 1286,
+        "excluded_relations": 0,
+        "temporally_prior_relations": 0,
+        "systems_spanned": [],
+        "independent_dependency_families": [],
+        "central_entity_id": null,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "minimum_resolution_tier": "STRONG_IDENTIFIER",
+        "claim_tier_ceiling": "DESCRIPTIVE_EVIDENCE_ONLY",
+        "rationale": "Fewer than two admitted, temporally prior relations; no mechanism claim of any kind is available.",
+        "limitations": [
+          "entity resolution merged 5 cluster(s): 5 STRONG_IDENTIFIER",
+          "1286 admitted relation(s) were not temporally prior to the outcome and were excluded"
+        ]
+      },
+      "components": {
+        "prior_relations": 0,
+        "components_total": 0,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "largest_components": [],
+        "qualifying_components": []
+      }
+    },
+    "2006-01-01": {
+      "assessment": {
+        "verdict": "INSUFFICIENT_ADMITTED_RELATIONS",
+        "outcome_date": "2006-01-01",
+        "admitted_relations": 1286,
+        "excluded_relations": 0,
+        "temporally_prior_relations": 0,
+        "systems_spanned": [],
+        "independent_dependency_families": [],
+        "central_entity_id": null,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "minimum_resolution_tier": "STRONG_IDENTIFIER",
+        "claim_tier_ceiling": "DESCRIPTIVE_EVIDENCE_ONLY",
+        "rationale": "Fewer than two admitted, temporally prior relations; no mechanism claim of any kind is available.",
+        "limitations": [
+          "entity resolution merged 5 cluster(s): 5 STRONG_IDENTIFIER",
+          "1286 admitted relation(s) were not temporally prior to the outcome and were excluded"
+        ]
+      },
+      "components": {
+        "prior_relations": 0,
+        "components_total": 0,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "largest_components": [],
+        "qualifying_components": []
+      }
+    },
+    "2007-01-01": {
+      "assessment": {
+        "verdict": "INSUFFICIENT_ADMITTED_RELATIONS",
+        "outcome_date": "2007-01-01",
+        "admitted_relations": 1286,
+        "excluded_relations": 0,
+        "temporally_prior_relations": 0,
+        "systems_spanned": [],
+        "independent_dependency_families": [],
+        "central_entity_id": null,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "minimum_resolution_tier": "STRONG_IDENTIFIER",
+        "claim_tier_ceiling": "DESCRIPTIVE_EVIDENCE_ONLY",
+        "rationale": "Fewer than two admitted, temporally prior relations; no mechanism claim of any kind is available.",
+        "limitations": [
+          "entity resolution merged 5 cluster(s): 5 STRONG_IDENTIFIER",
+          "1286 admitted relation(s) were not temporally prior to the outcome and were excluded"
+        ]
+      },
+      "components": {
+        "prior_relations": 0,
+        "components_total": 0,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "largest_components": [],
+        "qualifying_components": []
+      }
+    },
+    "2008-01-01": {
+      "assessment": {
+        "verdict": "INSUFFICIENT_ADMITTED_RELATIONS",
+        "outcome_date": "2008-01-01",
+        "admitted_relations": 1286,
+        "excluded_relations": 0,
+        "temporally_prior_relations": 0,
+        "systems_spanned": [],
+        "independent_dependency_families": [],
+        "central_entity_id": null,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "minimum_resolution_tier": "STRONG_IDENTIFIER",
+        "claim_tier_ceiling": "DESCRIPTIVE_EVIDENCE_ONLY",
+        "rationale": "Fewer than two admitted, temporally prior relations; no mechanism claim of any kind is available.",
+        "limitations": [
+          "entity resolution merged 5 cluster(s): 5 STRONG_IDENTIFIER",
+          "1286 admitted relation(s) were not temporally prior to the outcome and were excluded"
+        ]
+      },
+      "components": {
+        "prior_relations": 0,
+        "components_total": 0,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "largest_components": [],
+        "qualifying_components": []
+      }
+    },
+    "2009-01-01": {
+      "assessment": {
+        "verdict": "INSUFFICIENT_ADMITTED_RELATIONS",
+        "outcome_date": "2009-01-01",
+        "admitted_relations": 1286,
+        "excluded_relations": 0,
+        "temporally_prior_relations": 1,
+        "systems_spanned": [
+          "ACADEMIC",
+          "POLICY"
+        ],
+        "independent_dependency_families": [
+          "register:ukri-gateway-to-research"
+        ],
+        "central_entity_id": null,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "minimum_resolution_tier": "STRONG_IDENTIFIER",
+        "claim_tier_ceiling": "DESCRIPTIVE_EVIDENCE_ONLY",
+        "rationale": "Fewer than two admitted, temporally prior relations; no mechanism claim of any kind is available.",
+        "limitations": [
+          "entity resolution merged 5 cluster(s): 5 STRONG_IDENTIFIER",
+          "1285 admitted relation(s) were not temporally prior to the outcome and were excluded"
+        ]
+      },
+      "components": {
+        "prior_relations": 1,
+        "components_total": 1,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "largest_components": [
+          {
+            "size": 2,
+            "domains": [
+              "ACADEMIC",
+              "POLICY"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "BBSRC",
+              "UNIVERSITY OF MANCHESTER"
+            ]
+          }
+        ],
+        "qualifying_components": []
+      }
+    },
+    "2010-01-01": {
+      "assessment": {
+        "verdict": "INSUFFICIENT_ADMITTED_RELATIONS",
+        "outcome_date": "2010-01-01",
+        "admitted_relations": 1286,
+        "excluded_relations": 0,
+        "temporally_prior_relations": 1,
+        "systems_spanned": [
+          "ACADEMIC",
+          "POLICY"
+        ],
+        "independent_dependency_families": [
+          "register:ukri-gateway-to-research"
+        ],
+        "central_entity_id": null,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "minimum_resolution_tier": "STRONG_IDENTIFIER",
+        "claim_tier_ceiling": "DESCRIPTIVE_EVIDENCE_ONLY",
+        "rationale": "Fewer than two admitted, temporally prior relations; no mechanism claim of any kind is available.",
+        "limitations": [
+          "entity resolution merged 5 cluster(s): 5 STRONG_IDENTIFIER",
+          "1285 admitted relation(s) were not temporally prior to the outcome and were excluded"
+        ]
+      },
+      "components": {
+        "prior_relations": 1,
+        "components_total": 1,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "largest_components": [
+          {
+            "size": 2,
+            "domains": [
+              "ACADEMIC",
+              "POLICY"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "BBSRC",
+              "UNIVERSITY OF MANCHESTER"
+            ]
+          }
+        ],
+        "qualifying_components": []
+      }
+    },
+    "2011-01-01": {
+      "assessment": {
+        "verdict": "INSUFFICIENT_INDEPENDENT_SOURCES",
+        "outcome_date": "2011-01-01",
+        "admitted_relations": 1286,
+        "excluded_relations": 0,
+        "temporally_prior_relations": 2,
+        "systems_spanned": [
+          "ACADEMIC",
+          "POLICY"
+        ],
+        "independent_dependency_families": [
+          "register:ukri-gateway-to-research"
+        ],
+        "central_entity_id": null,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "minimum_resolution_tier": "STRONG_IDENTIFIER",
+        "claim_tier_ceiling": "DESCRIPTIVE_EVIDENCE_ONLY",
+        "rationale": "All temporally prior relations share one dependency family, so they cannot corroborate each other. The network may be real, but this evidence cannot establish it.",
+        "limitations": [
+          "entity resolution merged 5 cluster(s): 5 STRONG_IDENTIFIER",
+          "1284 admitted relation(s) were not temporally prior to the outcome and were excluded"
+        ]
+      },
+      "components": {
+        "prior_relations": 2,
+        "components_total": 2,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "largest_components": [
+          {
+            "size": 2,
+            "domains": [
+              "ACADEMIC",
+              "POLICY"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "EPSRC",
+              "NEWCASTLE UNIVERSITY"
+            ]
+          },
+          {
+            "size": 2,
+            "domains": [
+              "ACADEMIC",
+              "POLICY"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "BBSRC",
+              "UNIVERSITY OF MANCHESTER"
+            ]
+          }
+        ],
+        "qualifying_components": []
+      }
+    },
+    "2012-01-01": {
+      "assessment": {
+        "verdict": "INSUFFICIENT_INDEPENDENT_SOURCES",
+        "outcome_date": "2012-01-01",
+        "admitted_relations": 1286,
+        "excluded_relations": 0,
+        "temporally_prior_relations": 3,
+        "systems_spanned": [
+          "ACADEMIC",
+          "POLICY"
+        ],
+        "independent_dependency_families": [
+          "register:ukri-gateway-to-research"
+        ],
+        "central_entity_id": null,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "minimum_resolution_tier": "STRONG_IDENTIFIER",
+        "claim_tier_ceiling": "DESCRIPTIVE_EVIDENCE_ONLY",
+        "rationale": "All temporally prior relations share one dependency family, so they cannot corroborate each other. The network may be real, but this evidence cannot establish it.",
+        "limitations": [
+          "entity resolution merged 5 cluster(s): 5 STRONG_IDENTIFIER",
+          "1283 admitted relation(s) were not temporally prior to the outcome and were excluded"
+        ]
+      },
+      "components": {
+        "prior_relations": 3,
+        "components_total": 2,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "largest_components": [
+          {
+            "size": 3,
+            "domains": [
+              "ACADEMIC",
+              "POLICY"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "BBSRC",
+              "Babraham Institute",
+              "UNIVERSITY OF MANCHESTER"
+            ]
+          },
+          {
+            "size": 2,
+            "domains": [
+              "ACADEMIC",
+              "POLICY"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "EPSRC",
+              "NEWCASTLE UNIVERSITY"
+            ]
+          }
+        ],
+        "qualifying_components": []
+      }
+    },
+    "2013-01-01": {
+      "assessment": {
+        "verdict": "INSUFFICIENT_INDEPENDENT_SOURCES",
+        "outcome_date": "2013-01-01",
+        "admitted_relations": 1286,
+        "excluded_relations": 0,
+        "temporally_prior_relations": 3,
+        "systems_spanned": [
+          "ACADEMIC",
+          "POLICY"
+        ],
+        "independent_dependency_families": [
+          "register:ukri-gateway-to-research"
+        ],
+        "central_entity_id": null,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "minimum_resolution_tier": "STRONG_IDENTIFIER",
+        "claim_tier_ceiling": "DESCRIPTIVE_EVIDENCE_ONLY",
+        "rationale": "All temporally prior relations share one dependency family, so they cannot corroborate each other. The network may be real, but this evidence cannot establish it.",
+        "limitations": [
+          "entity resolution merged 5 cluster(s): 5 STRONG_IDENTIFIER",
+          "1283 admitted relation(s) were not temporally prior to the outcome and were excluded"
+        ]
+      },
+      "components": {
+        "prior_relations": 3,
+        "components_total": 2,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "largest_components": [
+          {
+            "size": 3,
+            "domains": [
+              "ACADEMIC",
+              "POLICY"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "BBSRC",
+              "Babraham Institute",
+              "UNIVERSITY OF MANCHESTER"
+            ]
+          },
+          {
+            "size": 2,
+            "domains": [
+              "ACADEMIC",
+              "POLICY"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "EPSRC",
+              "NEWCASTLE UNIVERSITY"
+            ]
+          }
+        ],
+        "qualifying_components": []
+      }
+    },
+    "2014-01-01": {
+      "assessment": {
+        "verdict": "INSUFFICIENT_INDEPENDENT_SOURCES",
+        "outcome_date": "2014-01-01",
+        "admitted_relations": 1286,
+        "excluded_relations": 0,
+        "temporally_prior_relations": 4,
+        "systems_spanned": [
+          "ACADEMIC",
+          "POLICY"
+        ],
+        "independent_dependency_families": [
+          "register:ukri-gateway-to-research"
+        ],
+        "central_entity_id": null,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "minimum_resolution_tier": "STRONG_IDENTIFIER",
+        "claim_tier_ceiling": "DESCRIPTIVE_EVIDENCE_ONLY",
+        "rationale": "All temporally prior relations share one dependency family, so they cannot corroborate each other. The network may be real, but this evidence cannot establish it.",
+        "limitations": [
+          "entity resolution merged 5 cluster(s): 5 STRONG_IDENTIFIER",
+          "1282 admitted relation(s) were not temporally prior to the outcome and were excluded"
+        ]
+      },
+      "components": {
+        "prior_relations": 4,
+        "components_total": 3,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "largest_components": [
+          {
+            "size": 3,
+            "domains": [
+              "ACADEMIC",
+              "POLICY"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "BBSRC",
+              "Babraham Institute",
+              "UNIVERSITY OF MANCHESTER"
+            ]
+          },
+          {
+            "size": 2,
+            "domains": [
+              "ACADEMIC",
+              "POLICY"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "EPSRC",
+              "NEWCASTLE UNIVERSITY"
+            ]
+          },
+          {
+            "size": 2,
+            "domains": [
+              "ACADEMIC",
+              "POLICY"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "HADWEBUTKNOWN LIMITED",
+              "Innovate UK"
+            ]
+          }
+        ],
+        "qualifying_components": []
+      }
+    },
+    "2015-01-01": {
+      "assessment": {
+        "verdict": "INSUFFICIENT_INDEPENDENT_SOURCES",
+        "outcome_date": "2015-01-01",
+        "admitted_relations": 1286,
+        "excluded_relations": 0,
+        "temporally_prior_relations": 6,
+        "systems_spanned": [
+          "ACADEMIC",
+          "POLICY"
+        ],
+        "independent_dependency_families": [
+          "register:ukri-gateway-to-research"
+        ],
+        "central_entity_id": null,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "minimum_resolution_tier": "STRONG_IDENTIFIER",
+        "claim_tier_ceiling": "DESCRIPTIVE_EVIDENCE_ONLY",
+        "rationale": "All temporally prior relations share one dependency family, so they cannot corroborate each other. The network may be real, but this evidence cannot establish it.",
+        "limitations": [
+          "entity resolution merged 5 cluster(s): 5 STRONG_IDENTIFIER",
+          "1280 admitted relation(s) were not temporally prior to the outcome and were excluded"
+        ]
+      },
+      "components": {
+        "prior_relations": 6,
+        "components_total": 4,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "largest_components": [
+          {
+            "size": 3,
+            "domains": [
+              "ACADEMIC",
+              "POLICY"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "HADWEBUTKNOWN LIMITED",
+              "Innovate UK",
+              "WITTOS LTD"
+            ]
+          },
+          {
+            "size": 3,
+            "domains": [
+              "ACADEMIC",
+              "POLICY"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "BBSRC",
+              "Babraham Institute",
+              "UNIVERSITY OF MANCHESTER"
+            ]
+          },
+          {
+            "size": 2,
+            "domains": [
+              "ACADEMIC",
+              "POLICY"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "EPSRC",
+              "NEWCASTLE UNIVERSITY"
+            ]
+          },
+          {
+            "size": 2,
+            "domains": [
+              "ACADEMIC",
+              "POLICY"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "NERC",
+              "University of Glasgow"
+            ]
+          }
+        ],
+        "qualifying_components": []
+      }
+    },
+    "2016-01-01": {
+      "assessment": {
+        "verdict": "INSUFFICIENT_INDEPENDENT_SOURCES",
+        "outcome_date": "2016-01-01",
+        "admitted_relations": 1286,
+        "excluded_relations": 0,
+        "temporally_prior_relations": 7,
+        "systems_spanned": [
+          "ACADEMIC",
+          "POLICY"
+        ],
+        "independent_dependency_families": [
+          "register:ukri-gateway-to-research"
+        ],
+        "central_entity_id": null,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "minimum_resolution_tier": "STRONG_IDENTIFIER",
+        "claim_tier_ceiling": "DESCRIPTIVE_EVIDENCE_ONLY",
+        "rationale": "All temporally prior relations share one dependency family, so they cannot corroborate each other. The network may be real, but this evidence cannot establish it.",
+        "limitations": [
+          "entity resolution merged 5 cluster(s): 5 STRONG_IDENTIFIER",
+          "1279 admitted relation(s) were not temporally prior to the outcome and were excluded"
+        ]
+      },
+      "components": {
+        "prior_relations": 7,
+        "components_total": 4,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "largest_components": [
+          {
+            "size": 4,
+            "domains": [
+              "ACADEMIC",
+              "POLICY"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "BBSRC",
+              "Babraham Institute",
+              "UNIVERSITY OF LEICESTER",
+              "UNIVERSITY OF MANCHESTER"
+            ]
+          },
+          {
+            "size": 3,
+            "domains": [
+              "ACADEMIC",
+              "POLICY"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "HADWEBUTKNOWN LIMITED",
+              "Innovate UK",
+              "WITTOS LTD"
+            ]
+          },
+          {
+            "size": 2,
+            "domains": [
+              "ACADEMIC",
+              "POLICY"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "EPSRC",
+              "NEWCASTLE UNIVERSITY"
+            ]
+          },
+          {
+            "size": 2,
+            "domains": [
+              "ACADEMIC",
+              "POLICY"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "NERC",
+              "University of Glasgow"
+            ]
+          }
+        ],
+        "qualifying_components": []
+      }
+    },
+    "2017-01-01": {
+      "assessment": {
+        "verdict": "INSUFFICIENT_INDEPENDENT_SOURCES",
+        "outcome_date": "2017-01-01",
+        "admitted_relations": 1286,
+        "excluded_relations": 0,
+        "temporally_prior_relations": 9,
+        "systems_spanned": [
+          "ACADEMIC",
+          "POLICY"
+        ],
+        "independent_dependency_families": [
+          "register:ukri-gateway-to-research"
+        ],
+        "central_entity_id": null,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "minimum_resolution_tier": "STRONG_IDENTIFIER",
+        "claim_tier_ceiling": "DESCRIPTIVE_EVIDENCE_ONLY",
+        "rationale": "All temporally prior relations share one dependency family, so they cannot corroborate each other. The network may be real, but this evidence cannot establish it.",
+        "limitations": [
+          "entity resolution merged 5 cluster(s): 5 STRONG_IDENTIFIER",
+          "1277 admitted relation(s) were not temporally prior to the outcome and were excluded"
+        ]
+      },
+      "components": {
+        "prior_relations": 9,
+        "components_total": 5,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "largest_components": [
+          {
+            "size": 4,
+            "domains": [
+              "ACADEMIC",
+              "POLICY"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "BBSRC",
+              "Babraham Institute",
+              "UNIVERSITY OF LEICESTER",
+              "UNIVERSITY OF MANCHESTER"
+            ]
+          },
+          {
+            "size": 3,
+            "domains": [
+              "ACADEMIC",
+              "POLICY"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "HADWEBUTKNOWN LIMITED",
+              "Innovate UK",
+              "WITTOS LTD"
+            ]
+          },
+          {
+            "size": 3,
+            "domains": [
+              "ACADEMIC",
+              "POLICY"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "NERC",
+              "UNIVERSITY OF PLYMOUTH",
+              "University of Glasgow"
+            ]
+          },
+          {
+            "size": 2,
+            "domains": [
+              "ACADEMIC",
+              "POLICY"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "EPSRC",
+              "NEWCASTLE UNIVERSITY"
+            ]
+          },
+          {
+            "size": 2,
+            "domains": [
+              "ACADEMIC",
+              "POLICY"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "QUEEN'S UNIVERSITY BELFAST",
+              "STFC"
+            ]
+          }
+        ],
+        "qualifying_components": []
+      }
+    },
+    "2018-01-01": {
+      "assessment": {
+        "verdict": "MX09_ISOLATED_PROCESSES_BETTER",
+        "outcome_date": "2018-01-01",
+        "admitted_relations": 1286,
+        "excluded_relations": 0,
+        "temporally_prior_relations": 44,
+        "systems_spanned": [
+          "ACADEMIC",
+          "PHILANTHROPIC",
+          "POLICY"
+        ],
+        "independent_dependency_families": [
+          "register:360giving",
+          "register:govuk-publications",
+          "register:ukri-gateway-to-research"
+        ],
+        "central_entity_id": null,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "minimum_resolution_tier": "STRONG_IDENTIFIER",
+        "claim_tier_ceiling": "MODERATE_TRIANGULATED_CAUSAL_EVIDENCE",
+        "rationale": "No connected component carries influence between systems. The corpus holds 2 tie type(s) (FUNDS, ISSUES_GUIDANCE_TO) across 7 components, but the largest component has 25 entities joined by only FUNDS; ISSUES_GUIDANCE_TO appear only in components that do not connect to it, so no path runs from one kind of tie to another. A component built from one tie type is one mechanism repeated, and its domain spread follows from that tie type rather than from diffusion. The MX09 rival, isolated non-coupled processes, explains the pattern better.",
+        "limitations": [
+          "entity resolution merged 5 cluster(s): 5 STRONG_IDENTIFIER",
+          "1242 admitted relation(s) were not temporally prior to the outcome and were excluded"
+        ]
+      },
+      "components": {
+        "prior_relations": 44,
+        "components_total": 7,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "largest_components": [
+          {
+            "size": 25,
+            "domains": [
+              "PHILANTHROPIC"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "Action On Hearing Loss",
+              "Barnet Borough Arts Council",
+              "Barnet Bowls Club",
+              "Caritas St Joseph's Centre",
+              "Community Focus",
+              "East Barnet Community Festival",
+              "East Finchley Arts Festival",
+              "Finchley Horticultural Society",
+              "Friend In Need Community Centre",
+              "Friends Of Childs Hill Park",
+              "Harts Theatre Company",
+              "Home Start Barnet",
+              "Inclusion Barnet",
+              "London Borough of Barnet",
+              "Noa Girls",
+              "Persian Advice Bureau",
+              "Phoenix Canoe Club Limited",
+              "Sangam Assoc Of Asian Women",
+              "Somali Bravanese Welfare Assoc",
+              "St Peter's Bourne Man. Company",
+              "Stonegrove Estates' Youth Project",
+              "The Axis Educational Trust",
+              "The Hope Of Childs Hill",
+              "The Larches Community",
+              "The Last Cuppa Cic"
+            ]
+          },
+          {
+            "size": 4,
+            "domains": [
+              "ACADEMIC",
+              "POLICY"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "BBSRC",
+              "Babraham Institute",
+              "UNIVERSITY OF LEICESTER",
+              "UNIVERSITY OF MANCHESTER"
+            ]
+          },
+          {
+            "size": 3,
+            "domains": [
+              "ACADEMIC",
+              "POLICY"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "HADWEBUTKNOWN LIMITED",
+              "Innovate UK",
+              "WITTOS LTD"
+            ]
+          },
+          {
+            "size": 3,
+            "domains": [
+              "ACADEMIC",
+              "POLICY"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "NERC",
+              "UNIVERSITY OF PLYMOUTH",
+              "University of Glasgow"
+            ]
+          },
+          {
+            "size": 3,
+            "domains": [
+              "ACADEMIC",
+              "POLICY"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "EPSRC",
+              "NEWCASTLE UNIVERSITY",
+              "UNIVERSITY OF OXFORD"
+            ]
+          }
+        ],
+        "qualifying_components": []
+      }
+    },
+    "2019-01-01": {
+      "assessment": {
+        "verdict": "MX09_ISOLATED_PROCESSES_BETTER",
+        "outcome_date": "2019-01-01",
+        "admitted_relations": 1286,
+        "excluded_relations": 0,
+        "temporally_prior_relations": 45,
+        "systems_spanned": [
+          "ACADEMIC",
+          "PHILANTHROPIC",
+          "POLICY"
+        ],
+        "independent_dependency_families": [
+          "register:360giving",
+          "register:govuk-publications",
+          "register:ukri-gateway-to-research"
+        ],
+        "central_entity_id": null,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "minimum_resolution_tier": "STRONG_IDENTIFIER",
+        "claim_tier_ceiling": "MODERATE_TRIANGULATED_CAUSAL_EVIDENCE",
+        "rationale": "No connected component carries influence between systems. The corpus holds 2 tie type(s) (FUNDS, ISSUES_GUIDANCE_TO) across 8 components, but the largest component has 25 entities joined by only FUNDS; ISSUES_GUIDANCE_TO appear only in components that do not connect to it, so no path runs from one kind of tie to another. A component built from one tie type is one mechanism repeated, and its domain spread follows from that tie type rather than from diffusion. The MX09 rival, isolated non-coupled processes, explains the pattern better.",
+        "limitations": [
+          "entity resolution merged 5 cluster(s): 5 STRONG_IDENTIFIER",
+          "1241 admitted relation(s) were not temporally prior to the outcome and were excluded"
+        ]
+      },
+      "components": {
+        "prior_relations": 45,
+        "components_total": 8,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "largest_components": [
+          {
+            "size": 25,
+            "domains": [
+              "PHILANTHROPIC"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "Action On Hearing Loss",
+              "Barnet Borough Arts Council",
+              "Barnet Bowls Club",
+              "Caritas St Joseph's Centre",
+              "Community Focus",
+              "East Barnet Community Festival",
+              "East Finchley Arts Festival",
+              "Finchley Horticultural Society",
+              "Friend In Need Community Centre",
+              "Friends Of Childs Hill Park",
+              "Harts Theatre Company",
+              "Home Start Barnet",
+              "Inclusion Barnet",
+              "London Borough of Barnet",
+              "Noa Girls",
+              "Persian Advice Bureau",
+              "Phoenix Canoe Club Limited",
+              "Sangam Assoc Of Asian Women",
+              "Somali Bravanese Welfare Assoc",
+              "St Peter's Bourne Man. Company",
+              "Stonegrove Estates' Youth Project",
+              "The Axis Educational Trust",
+              "The Hope Of Childs Hill",
+              "The Larches Community",
+              "The Last Cuppa Cic"
+            ]
+          },
+          {
+            "size": 4,
+            "domains": [
+              "ACADEMIC",
+              "POLICY"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "BBSRC",
+              "Babraham Institute",
+              "UNIVERSITY OF LEICESTER",
+              "UNIVERSITY OF MANCHESTER"
+            ]
+          },
+          {
+            "size": 3,
+            "domains": [
+              "ACADEMIC",
+              "POLICY"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "HADWEBUTKNOWN LIMITED",
+              "Innovate UK",
+              "WITTOS LTD"
+            ]
+          },
+          {
+            "size": 3,
+            "domains": [
+              "ACADEMIC",
+              "POLICY"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "NERC",
+              "UNIVERSITY OF PLYMOUTH",
+              "University of Glasgow"
+            ]
+          },
+          {
+            "size": 3,
+            "domains": [
+              "ACADEMIC",
+              "POLICY"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "EPSRC",
+              "NEWCASTLE UNIVERSITY",
+              "UNIVERSITY OF OXFORD"
+            ]
+          }
+        ],
+        "qualifying_components": []
+      }
+    },
+    "2020-01-01": {
+      "assessment": {
+        "verdict": "MX09_ISOLATED_PROCESSES_BETTER",
+        "outcome_date": "2020-01-01",
+        "admitted_relations": 1286,
+        "excluded_relations": 0,
+        "temporally_prior_relations": 46,
+        "systems_spanned": [
+          "ACADEMIC",
+          "PHILANTHROPIC",
+          "POLICY"
+        ],
+        "independent_dependency_families": [
+          "register:360giving",
+          "register:govuk-publications",
+          "register:ukri-gateway-to-research"
+        ],
+        "central_entity_id": null,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "minimum_resolution_tier": "STRONG_IDENTIFIER",
+        "claim_tier_ceiling": "MODERATE_TRIANGULATED_CAUSAL_EVIDENCE",
+        "rationale": "No connected component carries influence between systems. The corpus holds 2 tie type(s) (FUNDS, ISSUES_GUIDANCE_TO) across 8 components, but the largest component has 25 entities joined by only FUNDS; ISSUES_GUIDANCE_TO appear only in components that do not connect to it, so no path runs from one kind of tie to another. A component built from one tie type is one mechanism repeated, and its domain spread follows from that tie type rather than from diffusion. The MX09 rival, isolated non-coupled processes, explains the pattern better.",
+        "limitations": [
+          "entity resolution merged 5 cluster(s): 5 STRONG_IDENTIFIER",
+          "1240 admitted relation(s) were not temporally prior to the outcome and were excluded"
+        ]
+      },
+      "components": {
+        "prior_relations": 46,
+        "components_total": 8,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "largest_components": [
+          {
+            "size": 25,
+            "domains": [
+              "PHILANTHROPIC"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "Action On Hearing Loss",
+              "Barnet Borough Arts Council",
+              "Barnet Bowls Club",
+              "Caritas St Joseph's Centre",
+              "Community Focus",
+              "East Barnet Community Festival",
+              "East Finchley Arts Festival",
+              "Finchley Horticultural Society",
+              "Friend In Need Community Centre",
+              "Friends Of Childs Hill Park",
+              "Harts Theatre Company",
+              "Home Start Barnet",
+              "Inclusion Barnet",
+              "London Borough of Barnet",
+              "Noa Girls",
+              "Persian Advice Bureau",
+              "Phoenix Canoe Club Limited",
+              "Sangam Assoc Of Asian Women",
+              "Somali Bravanese Welfare Assoc",
+              "St Peter's Bourne Man. Company",
+              "Stonegrove Estates' Youth Project",
+              "The Axis Educational Trust",
+              "The Hope Of Childs Hill",
+              "The Larches Community",
+              "The Last Cuppa Cic"
+            ]
+          },
+          {
+            "size": 4,
+            "domains": [
+              "ACADEMIC",
+              "POLICY"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "BIOPAXIUM TECHNOLOGIES LIMITED",
+              "HADWEBUTKNOWN LIMITED",
+              "Innovate UK",
+              "WITTOS LTD"
+            ]
+          },
+          {
+            "size": 4,
+            "domains": [
+              "ACADEMIC",
+              "POLICY"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "BBSRC",
+              "Babraham Institute",
+              "UNIVERSITY OF LEICESTER",
+              "UNIVERSITY OF MANCHESTER"
+            ]
+          },
+          {
+            "size": 3,
+            "domains": [
+              "ACADEMIC",
+              "POLICY"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "NERC",
+              "UNIVERSITY OF PLYMOUTH",
+              "University of Glasgow"
+            ]
+          },
+          {
+            "size": 3,
+            "domains": [
+              "ACADEMIC",
+              "POLICY"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "EPSRC",
+              "NEWCASTLE UNIVERSITY",
+              "UNIVERSITY OF OXFORD"
+            ]
+          }
+        ],
+        "qualifying_components": []
+      }
+    },
+    "2021-01-01": {
+      "assessment": {
+        "verdict": "MX09_ISOLATED_PROCESSES_BETTER",
+        "outcome_date": "2021-01-01",
+        "admitted_relations": 1286,
+        "excluded_relations": 0,
+        "temporally_prior_relations": 220,
+        "systems_spanned": [
+          "ACADEMIC",
+          "PHILANTHROPIC",
+          "POLICY"
+        ],
+        "independent_dependency_families": [
+          "register:360giving",
+          "register:govuk-publications",
+          "register:ukri-gateway-to-research"
+        ],
+        "central_entity_id": null,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "minimum_resolution_tier": "STRONG_IDENTIFIER",
+        "claim_tier_ceiling": "MODERATE_TRIANGULATED_CAUSAL_EVIDENCE",
+        "rationale": "No connected component carries influence between systems. The corpus holds 2 tie type(s) (FUNDS, ISSUES_GUIDANCE_TO) across 10 components, but the largest component has 146 entities joined by only FUNDS; ISSUES_GUIDANCE_TO appear only in components that do not connect to it, so no path runs from one kind of tie to another. A component built from one tie type is one mechanism repeated, and its domain spread follows from that tie type rather than from diffusion. The MX09 rival, isolated non-coupled processes, explains the pattern better.",
+        "limitations": [
+          "entity resolution merged 5 cluster(s): 5 STRONG_IDENTIFIER",
+          "1066 admitted relation(s) were not temporally prior to the outcome and were excluded"
+        ]
+      },
+      "components": {
+        "prior_relations": 220,
+        "components_total": 10,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "largest_components": [
+          {
+            "size": 146,
+            "domains": [
+              "PHILANTHROPIC"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "107 Endeavour Boston",
+              "ACTS Trust",
+              "Abbey Access Centre Ltd",
+              "Age UK East Lindsey",
+              "Alford Food Bank Access Church",
+              "Alford Hub",
+              "BRIDGE Friends Grimsby",
+              "Baby\ufffds Basket, Lincoln",
+              "Bearded Fishermen Gainsborough",
+              "Bearded Fishermen, Gainsborough",
+              "Bells & Whistles",
+              "Big Jumps Trampoline Club, Sleaford",
+              "Billingborough Community Gym",
+              "Blue Light Brigade, Grimsby",
+              "Bosom Family Support Scunthorpe",
+              "Boston Lithuanian Community",
+              "Boston Samaritans",
+              "Boston Sea Cadets",
+              "Boston Women's Aid",
+              "Branston Covid19 Support",
+              "Bridge Church, Lincoln",
+              "Building Resilience in Communities (BRIC)\nFormerly Homestart Lincolnshire",
+              "Busydays Daycare",
+              "Butterfly Hospice",
+              "CAB Lindsey",
+              "CAB Mid Lincs",
+              "CAB North Lincolnshire",
+              "CARE, Immingham",
+              "CPO Media Grimsby",
+              "Caistor COVID-19 Volunteer Response",
+              "Carers First",
+              "Centrepoint Outreach Boston",
+              "Children\ufffds Links",
+              "Churches Together Across Lincolnshire",
+              "Cleethorpes Sea Cadets",
+              "Climb4 Grimsby",
+              "Clint\ufffds Foundation Scunthorpe",
+              "Community Lincs",
+              "Creative Start Arts in Health Grimsby",
+              "Crosby Community Association, Scunthorpe"
+            ]
+          },
+          {
+            "size": 25,
+            "domains": [
+              "PHILANTHROPIC"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "Action On Hearing Loss",
+              "Barnet Borough Arts Council",
+              "Barnet Bowls Club",
+              "Caritas St Joseph's Centre",
+              "Community Focus",
+              "East Barnet Community Festival",
+              "East Finchley Arts Festival",
+              "Finchley Horticultural Society",
+              "Friend In Need Community Centre",
+              "Friends Of Childs Hill Park",
+              "Harts Theatre Company",
+              "Home Start Barnet",
+              "Inclusion Barnet",
+              "London Borough of Barnet",
+              "Noa Girls",
+              "Persian Advice Bureau",
+              "Phoenix Canoe Club Limited",
+              "Sangam Assoc Of Asian Women",
+              "Somali Bravanese Welfare Assoc",
+              "St Peter's Bourne Man. Company",
+              "Stonegrove Estates' Youth Project",
+              "The Axis Educational Trust",
+              "The Hope Of Childs Hill",
+              "The Larches Community",
+              "The Last Cuppa Cic"
+            ]
+          },
+          {
+            "size": 5,
+            "domains": [
+              "ACADEMIC",
+              "POLICY"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "BBSRC",
+              "Babraham Institute",
+              "UNIVERSITY OF EAST ANGLIA",
+              "UNIVERSITY OF LEICESTER",
+              "UNIVERSITY OF MANCHESTER"
+            ]
+          },
+          {
+            "size": 4,
+            "domains": [
+              "ACADEMIC",
+              "POLICY"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "BIOPAXIUM TECHNOLOGIES LIMITED",
+              "HADWEBUTKNOWN LIMITED",
+              "Innovate UK",
+              "WITTOS LTD"
+            ]
+          },
+          {
+            "size": 4,
+            "domains": [
+              "ACADEMIC",
+              "POLICY"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "EPSRC",
+              "NEWCASTLE UNIVERSITY",
+              "UNIVERSITY OF CAMBRIDGE",
+              "UNIVERSITY OF OXFORD"
+            ]
+          }
+        ],
+        "qualifying_components": []
+      }
+    },
+    "2022-01-01": {
+      "assessment": {
+        "verdict": "MX09_ISOLATED_PROCESSES_BETTER",
+        "outcome_date": "2022-01-01",
+        "admitted_relations": 1286,
+        "excluded_relations": 0,
+        "temporally_prior_relations": 252,
+        "systems_spanned": [
+          "ACADEMIC",
+          "PHILANTHROPIC",
+          "POLICY"
+        ],
+        "independent_dependency_families": [
+          "register:360giving",
+          "register:govuk-publications",
+          "register:ukri-gateway-to-research"
+        ],
+        "central_entity_id": null,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "minimum_resolution_tier": "STRONG_IDENTIFIER",
+        "claim_tier_ceiling": "MODERATE_TRIANGULATED_CAUSAL_EVIDENCE",
+        "rationale": "No connected component carries influence between systems. The corpus holds 2 tie type(s) (FUNDS, ISSUES_GUIDANCE_TO) across 11 components, but the largest component has 151 entities joined by only FUNDS; ISSUES_GUIDANCE_TO appear only in components that do not connect to it, so no path runs from one kind of tie to another. A component built from one tie type is one mechanism repeated, and its domain spread follows from that tie type rather than from diffusion. The MX09 rival, isolated non-coupled processes, explains the pattern better.",
+        "limitations": [
+          "entity resolution merged 5 cluster(s): 5 STRONG_IDENTIFIER",
+          "1034 admitted relation(s) were not temporally prior to the outcome and were excluded"
+        ]
+      },
+      "components": {
+        "prior_relations": 252,
+        "components_total": 11,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "largest_components": [
+          {
+            "size": 151,
+            "domains": [
+              "PHILANTHROPIC"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "107 Endeavour Boston",
+              "ACTS Trust",
+              "Abbey Access Centre Ltd",
+              "Age UK East Lindsey",
+              "Alford Food Bank Access Church",
+              "Alford Hub",
+              "BRIDGE Friends Grimsby",
+              "Baby\ufffds Basket, Lincoln",
+              "Bearded Fishermen Gainsborough",
+              "Bearded Fishermen, Gainsborough",
+              "Bells & Whistles",
+              "Big Jumps Trampoline Club, Sleaford",
+              "Billingborough Community Gym",
+              "Blue Light Brigade, Grimsby",
+              "Bosom Family Support Scunthorpe",
+              "Boston Lithuanian Community",
+              "Boston Samaritans",
+              "Boston Sea Cadets",
+              "Boston Women's Aid",
+              "Branston Covid19 Support",
+              "Bridge Church, Lincoln",
+              "Building Resilience in Communities (BRIC)\nFormerly Homestart Lincolnshire",
+              "Busydays Daycare",
+              "Butterfly Hospice",
+              "CAB Lindsey",
+              "CAB Mid Lincs",
+              "CAB North Lincolnshire",
+              "CARE, Immingham",
+              "CPO Media Grimsby",
+              "Caistor COVID-19 Volunteer Response",
+              "Carers First",
+              "Centrepoint Outreach Boston",
+              "Children\ufffds Links",
+              "Churches Together Across Lincolnshire",
+              "Cleethorpes Sea Cadets",
+              "Climb4 Grimsby",
+              "Clint\ufffds Foundation Scunthorpe",
+              "Community Lincs",
+              "Creative Start Arts in Health Grimsby",
+              "Crosby Community Association, Scunthorpe"
+            ]
+          },
+          {
+            "size": 25,
+            "domains": [
+              "PHILANTHROPIC"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "Action On Hearing Loss",
+              "Barnet Borough Arts Council",
+              "Barnet Bowls Club",
+              "Caritas St Joseph's Centre",
+              "Community Focus",
+              "East Barnet Community Festival",
+              "East Finchley Arts Festival",
+              "Finchley Horticultural Society",
+              "Friend In Need Community Centre",
+              "Friends Of Childs Hill Park",
+              "Harts Theatre Company",
+              "Home Start Barnet",
+              "Inclusion Barnet",
+              "London Borough of Barnet",
+              "Noa Girls",
+              "Persian Advice Bureau",
+              "Phoenix Canoe Club Limited",
+              "Sangam Assoc Of Asian Women",
+              "Somali Bravanese Welfare Assoc",
+              "St Peter's Bourne Man. Company",
+              "Stonegrove Estates' Youth Project",
+              "The Axis Educational Trust",
+              "The Hope Of Childs Hill",
+              "The Larches Community",
+              "The Last Cuppa Cic"
+            ]
+          },
+          {
+            "size": 16,
+            "domains": [
+              "PHILANTHROPIC"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "Action for Education",
+              "Asylum Seeker Info Services Team",
+              "CRIBS International",
+              "Collective Aid",
+              "ConnectionHub",
+              "No Name Kitchen",
+              "Northern Lights Aid",
+              "Project Armonia",
+              "Refugee Biriyani & Bananas",
+              "Refugee Info Bus",
+              "Refugee Rescue",
+              "Refugee Women's Centre",
+              "Wave - Thessaloniki",
+              "Yoga and Sport with Refugees",
+              "foodKIND",
+              "forRefugees"
+            ]
+          },
+          {
+            "size": 5,
+            "domains": [
+              "ACADEMIC",
+              "POLICY"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "BBSRC",
+              "Babraham Institute",
+              "UNIVERSITY OF EAST ANGLIA",
+              "UNIVERSITY OF LEICESTER",
+              "UNIVERSITY OF MANCHESTER"
+            ]
+          },
+          {
+            "size": 4,
+            "domains": [
+              "ACADEMIC",
+              "POLICY"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "BIOPAXIUM TECHNOLOGIES LIMITED",
+              "HADWEBUTKNOWN LIMITED",
+              "Innovate UK",
+              "WITTOS LTD"
+            ]
+          }
+        ],
+        "qualifying_components": []
+      }
+    },
+    "2023-01-01": {
+      "assessment": {
+        "verdict": "MX09_ISOLATED_PROCESSES_BETTER",
+        "outcome_date": "2023-01-01",
+        "admitted_relations": 1286,
+        "excluded_relations": 0,
+        "temporally_prior_relations": 349,
+        "systems_spanned": [
+          "ACADEMIC",
+          "PHILANTHROPIC",
+          "POLICY"
+        ],
+        "independent_dependency_families": [
+          "register:360giving",
+          "register:govuk-publications",
+          "register:ukri-gateway-to-research"
+        ],
+        "central_entity_id": null,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "minimum_resolution_tier": "STRONG_IDENTIFIER",
+        "claim_tier_ceiling": "MODERATE_TRIANGULATED_CAUSAL_EVIDENCE",
+        "rationale": "No connected component carries influence between systems. The corpus holds 2 tie type(s) (FUNDS, ISSUES_GUIDANCE_TO) across 13 components, but the largest component has 158 entities joined by only FUNDS; ISSUES_GUIDANCE_TO appear only in components that do not connect to it, so no path runs from one kind of tie to another. A component built from one tie type is one mechanism repeated, and its domain spread follows from that tie type rather than from diffusion. The MX09 rival, isolated non-coupled processes, explains the pattern better.",
+        "limitations": [
+          "entity resolution merged 5 cluster(s): 5 STRONG_IDENTIFIER",
+          "937 admitted relation(s) were not temporally prior to the outcome and were excluded"
+        ]
+      },
+      "components": {
+        "prior_relations": 349,
+        "components_total": 13,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "largest_components": [
+          {
+            "size": 158,
+            "domains": [
+              "PHILANTHROPIC"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "107 Endeavour Boston",
+              "ACTS Trust",
+              "Abbey Access Centre Ltd",
+              "Age UK East Lindsey",
+              "Alford Food Bank Access Church",
+              "Alford Hub",
+              "BRIDGE Friends Grimsby",
+              "Baby\ufffds Basket, Lincoln",
+              "Bearded Fishermen Gainsborough",
+              "Bearded Fishermen, Gainsborough",
+              "Bells & Whistles",
+              "Big Jumps Trampoline Club, Sleaford",
+              "Billingborough Community Gym",
+              "Blue Light Brigade, Grimsby",
+              "Blyton Evergreens Club",
+              "Bosom Family Support Scunthorpe",
+              "Boston Lithuanian Community",
+              "Boston Samaritans",
+              "Boston Sea Cadets",
+              "Boston Women's Aid",
+              "Branston Covid19 Support",
+              "Bridge Church, Lincoln",
+              "Building Resilience in Communities (BRIC)\nFormerly Homestart Lincolnshire",
+              "Busydays Daycare",
+              "Butterfly Hospice",
+              "CAB Lindsey",
+              "CAB Mid Lincs",
+              "CAB North Lincolnshire",
+              "CARE, Immingham",
+              "CPO Media Grimsby",
+              "Caistor COVID-19 Volunteer Response",
+              "Carers First",
+              "Centrepoint Outreach Boston",
+              "Children\ufffds Links",
+              "Churches Together Across Lincolnshire",
+              "Cleethorpes Sea Cadets",
+              "Climb4 Grimsby",
+              "Clint\ufffds Foundation Scunthorpe",
+              "Community Lincs",
+              "Creative Start Arts in Health Grimsby"
+            ]
+          },
+          {
+            "size": 27,
+            "domains": [
+              "PHILANTHROPIC"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "Action for Education",
+              "Asylum Seeker Info Services Team",
+              "Be Aware and Share",
+              "CHEERing - CHEER International Group",
+              "CRIBS International",
+              "Center for Community Services PUZ",
+              "Collective Aid",
+              "ConnectionHub",
+              "Eudaimonia Medical Services",
+              "FORGE for humanity",
+              "Fenix - Humanitarian Legal Aid",
+              "Habibi Center",
+              "Habibi Works & Soup & Socks e.V.",
+              "Mobile Refugee Support",
+              "No Name Kitchen",
+              "Northern Lights Aid",
+              "Project Armonia",
+              "RefuGym",
+              "Refugee Biriyani & Bananas",
+              "Refugee Info Bus",
+              "Refugee Rescue",
+              "Refugee Women's Centre",
+              "Vents Contraires",
+              "Wave - Thessaloniki",
+              "Yoga and Sport with Refugees",
+              "foodKIND",
+              "forRefugees"
+            ]
+          },
+          {
+            "size": 26,
+            "domains": [
+              "PHILANTHROPIC"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "Aldersey C of E Primary School",
+              "City & Guilds",
+              "Construction Youth Trust",
+              "EY Foundation",
+              "Haberdashers Monmouth School For Girls",
+              "Haberdashers' Abraham Darby Academy",
+              "Haberdashers' Adams",
+              "Haberdashers' Borough Academy",
+              "Haberdashers' Boys School",
+              "Haberdashers' Company",
+              "Haberdashers' Crayford Academy",
+              "Haberdashers' Girls' School",
+              "Haberdashers' Hatcham College",
+              "Haberdashers' Knights Academy",
+              "London College of Fashion",
+              "Monmouth School for Boys",
+              "Royal College of Art",
+              "St Bartholomew the Great",
+              "St. Bartholomew's and the Royal London School of Medicine and Dentistry",
+              "St. John the Baptist Church Hoxton",
+              "St. Mary's Priory Church, Monmouth",
+              "The Army Benevolent Fund",
+              "The Royal British Legion",
+              "Trinity College, Cambridge",
+              "West Monmouth School",
+              "XLP"
+            ]
+          },
+          {
+            "size": 25,
+            "domains": [
+              "PHILANTHROPIC"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "Action On Hearing Loss",
+              "Barnet Borough Arts Council",
+              "Barnet Bowls Club",
+              "Caritas St Joseph's Centre",
+              "Community Focus",
+              "East Barnet Community Festival",
+              "East Finchley Arts Festival",
+              "Finchley Horticultural Society",
+              "Friend In Need Community Centre",
+              "Friends Of Childs Hill Park",
+              "Harts Theatre Company",
+              "Home Start Barnet",
+              "Inclusion Barnet",
+              "London Borough of Barnet",
+              "Noa Girls",
+              "Persian Advice Bureau",
+              "Phoenix Canoe Club Limited",
+              "Sangam Assoc Of Asian Women",
+              "Somali Bravanese Welfare Assoc",
+              "St Peter's Bourne Man. Company",
+              "Stonegrove Estates' Youth Project",
+              "The Axis Educational Trust",
+              "The Hope Of Childs Hill",
+              "The Larches Community",
+              "The Last Cuppa Cic"
+            ]
+          },
+          {
+            "size": 7,
+            "domains": [
+              "POLICY"
+            ],
+            "relation_types": [
+              "ISSUES_GUIDANCE_TO"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "Code of practice: Mental Health Act 1983",
+              "Department of Health and Social Care",
+              "Foreign, Commonwealth & Development Office",
+              "Healthcare for UK nationals visiting Spain",
+              "NHS continuing healthcare checklist",
+              "NHS continuing healthcare decision support tool",
+              "NHS continuing healthcare fast-track pathway tool"
+            ]
+          }
+        ],
+        "qualifying_components": []
+      }
+    },
+    "2024-01-01": {
+      "assessment": {
+        "verdict": "MX09_ISOLATED_PROCESSES_BETTER",
+        "outcome_date": "2024-01-01",
+        "admitted_relations": 1286,
+        "excluded_relations": 0,
+        "temporally_prior_relations": 601,
+        "systems_spanned": [
+          "ACADEMIC",
+          "COMMERCIAL",
+          "PHILANTHROPIC",
+          "POLICY"
+        ],
+        "independent_dependency_families": [
+          "register:360giving",
+          "register:contracts-finder-ocds",
+          "register:govuk-publications",
+          "register:ukri-gateway-to-research"
+        ],
+        "central_entity_id": null,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "minimum_resolution_tier": "STRONG_IDENTIFIER",
+        "claim_tier_ceiling": "MODERATE_TRIANGULATED_CAUSAL_EVIDENCE",
+        "rationale": "No connected component carries influence between systems. The corpus holds 3 tie type(s) (CONTRACTS_WITH, FUNDS, ISSUES_GUIDANCE_TO) across 14 components, but the largest component has 210 entities joined by only FUNDS; CONTRACTS_WITH, ISSUES_GUIDANCE_TO appear only in components that do not connect to it, so no path runs from one kind of tie to another. A component built from one tie type is one mechanism repeated, and its domain spread follows from that tie type rather than from diffusion. The MX09 rival, isolated non-coupled processes, explains the pattern better.",
+        "limitations": [
+          "entity resolution merged 5 cluster(s): 5 STRONG_IDENTIFIER",
+          "685 admitted relation(s) were not temporally prior to the outcome and were excluded"
+        ]
+      },
+      "components": {
+        "prior_relations": 601,
+        "components_total": 14,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "largest_components": [
+          {
+            "size": 210,
+            "domains": [
+              "PHILANTHROPIC"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "107 Endeavour Boston",
+              "ACTS Trust",
+              "Abbey Access Centre Ltd",
+              "Acts Trust",
+              "Age UK East Lindsey",
+              "Alford Food Bank Access Church",
+              "Alford Hub",
+              "Alford Hub",
+              "BRIDGE Friends Grimsby",
+              "Baby\ufffds Basket, Lincoln",
+              "Beach Bar Boxing Club",
+              "Bearded Fishermen Gainsborough",
+              "Bearded Fishermen, Gainsborough",
+              "Bells & Whistles",
+              "Bells and Whistles Exercise Group",
+              "Bicker Bowls Club",
+              "Bicker Village Hall",
+              "Big Jumps Trampoline Club, Sleaford",
+              "Billingborough Community Gym",
+              "Blue Light Brigade, Grimsby",
+              "Blyton Evergreens Club",
+              "Bosom Family Support Scunthorpe",
+              "Boston Lithuanian Community",
+              "Boston Samaritans",
+              "Boston Sea Cadets",
+              "Boston Women's Aid",
+              "Boxes of Hope",
+              "Branston Covid19 Support",
+              "Branston Food Vouchers",
+              "Bridge Church",
+              "Bridge Church, Lincoln",
+              "Building Resilience in Communities (BRIC)\nFormerly Homestart Lincolnshire",
+              "Bumps and Beyond",
+              "Busydays Daycare",
+              "Butterfly Hospice",
+              "CAB Lindsey",
+              "CAB Mid Lincs",
+              "CAB North Lincolnshire",
+              "CARE, Immingham",
+              "CPO Media Grimsby"
+            ]
+          },
+          {
+            "size": 71,
+            "domains": [
+              "PHILANTHROPIC"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "Adult Literacy Trust",
+              "Aldersey C of E Primary School",
+              "Alternatives to Violence Project Britain",
+              "Chapter (West Cheshire)",
+              "City & Guilds",
+              "Cockpit Arts",
+              "Construction Youth Trust",
+              "EY Foundation",
+              "Free to Be Kids",
+              "Guildhall School Trust",
+              "Haberdashers Monmouth School For Girls",
+              "Haberdashers' Abraham Darby Academy",
+              "Haberdashers' Adams",
+              "Haberdashers' Borough Academy",
+              "Haberdashers' Boys School",
+              "Haberdashers' Company",
+              "Haberdashers' Crayford Academy",
+              "Haberdashers' Crayford Primary",
+              "Haberdashers' Girls' School",
+              "Haberdashers' Hatcham College",
+              "Haberdashers' Hatcham Free Primary",
+              "Haberdashers' Hatcham Primary",
+              "Haberdashers' Knights Academy",
+              "Haberdashers' Knights Primary",
+              "Haberdashers' Slade Green Primary",
+              "Irish Community Services",
+              "King's College School",
+              "Lewisham Local",
+              "Lewisham Youth Theatre",
+              "London Bubble Theatre",
+              "London College of Fashion",
+              "Lord Mayor's Appeal",
+              "Mansion House Scholarship Scheme",
+              "Monmouth School for Boys",
+              "Royal College of Art",
+              "Royal School of Needlework",
+              "Sheriffs' and Recorder's Fund",
+              "Shropshire Youth Support Trust",
+              "Somerville Youth and Play Provision",
+              "Southwark Pensioners' Centre"
+            ]
+          },
+          {
+            "size": 40,
+            "domains": [
+              "PHILANTHROPIC"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "Action for Education",
+              "Asylum Seeker Info Services Team",
+              "Attika Human Support",
+              "Be Aware and Share",
+              "CHEERing - CHEER International Group",
+              "CRIBS International",
+              "Calais Food Collective",
+              "Center for Community Services PUZ",
+              "Collective Aid",
+              "ConnectionHub",
+              "Eudaimonia Medical Services",
+              "FORGE for humanity",
+              "Fenix - Humanitarian Legal Aid",
+              "F\u00e1ilte Centre, The",
+              "Glocal Roots",
+              "Habibi Center",
+              "Habibi Works & Soup & Socks e.V.",
+              "Human Rights Legal Project",
+              "I Have Rights",
+              "Intereuropean Human Aid Association e.V.",
+              "Lighthouse Relief",
+              "Mazi Housing",
+              "Med'EqualiTeam",
+              "Mobile Info Team",
+              "Mobile Refugee Support",
+              "No Border Medics",
+              "No Name Kitchen",
+              "Northern Lights Aid",
+              "Project Armonia",
+              "RefuGym",
+              "Refugee Biriyani & Bananas",
+              "Refugee Info Bus",
+              "Refugee Rescue",
+              "Refugee Women's Centre",
+              "Selfm.aid",
+              "Vents Contraires",
+              "Wave - Thessaloniki",
+              "Yoga and Sport with Refugees",
+              "foodKIND",
+              "forRefugees"
+            ]
+          },
+          {
+            "size": 25,
+            "domains": [
+              "PHILANTHROPIC"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "Action On Hearing Loss",
+              "Barnet Borough Arts Council",
+              "Barnet Bowls Club",
+              "Caritas St Joseph's Centre",
+              "Community Focus",
+              "East Barnet Community Festival",
+              "East Finchley Arts Festival",
+              "Finchley Horticultural Society",
+              "Friend In Need Community Centre",
+              "Friends Of Childs Hill Park",
+              "Harts Theatre Company",
+              "Home Start Barnet",
+              "Inclusion Barnet",
+              "London Borough of Barnet",
+              "Noa Girls",
+              "Persian Advice Bureau",
+              "Phoenix Canoe Club Limited",
+              "Sangam Assoc Of Asian Women",
+              "Somali Bravanese Welfare Assoc",
+              "St Peter's Bourne Man. Company",
+              "Stonegrove Estates' Youth Project",
+              "The Axis Educational Trust",
+              "The Hope Of Childs Hill",
+              "The Larches Community",
+              "The Last Cuppa Cic"
+            ]
+          },
+          {
+            "size": 9,
+            "domains": [
+              "POLICY"
+            ],
+            "relation_types": [
+              "ISSUES_GUIDANCE_TO"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "Code of practice: Mental Health Act 1983",
+              "Department of Health and Social Care",
+              "Foreign, Commonwealth & Development Office",
+              "Healthcare for UK nationals visiting Spain",
+              "NHS Constitution for England",
+              "NHS continuing healthcare checklist",
+              "NHS continuing healthcare decision support tool",
+              "NHS continuing healthcare fast-track pathway tool",
+              "National framework for NHS continuing healthcare and NHS-funded nursing care"
+            ]
+          }
+        ],
+        "qualifying_components": []
+      }
+    },
+    "2025-01-01": {
+      "assessment": {
+        "verdict": "MX09_ISOLATED_PROCESSES_BETTER",
+        "outcome_date": "2025-01-01",
+        "admitted_relations": 1286,
+        "excluded_relations": 0,
+        "temporally_prior_relations": 876,
+        "systems_spanned": [
+          "ACADEMIC",
+          "COMMERCIAL",
+          "PHILANTHROPIC",
+          "POLICY"
+        ],
+        "independent_dependency_families": [
+          "register:360giving",
+          "register:contracts-finder-ocds",
+          "register:govuk-publications",
+          "register:ukri-gateway-to-research"
+        ],
+        "central_entity_id": null,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "minimum_resolution_tier": "STRONG_IDENTIFIER",
+        "claim_tier_ceiling": "MODERATE_TRIANGULATED_CAUSAL_EVIDENCE",
+        "rationale": "No connected component carries influence between systems. The corpus holds 3 tie type(s) (CONTRACTS_WITH, FUNDS, ISSUES_GUIDANCE_TO) across 16 components, but the largest component has 338 entities joined by only FUNDS; CONTRACTS_WITH, ISSUES_GUIDANCE_TO appear only in components that do not connect to it, so no path runs from one kind of tie to another. A component built from one tie type is one mechanism repeated, and its domain spread follows from that tie type rather than from diffusion. The MX09 rival, isolated non-coupled processes, explains the pattern better.",
+        "limitations": [
+          "entity resolution merged 5 cluster(s): 5 STRONG_IDENTIFIER",
+          "410 admitted relation(s) were not temporally prior to the outcome and were excluded"
+        ]
+      },
+      "components": {
+        "prior_relations": 876,
+        "components_total": 16,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "largest_components": [
+          {
+            "size": 338,
+            "domains": [
+              "PHILANTHROPIC"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "107 Endeavour Boston",
+              "11th Lincoln Scout Group",
+              "1st Billinghay Guides",
+              "ACTS Trust",
+              "Abbey Access Centre Ltd",
+              "Acts Trust",
+              "Age UK East Lindsey",
+              "Alford Corn Exchange Community Group",
+              "Alford Food Bank Access Church",
+              "Alford Hub",
+              "Alford Hub",
+              "Alford Squash Club",
+              "Angle in the Community CIC",
+              "Anwick Parish Council",
+              "Aubourn and Haddington Parish Council",
+              "Authorpe Village Hall",
+              "BRIDGE Friends Grimsby",
+              "Baby\ufffds Basket, Lincoln",
+              "Beach Bar Boxing Club",
+              "Bearded Fishermen Gainsborough",
+              "Bearded Fishermen, Gainsborough",
+              "Bells & Whistles",
+              "Bells and Whistles Exercise Group",
+              "Best Futures CIC",
+              "Bicker Bowls Club",
+              "Bicker Buds",
+              "Bicker Village Hall",
+              "Big Jumps Trampoline Club, Sleaford",
+              "Billingborough Community Gym",
+              "Billinghay Amateur Dramatics Association",
+              "Binbrook Parish Council",
+              "Blue Light Brigade, Grimsby",
+              "Blyton Evergreens Club",
+              "Bosom Family Support Scunthorpe",
+              "Boston Lithuanian Community",
+              "Boston Samaritans",
+              "Boston Sea Cadets",
+              "Boston Tennis Club",
+              "Boston Women's Aid",
+              "Boxes of Hope"
+            ]
+          },
+          {
+            "size": 88,
+            "domains": [
+              "PHILANTHROPIC"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "Adult Literacy Trust",
+              "Aldersey C of E Primary School",
+              "Alternatives to Violence Project Britain",
+              "Chapter (West Cheshire)",
+              "City & Guilds",
+              "Cockpit Arts",
+              "Construction Youth Trust",
+              "Dabbagh Welfare Trust",
+              "EY Foundation",
+              "Elliott Hall for Youth and Community",
+              "Feltham Community Chaplaincy Trust (FCCT)",
+              "Free to Be Kids",
+              "GASP Motor Project",
+              "Guildhall School Trust",
+              "Haberdashers Monmouth School For Girls",
+              "Haberdashers' Abraham Darby Academy",
+              "Haberdashers' Adams",
+              "Haberdashers' Borough Academy",
+              "Haberdashers' Boys School",
+              "Haberdashers' Company",
+              "Haberdashers' Crayford Academy",
+              "Haberdashers' Crayford Primary",
+              "Haberdashers' Girls' School",
+              "Haberdashers' Hatcham College",
+              "Haberdashers' Hatcham Free Primary",
+              "Haberdashers' Hatcham Primary",
+              "Haberdashers' Knights Academy",
+              "Haberdashers' Knights Primary",
+              "Haberdashers' Slade Green Primary",
+              "Hackney Playbus",
+              "Ignite Hubs",
+              "Inside Out Clothing Project",
+              "Irish Community Services",
+              "King's College School",
+              "Lewisham Local",
+              "Lewisham Youth Theatre",
+              "Little Stars Baby Bank",
+              "London Bubble Theatre",
+              "London College of Fashion",
+              "Lord Mayor's Appeal"
+            ]
+          },
+          {
+            "size": 51,
+            "domains": [
+              "PHILANTHROPIC"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "AMURTEL Greece",
+              "ANKAA Project",
+              "Action for Education",
+              "Asylum Seeker Info Services Team",
+              "Attika Human Support",
+              "Be Aware and Share",
+              "CHEERing - CHEER International Group",
+              "CRIBS International",
+              "Calais Food Collective",
+              "Center for Community Services PUZ",
+              "Collective Aid",
+              "ConnectionHub",
+              "ECHO for Refugees",
+              "Eudaimonia Medical Services",
+              "FORGE for humanity",
+              "Fenix - Humanitarian Legal Aid",
+              "F\u00e1ilte Centre, The",
+              "Glocal Roots",
+              "Habibi Center",
+              "Habibi Works & Soup & Socks e.V.",
+              "Human Rights Legal Project",
+              "I Have Rights",
+              "Intereuropean Human Aid Association e.V.",
+              "Kaleidoscope",
+              "Lighthouse Relief",
+              "Mazi Housing",
+              "Med'EqualiTeam",
+              "Mobile Info Team",
+              "Mobile Refugee Support",
+              "No Border Medics",
+              "No Name Kitchen",
+              "Northern Lights Aid",
+              "Project Armonia",
+              "ReFOCUS Media Labs",
+              "RefuGym",
+              "Refugee Biriyani & Bananas",
+              "Refugee Community Kitchen",
+              "Refugee Info Bus",
+              "Refugee Legal Support - Greece",
+              "Refugee Rescue"
+            ]
+          },
+          {
+            "size": 25,
+            "domains": [
+              "PHILANTHROPIC"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "Action On Hearing Loss",
+              "Barnet Borough Arts Council",
+              "Barnet Bowls Club",
+              "Caritas St Joseph's Centre",
+              "Community Focus",
+              "East Barnet Community Festival",
+              "East Finchley Arts Festival",
+              "Finchley Horticultural Society",
+              "Friend In Need Community Centre",
+              "Friends Of Childs Hill Park",
+              "Harts Theatre Company",
+              "Home Start Barnet",
+              "Inclusion Barnet",
+              "London Borough of Barnet",
+              "Noa Girls",
+              "Persian Advice Bureau",
+              "Phoenix Canoe Club Limited",
+              "Sangam Assoc Of Asian Women",
+              "Somali Bravanese Welfare Assoc",
+              "St Peter's Bourne Man. Company",
+              "Stonegrove Estates' Youth Project",
+              "The Axis Educational Trust",
+              "The Hope Of Childs Hill",
+              "The Larches Community",
+              "The Last Cuppa Cic"
+            ]
+          },
+          {
+            "size": 13,
+            "domains": [
+              "POLICY"
+            ],
+            "relation_types": [
+              "ISSUES_GUIDANCE_TO"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "Code of practice: Mental Health Act 1983",
+              "Department for Education",
+              "Department of Health and Social Care",
+              "Foreign, Commonwealth & Development Office",
+              "Healthcare for UK nationals visiting Spain",
+              "Medicines and Healthcare products Regulatory Agency",
+              "Medicines: good manufacturing practice and good distribution practice",
+              "NHS Constitution for England",
+              "NHS continuing healthcare checklist",
+              "NHS continuing healthcare decision support tool",
+              "NHS continuing healthcare fast-track pathway tool",
+              "National framework for NHS continuing healthcare and NHS-funded nursing care",
+              "SEND code of practice: 0 to 25 years"
+            ]
+          }
+        ],
+        "qualifying_components": []
+      }
+    },
+    "2026-01-01": {
+      "assessment": {
+        "verdict": "MX09_ISOLATED_PROCESSES_BETTER",
+        "outcome_date": "2026-01-01",
+        "admitted_relations": 1286,
+        "excluded_relations": 0,
+        "temporally_prior_relations": 933,
+        "systems_spanned": [
+          "ACADEMIC",
+          "COMMERCIAL",
+          "PHILANTHROPIC",
+          "POLICY"
+        ],
+        "independent_dependency_families": [
+          "register:360giving",
+          "register:contracts-finder-ocds",
+          "register:govuk-publications",
+          "register:ukri-gateway-to-research"
+        ],
+        "central_entity_id": null,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "minimum_resolution_tier": "STRONG_IDENTIFIER",
+        "claim_tier_ceiling": "MODERATE_TRIANGULATED_CAUSAL_EVIDENCE",
+        "rationale": "No connected component carries influence between systems. The corpus holds 3 tie type(s) (CONTRACTS_WITH, FUNDS, ISSUES_GUIDANCE_TO) across 18 components, but the largest component has 338 entities joined by only FUNDS; CONTRACTS_WITH, ISSUES_GUIDANCE_TO appear only in components that do not connect to it, so no path runs from one kind of tie to another. A component built from one tie type is one mechanism repeated, and its domain spread follows from that tie type rather than from diffusion. The MX09 rival, isolated non-coupled processes, explains the pattern better.",
+        "limitations": [
+          "entity resolution merged 5 cluster(s): 5 STRONG_IDENTIFIER",
+          "353 admitted relation(s) were not temporally prior to the outcome and were excluded"
+        ]
+      },
+      "components": {
+        "prior_relations": 933,
+        "components_total": 18,
+        "merges_applied": {
+          "STRONG_IDENTIFIER": 5
+        },
+        "largest_components": [
+          {
+            "size": 338,
+            "domains": [
+              "PHILANTHROPIC"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "107 Endeavour Boston",
+              "11th Lincoln Scout Group",
+              "1st Billinghay Guides",
+              "ACTS Trust",
+              "Abbey Access Centre Ltd",
+              "Acts Trust",
+              "Age UK East Lindsey",
+              "Alford Corn Exchange Community Group",
+              "Alford Food Bank Access Church",
+              "Alford Hub",
+              "Alford Hub",
+              "Alford Squash Club",
+              "Angle in the Community CIC",
+              "Anwick Parish Council",
+              "Aubourn and Haddington Parish Council",
+              "Authorpe Village Hall",
+              "BRIDGE Friends Grimsby",
+              "Baby\ufffds Basket, Lincoln",
+              "Beach Bar Boxing Club",
+              "Bearded Fishermen Gainsborough",
+              "Bearded Fishermen, Gainsborough",
+              "Bells & Whistles",
+              "Bells and Whistles Exercise Group",
+              "Best Futures CIC",
+              "Bicker Bowls Club",
+              "Bicker Buds",
+              "Bicker Village Hall",
+              "Big Jumps Trampoline Club, Sleaford",
+              "Billingborough Community Gym",
+              "Billinghay Amateur Dramatics Association",
+              "Binbrook Parish Council",
+              "Blue Light Brigade, Grimsby",
+              "Blyton Evergreens Club",
+              "Bosom Family Support Scunthorpe",
+              "Boston Lithuanian Community",
+              "Boston Samaritans",
+              "Boston Sea Cadets",
+              "Boston Tennis Club",
+              "Boston Women's Aid",
+              "Boxes of Hope"
+            ]
+          },
+          {
+            "size": 88,
+            "domains": [
+              "PHILANTHROPIC"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "Adult Literacy Trust",
+              "Aldersey C of E Primary School",
+              "Alternatives to Violence Project Britain",
+              "Chapter (West Cheshire)",
+              "City & Guilds",
+              "Cockpit Arts",
+              "Construction Youth Trust",
+              "Dabbagh Welfare Trust",
+              "EY Foundation",
+              "Elliott Hall for Youth and Community",
+              "Feltham Community Chaplaincy Trust (FCCT)",
+              "Free to Be Kids",
+              "GASP Motor Project",
+              "Guildhall School Trust",
+              "Haberdashers Monmouth School For Girls",
+              "Haberdashers' Abraham Darby Academy",
+              "Haberdashers' Adams",
+              "Haberdashers' Borough Academy",
+              "Haberdashers' Boys School",
+              "Haberdashers' Company",
+              "Haberdashers' Crayford Academy",
+              "Haberdashers' Crayford Primary",
+              "Haberdashers' Girls' School",
+              "Haberdashers' Hatcham College",
+              "Haberdashers' Hatcham Free Primary",
+              "Haberdashers' Hatcham Primary",
+              "Haberdashers' Knights Academy",
+              "Haberdashers' Knights Primary",
+              "Haberdashers' Slade Green Primary",
+              "Hackney Playbus",
+              "Ignite Hubs",
+              "Inside Out Clothing Project",
+              "Irish Community Services",
+              "King's College School",
+              "Lewisham Local",
+              "Lewisham Youth Theatre",
+              "Little Stars Baby Bank",
+              "London Bubble Theatre",
+              "London College of Fashion",
+              "Lord Mayor's Appeal"
+            ]
+          },
+          {
+            "size": 59,
+            "domains": [
+              "PHILANTHROPIC"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "ALMA Community Therapies",
+              "AMURTEL Greece",
+              "ANKAA Project",
+              "Action for Education",
+              "Action for Women",
+              "Asylum Seeker Info Services Team",
+              "Attika Human Support",
+              "Avocats Sans Fronti\u00e8res France - Samos Legal Centre Project",
+              "Be Aware and Share",
+              "CHEERing - CHEER International Group",
+              "CRIBS International",
+              "Calais Food Collective",
+              "Center for Community Services PUZ",
+              "Center for legal aid - Voice in Bulgaria",
+              "Collective Aid",
+              "ConnectionHub",
+              "ECHO for Refugees",
+              "Eudaimonia Medical Services",
+              "FORGE for humanity",
+              "Fenix - Humanitarian Legal Aid",
+              "F\u00e1ilte Centre, The",
+              "Glocal Roots",
+              "Habibi Center",
+              "Habibi Works & Soup & Socks e.V.",
+              "Human Rights Legal Project",
+              "Human Rights Observer",
+              "I Have Rights",
+              "Intereuropean Human Aid Association e.V.",
+              "Kaleidoscope",
+              "La Capuche Mobilis\u00e9e",
+              "Light Without Borders",
+              "Lighthouse Relief",
+              "Mazi Housing",
+              "Med'EqualiTeam",
+              "Mobile Info Team",
+              "Mobile Refugee Support",
+              "Nicosia Mercy Centre",
+              "No Border Medics",
+              "No Name Kitchen",
+              "Northern Lights Aid"
+            ]
+          },
+          {
+            "size": 25,
+            "domains": [
+              "PHILANTHROPIC"
+            ],
+            "relation_types": [
+              "FUNDS"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "Action On Hearing Loss",
+              "Barnet Borough Arts Council",
+              "Barnet Bowls Club",
+              "Caritas St Joseph's Centre",
+              "Community Focus",
+              "East Barnet Community Festival",
+              "East Finchley Arts Festival",
+              "Finchley Horticultural Society",
+              "Friend In Need Community Centre",
+              "Friends Of Childs Hill Park",
+              "Harts Theatre Company",
+              "Home Start Barnet",
+              "Inclusion Barnet",
+              "London Borough of Barnet",
+              "Noa Girls",
+              "Persian Advice Bureau",
+              "Phoenix Canoe Club Limited",
+              "Sangam Assoc Of Asian Women",
+              "Somali Bravanese Welfare Assoc",
+              "St Peter's Bourne Man. Company",
+              "Stonegrove Estates' Youth Project",
+              "The Axis Educational Trust",
+              "The Hope Of Childs Hill",
+              "The Larches Community",
+              "The Last Cuppa Cic"
+            ]
+          },
+          {
+            "size": 22,
+            "domains": [
+              "POLICY"
+            ],
+            "relation_types": [
+              "ISSUES_GUIDANCE_TO"
+            ],
+            "qualifies_for_md15": false,
+            "entities": [
+              "999 and 112: the UK's national emergency numbers",
+              "Code of practice: Mental Health Act 1983",
+              "Delivering better oral health: an evidence-based toolkit for prevention",
+              "Department for Education",
+              "Department for Science, Innovation and Technology",
+              "Department of Health and Social Care",
+              "Find a telecare provider",
+              "Foreign, Commonwealth & Development Office",
+              "Healthcare for UK nationals visiting Spain",
+              "Healthcare for visitors to the UK from the EU",
+              "Home Office",
+              "Medicines and Healthcare products Regulatory Agency",
+              "Medicines: good manufacturing practice and good distribution practice",
+              "NHS Constitution for England",
+              "NHS England",
+              "NHS continuing healthcare checklist",
+              "NHS continuing healthcare decision support tool",
+              "NHS continuing healthcare fast-track pathway tool",
+              "National framework for NHS continuing healthcare and NHS-funded nursing care",
+              "SEND code of practice: 0 to 25 years",
+              "Supplying take home naloxone without a prescription",
+              "UK reciprocal healthcare agreements with non-EU countries"
+            ]
+          }
+        ],
+        "qualifying_components": []
+      }
+    }
+  }
+}
