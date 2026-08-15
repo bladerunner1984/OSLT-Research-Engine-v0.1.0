@@ -152,3 +152,47 @@ not counted as evidence with an empty field, and not treated as an outstanding g
 backfill pipeline, check whether the value exists at the source. Two passes and a full day
 of a P0 source's rate budget went to recovering data that was never there — the corpus
 composition would have shown it in one query.
+
+---
+
+## Closed to automation: WhatDoTheyKnow (FOI)
+
+The data is there. The access terms are not.
+
+`https://www.whatdotheyknow.com/feed/search/<query>.json` returns 200 with 25 event objects
+carrying request metadata, authority, status and a ~300-character highlighted snippet.
+`/request/<slug>.json` returns event records with message IDs but no body text and no
+attachment list. Response bodies and attachment manifests exist only as HTML at
+`/request/<slug>/response/<id>`.
+
+**Two independent published signals forbid automating it.**
+
+robots.txt (`User-agent: *`) disallows `*/search/*`, `*/feed/*`, `*/request/*/response/*`
+and `*/request/*/download*`. The one endpoint that makes discovery possible matches two of
+those. Attachments are `Allow`ed, but an attachment URL can only be learned from a response
+page that is disallowed, so the permission is unreachable without breaching the prohibition
+above it.
+
+House Rules (`/help/house_rules`): "Don't use scripts or unapproved automation... using
+scripts or bots to bypass limits is not allowed." Commercial or for-profit use requires a
+Pro subscription. `/help/api` confirms there is no full API and asks people to make contact.
+
+That is a prior-approval regime, not a rate limit that politeness satisfies. A slow
+connector would still be unapproved automation on a robots-excluded path. **Declined, on the
+same grounds as PROSPERO and GrantNav.** About 12 manual fetches were made during the
+investigation, then it stopped.
+
+**The data does exist there**, verified by manual search - an NHS England request titled
+"2025 child referral figures by Integrated Care Boards to Arden and Gem hub & specialist..."
+is marked Successful, dated 2026-07-06. Caveat if ever approved: search appears to OR query
+terms loosely and returns heavy noise, and structured attachments cannot be distinguished
+from prose without fetching the disallowed response page.
+
+**To unblock:** either email mySociety describing the research use and asking whether Pro or
+an agreed bulk extract covers it, or - far faster and free - submit an FOI request directly.
+See `studies/foi_requests/nhs_gender_service_referrals.md`, which is drafted and ready.
+
+**Standing lesson:** "find a workaround" reaches the end of its authority at a published
+access policy. mySociety is a charity, the prohibition is explicit and machine-readable, and
+the legitimate route here is not merely permissible but *better* - an FOI request is free,
+carries a 20-working-day statutory deadline, and yields a citable published answer.
