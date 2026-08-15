@@ -7,7 +7,7 @@ from pathlib import Path
 from typing import Iterable
 
 from oslt_research.connectors.base import HarvestQuery, SourceConnector
-from oslt_research.domain.models import EvidenceObject, KernelResult
+from oslt_research.domain.models import EvidenceObject, KernelResult, RunManifest
 from oslt_research.evidence.journal import ResearchComputationJournal
 from oslt_research.evidence.provenance import canonical_json_hash
 from oslt_research.evidence.study_family import StudyFamilyResolver
@@ -15,6 +15,7 @@ from oslt_research.kernels.academic_knowledge import AcademicKnowledgeProduction
 from oslt_research.persistence.sqlite import SQLiteStore
 
 from .harvest import execute_harvest
+from .run_manifest import build_run_manifest
 
 
 @dataclass(frozen=True)
@@ -24,6 +25,7 @@ class PilotOneOutput:
     kernel_results: list[KernelResult]
     corpus_manifest_path: Path
     family_resolution: object | None = None
+    run_manifest: RunManifest | None = None
 
 
 async def run_pilot_one(
@@ -101,6 +103,19 @@ async def run_pilot_one(
     manifest_path.write_text(json.dumps(manifest, indent=2, sort_keys=True), encoding="utf-8")
     journal.append("CORPUS_SEALED", {"manifest_path": str(manifest_path), **manifest})
 
+    # The reproducibility manifest is point 8 of the claim release standard. It is
+    # written before analysis so a run that later fails still leaves a record of what it
+    # was, rather than only successful runs being reproducible.
+    run_manifest = build_run_manifest(
+        run_id=run_id,
+        objective=query.concept,
+        proposition_ids=query.proposition_ids,
+        connectors=connector_list,
+        corpus_hashes={"corpus_manifest": manifest["manifest_sha256"]},
+    )
+    store.save_run(run_manifest)
+    journal.append("RUN_MANIFEST_SEALED", run_manifest.model_dump(mode="json"))
+
     kernel = AcademicKnowledgeProductionKernel()
     period = f"{query.from_date or 'UNBOUNDED'}..{query.to_date or 'PRESENT'}"
     results = kernel.analyse(run_id=run_id, evidence=evidence, period=period)
@@ -116,4 +131,5 @@ async def run_pilot_one(
         kernel_results=results,
         corpus_manifest_path=manifest_path,
         family_resolution=family_resolution,
+        run_manifest=run_manifest,
     )

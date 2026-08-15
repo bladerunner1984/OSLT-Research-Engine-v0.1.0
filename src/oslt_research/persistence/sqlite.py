@@ -6,6 +6,7 @@ from pathlib import Path
 from typing import Iterable
 
 from oslt_research.domain.models import EvidenceObject, KernelResult, RunManifest, SynthesisOutcome
+from oslt_research.ontology.entities import InstitutionalEntity, InstitutionalRelation
 
 
 class SQLiteStore:
@@ -74,6 +75,35 @@ class SQLiteStore:
                     run_id TEXT NOT NULL,
                     payload_json TEXT NOT NULL
                 );
+
+                CREATE TABLE IF NOT EXISTS institutional_entities (
+                    entity_id TEXT PRIMARY KEY,
+                    canonical_name TEXT NOT NULL,
+                    system_domain TEXT NOT NULL,
+                    jurisdiction TEXT NOT NULL,
+                    dependency_family TEXT NOT NULL,
+                    admitted INTEGER NOT NULL,
+                    payload_json TEXT NOT NULL
+                );
+
+                CREATE INDEX IF NOT EXISTS idx_entities_family
+                    ON institutional_entities(dependency_family);
+
+                CREATE TABLE IF NOT EXISTS institutional_relations (
+                    relation_id TEXT PRIMARY KEY,
+                    source_entity_id TEXT NOT NULL,
+                    target_entity_id TEXT NOT NULL,
+                    relation_type TEXT NOT NULL,
+                    valid_from TEXT,
+                    dependency_family TEXT NOT NULL,
+                    admitted INTEGER NOT NULL,
+                    payload_json TEXT NOT NULL
+                );
+
+                CREATE INDEX IF NOT EXISTS idx_relations_family
+                    ON institutional_relations(dependency_family);
+                CREATE INDEX IF NOT EXISTS idx_relations_endpoints
+                    ON institutional_relations(source_entity_id, target_entity_id);
                 """
             )
 
@@ -132,6 +162,89 @@ class SQLiteStore:
                 "SELECT payload_json FROM run_manifests WHERE run_id = ?", (run_id,)
             ).fetchone()
         return RunManifest.model_validate_json(row["payload_json"]) if row else None
+
+
+    # ------------------------------------------------------------ ontology layer
+
+    def save_entity(self, entity: InstitutionalEntity) -> None:
+        with self.transaction() as connection:
+            connection.execute(
+                """
+                INSERT INTO institutional_entities (
+                    entity_id, canonical_name, system_domain, jurisdiction,
+                    dependency_family, admitted, payload_json
+                ) VALUES (?, ?, ?, ?, ?, ?, ?)
+                ON CONFLICT(entity_id) DO UPDATE SET
+                    canonical_name=excluded.canonical_name,
+                    system_domain=excluded.system_domain,
+                    jurisdiction=excluded.jurisdiction,
+                    dependency_family=excluded.dependency_family,
+                    admitted=excluded.admitted,
+                    payload_json=excluded.payload_json
+                """,
+                (
+                    entity.entity_id,
+                    entity.canonical_name,
+                    entity.system_domain.value,
+                    entity.jurisdiction,
+                    entity.dependency_family,
+                    int(entity.admitted),
+                    entity.model_dump_json(),
+                ),
+            )
+
+    def save_entities(self, entities: Iterable[InstitutionalEntity]) -> None:
+        for entity in entities:
+            self.save_entity(entity)
+
+    def list_entities(self, *, admitted_only: bool = False) -> list[InstitutionalEntity]:
+        query = "SELECT payload_json FROM institutional_entities"
+        if admitted_only:
+            query += " WHERE admitted = 1"
+        with closing(self.connect()) as connection:
+            rows = connection.execute(query).fetchall()
+        return [InstitutionalEntity.model_validate_json(row["payload_json"]) for row in rows]
+
+    def save_relation(self, relation: InstitutionalRelation) -> None:
+        with self.transaction() as connection:
+            connection.execute(
+                """
+                INSERT INTO institutional_relations (
+                    relation_id, source_entity_id, target_entity_id, relation_type,
+                    valid_from, dependency_family, admitted, payload_json
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                ON CONFLICT(relation_id) DO UPDATE SET
+                    source_entity_id=excluded.source_entity_id,
+                    target_entity_id=excluded.target_entity_id,
+                    relation_type=excluded.relation_type,
+                    valid_from=excluded.valid_from,
+                    dependency_family=excluded.dependency_family,
+                    admitted=excluded.admitted,
+                    payload_json=excluded.payload_json
+                """,
+                (
+                    relation.relation_id,
+                    relation.source_entity_id,
+                    relation.target_entity_id,
+                    relation.relation_type.value,
+                    relation.valid_from.isoformat() if relation.valid_from else None,
+                    relation.dependency_family,
+                    int(relation.admitted),
+                    relation.model_dump_json(),
+                ),
+            )
+
+    def save_relations(self, relations: Iterable[InstitutionalRelation]) -> None:
+        for relation in relations:
+            self.save_relation(relation)
+
+    def list_relations(self, *, admitted_only: bool = False) -> list[InstitutionalRelation]:
+        query = "SELECT payload_json FROM institutional_relations"
+        if admitted_only:
+            query += " WHERE admitted = 1"
+        with closing(self.connect()) as connection:
+            rows = connection.execute(query).fetchall()
+        return [InstitutionalRelation.model_validate_json(row["payload_json"]) for row in rows]
 
     def save_kernel_result(self, result: KernelResult) -> None:
         with self.transaction() as connection:
