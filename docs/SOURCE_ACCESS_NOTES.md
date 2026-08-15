@@ -196,3 +196,59 @@ See `studies/foi_requests/nhs_gender_service_referrals.md`, which is drafted and
 access policy. mySociety is a charity, the prohibition is explicit and machine-readable, and
 the legitimate route here is not merely permissible but *better* - an FOI request is free,
 carries a 20-working-day statutory deadline, and yields a citable published answer.
+
+---
+
+## Declined to fetch, but unblockable: MHSDS (NHS mental health monthly statistics)
+
+**This is the single most valuable W02 source found, and it is open in every sense but one.**
+
+MHSDS monthly statistics need no login, no application and no key. The publication pages
+link ten data files directly, including `MHSDS Time_Series_data_Apr_2016_May_2026_Perf
+v2.zip` - a ten-year monthly referral and contact time series - plus data-quality coverage
+CSVs. Publication URLs follow a regular pattern
+(`.../mental-health-services-monthly-statistics/performance-<month>-<year>`) back to 2023.
+
+**Why the connector will not fetch them.** Every file is served from
+`files.digital.nhs.uk`, whose robots.txt is a blanket `User-agent: *` / `Disallow: /`,
+unchanged since 2018. Declined on the same grounds as PROSPERO and WhatDoTheyKnow.
+
+The publication *pages* sit on `digital.nhs.uk`, which has no Disallow at all, so discovery
+is permitted and only retrieval is not. `NhsEnglandStatisticsIndex` therefore returns file
+references and never file contents, and `guard_route()` makes that refusal executable rather
+than advisory - links to declined hosts are stripped from index results, so no later edit
+can quietly repoint the connector at the CDN.
+
+### The unblock, which requires no interpretation of anyone's policy
+
+**A person downloading a published file in a browser is not a robot.** robots.txt is the
+Robots Exclusion Protocol: it governs automated crawlers. It is not a licence term, and it
+places no restriction whatever on a human clicking a download link on a public page NHS
+England published for exactly that purpose. The files are open data.
+
+So the route is the one already documented for WHO ICTRP: **the researcher downloads the
+files manually, and the connector reads them from disk.** This is not a loophole - it is the
+ordinary intended use of a public statistics publication, and it moves nothing across the
+line the robots.txt draws.
+
+**Founder action.** Download from
+`https://digital.nhs.uk/data-and-information/publications/statistical/mental-health-services-monthly-statistics`
+and place the files under `runtime/mhsds/`. The time-series ZIP alone covers Apr 2016 to
+May 2026 monthly and is the highest-value single artefact for W02.
+
+A local-file reader should then be added, following the `ons_population.py` precedent
+(stream and aggregate a large local CSV rather than loading it), and applying the standing
+rules: MHSDS suppresses small numbers, so a suppressed cell is MISSING and never zero;
+MHSDS mixes England totals with provider and region rows, so nothing sums across levels;
+and MHSDS periods are monthly within financial years, which must not be coerced to calendar
+years.
+
+**Optional, and cheap.** It is still worth asking NHS England Digital
+(`enquiries@nhsdigital.nhs.uk`) whether programmatic retrieval of published MHSDS files is
+acceptable. A one-line yes would let the connector fetch directly and remove the manual step
+from every future refresh. The manual route does not depend on that answer.
+
+**Standing lesson:** a robots.txt closes the automated path, not the data. Before recording a
+source as blocked, ask whether the obstacle is to *retrieval by machine* or to *access at
+all* - they are different, and the first has a legitimate manual workaround that the second
+does not.
