@@ -227,6 +227,47 @@ class InstitutionalOntologyGraph:
                 "observed pattern at least as well.",
             )
 
+        # MD15 predicts diffusion and feedback, which requires the relations to actually
+        # connect. A pile of disconnected dyads spans domains trivially -- every
+        # CONTRACTS_WITH edge runs POLICY -> COMMERCIAL by construction -- while being
+        # the textbook shape of the MX09 rival: isolated, non-coupled processes. So the
+        # test is connectivity, not a domain head-count.
+        connected = nx.Graph()
+        for item in prior:
+            connected.add_edge(item.source_entity_id, item.target_entity_id, relation=item)
+        components = list(nx.connected_components(connected))
+
+        def qualifies(component: set[str]) -> bool:
+            domains = {
+                self.entities[node].system_domain
+                for node in component
+                if node in self.entities
+            }
+            kinds = {
+                connected.edges[edge]["relation"].relation_type
+                for edge in connected.subgraph(component).edges
+            }
+            # More than one kind of tie is the discriminating requirement. A component
+            # built from a single relation type is one mechanism repeated: every
+            # CONTRACTS_WITH edge runs POLICY -> COMMERCIAL, so domain spread follows
+            # from the edge type rather than from anything diffusing between systems.
+            return len(component) > 2 and len(domains) > 1 and len(kinds) > 1
+
+        diffusing = [component for component in components if qualifies(component)]
+        if not diffusing:
+            largest = max((len(component) for component in components), default=0)
+            kinds = {item.relation_type.value for item in prior}
+            return build(
+                CouplingVerdict.MX09_ISOLATED_PROCESSES_BETTER,
+                ClaimTier.MODERATE_TRIANGULATED_CAUSAL_EVIDENCE,
+                "No connected component carries influence between systems. The largest "
+                f"holds {largest} entities and the relations use {len(kinds)} tie "
+                f"type(s) ({', '.join(sorted(kinds))}). A component built from a single "
+                "tie type is one mechanism repeated, and its domain spread follows from "
+                "that tie type rather than from diffusion. The MX09 rival, isolated "
+                "non-coupled processes, explains the pattern better.",
+            )
+
         return build(
             CouplingVerdict.MD15_COUPLING_SUPPORTED,
             ClaimTier.LIMITED_CAUSAL_EVIDENCE,

@@ -68,13 +68,14 @@ def relation(
     family: str,
     valid_from: date | None = date(2015, 1, 1),
     status: SourceStatus = SourceStatus.VERIFIED,
+    kind: RelationType = RelationType.FUNDS,
 ) -> InstitutionalRelation:
     return admit_relation(
         InstitutionalRelation(
             relation_id=relation_id,
             source_entity_id=source,
             target_entity_id=target,
-            relation_type=RelationType.FUNDS,
+            relation_type=kind,
             valid_from=valid_from,
             provenance=provenance(relation_id),
             source_status=status,
@@ -184,20 +185,49 @@ def test_entity_resolution_merges_on_strong_identifier_not_across_jurisdictions(
     assert list(clusters.values()) == [["A", "B"]]
 
 
-def test_coupling_supported_across_independent_families_and_domains():
+def test_coupling_supported_needs_a_connected_cross_domain_chain():
+    """MD15 predicts diffusion, so influence must trace along a connected path."""
+
     graph = InstitutionalOntologyGraph()
     graph.add_entity(entity("F", SystemDomain.PHILANTHROPIC))
     graph.add_entity(entity("A", SystemDomain.ADVOCACY))
     graph.add_entity(entity("G", SystemDomain.CLINICAL))
     graph.add_entity(entity("P", SystemDomain.POLICY))
-    graph.add_relation(relation("R1", "F", "A", family="grant-register"))
-    graph.add_relation(relation("R2", "G", "P", family="guideline-archive"))
+    graph.add_relation(relation("R1", "F", "A", family="grant-register",
+                                kind=RelationType.FUNDS))
+    graph.add_relation(relation("R2", "A", "G", family="guideline-archive",
+                                kind=RelationType.ADVISES))
+    graph.add_relation(relation("R3", "G", "P", family="grant-register",
+                                kind=RelationType.ISSUES_GUIDANCE_TO))
 
     assessment = graph.assess_coupling(OUTCOME)
     assert assessment.verdict is CouplingVerdict.MD15_COUPLING_SUPPORTED
     assert assessment.claim_tier_ceiling is ClaimTier.LIMITED_CAUSAL_EVIDENCE
     assert len(assessment.independent_dependency_families) == 2
     assert len(assessment.systems_spanned) == 4
+
+
+def test_disconnected_dyads_spanning_domains_are_the_mx09_rival():
+    """Every CONTRACTS_WITH edge spans POLICY->COMMERCIAL by construction.
+
+    Counting domains without requiring connectivity would let any pile of unrelated
+    procurement awards read as cross-system coupling. Disconnected dyads are precisely
+    what 'isolated, non-coupled processes' means.
+    """
+
+    graph = InstitutionalOntologyGraph()
+    for name, domain in (
+        ("B1", SystemDomain.POLICY), ("S1", SystemDomain.COMMERCIAL),
+        ("B2", SystemDomain.POLICY), ("S2", SystemDomain.COMMERCIAL),
+    ):
+        graph.add_entity(entity(name, domain))
+    graph.add_relation(relation("R1", "B1", "S1", family="contracts-finder"))
+    graph.add_relation(relation("R2", "B2", "S2", family="find-a-tender"))
+
+    assessment = graph.assess_coupling(OUTCOME)
+    assert assessment.verdict is CouplingVerdict.MX09_ISOLATED_PROCESSES_BETTER
+    assert len(assessment.independent_dependency_families) == 2
+    assert "No connected component carries influence" in assessment.rationale
 
 
 def test_single_dependency_family_cannot_establish_coupling():
@@ -276,3 +306,23 @@ def test_unadmitted_relations_are_excluded_and_disclosed():
     assert assessment.verdict is CouplingVerdict.INSUFFICIENT_ADMITTED_RELATIONS
     assert any("failed admission" in item for item in assessment.limitations)
     assert len(graph.admitted_relations()) == 1
+
+
+def test_single_tie_type_component_is_not_coupling():
+    """One mechanism repeated is not systems reinforcing one another."""
+
+    graph = InstitutionalOntologyGraph()
+    graph.add_entity(entity("B", SystemDomain.POLICY))
+    graph.add_entity(entity("S1", SystemDomain.COMMERCIAL))
+    graph.add_entity(entity("S2", SystemDomain.COMMERCIAL))
+    graph.add_entity(entity("B2", SystemDomain.POLICY))
+    graph.add_relation(relation("R1", "B", "S1", family="contracts-finder",
+                                kind=RelationType.CONTRACTS_WITH))
+    graph.add_relation(relation("R2", "S1", "B2", family="find-a-tender",
+                                kind=RelationType.CONTRACTS_WITH))
+    graph.add_relation(relation("R3", "B2", "S2", family="contracts-finder",
+                                kind=RelationType.CONTRACTS_WITH))
+
+    assessment = graph.assess_coupling(OUTCOME)
+    assert assessment.verdict is CouplingVerdict.MX09_ISOLATED_PROCESSES_BETTER
+    assert "one mechanism repeated" in assessment.rationale
