@@ -1,0 +1,150 @@
+name: ci
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  classify:
+    name: classify validation scope
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    outputs:
+      integration_required: ${{ steps.scope.outputs.integration_required }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - id: scope
+        shell: bash
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          python - <<'PY'
+          import os
+          import subprocess
+
+          if os.environ["EVENT_NAME"] != "pull_request":
+              required = True
+              changed = ["<manual-dispatch>"]
+          else:
+              base = os.environ.get("BASE_SHA", "")
+              head = os.environ.get("HEAD_SHA", "")
+              if not base or not head:
+                  raise SystemExit("missing pull-request base/head SHA")
+              output = subprocess.check_output(
+                  ["git", "diff", "--no-renames", "--name-only", "-z", base, head]
+              )
+              changed = [path for path in output.decode().split("\0") if path]
+              prefixes = ("src/", "tests/integration/", "registries/", "config/", "schemas/")
+              exact = {"pyproject.toml", "Dockerfile", "docker-compose.yml"}
+              required = any(path.startswith(prefixes) or path in exact for path in changed)
+
+          print("Changed paths:")
+          for path in changed:
+              print(f"  {path}")
+          print(f"integration_required={'true' if required else 'false'}")
+          with open(os.environ["GITHUB_OUTPUT"], "a", encoding="utf-8") as handle:
+              handle.write(f"integration_required={'true' if required else 'false'}\n")
+          PY
+
+  static:
+    name: constitution, provenance and source guards
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+          cache: pip
+      - run: python -m pip install -e ".[dev]"
+      - run: python -m compileall -q src
+      - run: python scripts/validate_registries.py
+      - run: python scripts/check_ai_boundary.py
+      - run: python scripts/check_sensitive_files.py
+      - run: python scripts/preflight.py
+
+  unit:
+    name: pure unit and governance suite
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+          cache: pip
+      - run: python -m pip install -e ".[dev]"
+      - run: pytest tests/unit
+
+  integration:
+    name: connector, persistence and vertical-slice suite
+    needs: classify
+    if: needs.classify.outputs.integration_required == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+          cache: pip
+      - run: python -m pip install -e ".[dev]"
+      - run: pytest tests/integration
+
+
+  coverage:
+    name: full-suite coverage
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+          cache: pip
+      - run: python -m pip install -e ".[dev]"
+      - run: pytest --cov=oslt_research --cov-report=term-missing --cov-fail-under=80
+
+  package:
+    name: build distributable
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+          cache: pip
+      - run: python -m pip install -e ".[dev]"
+      - run: python scripts/export_schemas.py
+      - run: python -m pip wheel . --no-deps --no-build-isolation -w dist
+
+  check:
+    name: check
+    if: always()
+    needs: [classify, static, unit, integration, coverage, package]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fail closed on any required validation failure
+        shell: bash
+        run: |
+          test "${{ needs.classify.result }}" = "success"
+          test "${{ needs.static.result }}" = "success"
+          test "${{ needs.unit.result }}" = "success"
+          test "${{ needs.coverage.result }}" = "success"
+          test "${{ needs.package.result }}" = "success"
+          case "${{ needs.integration.result }}" in
+            success|skipped) ;;
+            *) exit 1 ;;
+          esac

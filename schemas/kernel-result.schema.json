@@ -1,0 +1,342 @@
+{
+  "$defs": {
+    "CertaintyVector": {
+      "additionalProperties": false,
+      "properties": {
+        "causal_identification": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Causal Identification",
+          "type": "number"
+        },
+        "confounding_control": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Confounding Control",
+          "type": "number"
+        },
+        "cross_method_convergence": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Cross Method Convergence",
+          "type": "number"
+        },
+        "explanatory_contribution": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Explanatory Contribution",
+          "type": "number"
+        },
+        "measurement_validity": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Measurement Validity",
+          "type": "number"
+        },
+        "missing_data_robustness": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Missing Data Robustness",
+          "type": "number"
+        },
+        "provenance_completeness": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Provenance Completeness",
+          "type": "number"
+        },
+        "publication_selection_control": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Publication Selection Control",
+          "type": "number"
+        },
+        "replication": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Replication",
+          "type": "number"
+        },
+        "selection_bias_control": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Selection Bias Control",
+          "type": "number"
+        },
+        "source_independence": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Source Independence",
+          "type": "number"
+        },
+        "specification_stability": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Specification Stability",
+          "type": "number"
+        },
+        "statistical_precision": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Statistical Precision",
+          "type": "number"
+        },
+        "temporal_ordering": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Temporal Ordering",
+          "type": "number"
+        },
+        "theory_independence": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Theory Independence",
+          "type": "number"
+        },
+        "transportability": {
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Transportability",
+          "type": "number"
+        }
+      },
+      "required": [
+        "statistical_precision",
+        "measurement_validity",
+        "temporal_ordering",
+        "causal_identification",
+        "confounding_control",
+        "selection_bias_control",
+        "missing_data_robustness",
+        "specification_stability",
+        "source_independence",
+        "cross_method_convergence",
+        "replication",
+        "transportability",
+        "publication_selection_control",
+        "provenance_completeness",
+        "theory_independence",
+        "explanatory_contribution"
+      ],
+      "title": "CertaintyVector",
+      "type": "object"
+    },
+    "ClaimTier": {
+      "enum": [
+        "DESCRIPTIVE_EVIDENCE_ONLY",
+        "ASSOCIATION_ONLY",
+        "LIMITED_CAUSAL_EVIDENCE",
+        "MODERATE_TRIANGULATED_CAUSAL_EVIDENCE",
+        "HIGH_TRIANGULATED_CAUSAL_EVIDENCE",
+        "THEORY_DEPENDENT_INTERPRETATION",
+        "SIMULATION_ONLY"
+      ],
+      "title": "ClaimTier",
+      "type": "string"
+    },
+    "EpistemicStatus": {
+      "enum": [
+        "OBSERVATION",
+        "MEASUREMENT",
+        "ASSOCIATION",
+        "CAUSAL_INFERENCE",
+        "INTERPRETATION",
+        "SIMULATION",
+        "RECOMMENDATION"
+      ],
+      "title": "EpistemicStatus",
+      "type": "string"
+    },
+    "FalsifierStatus": {
+      "enum": [
+        "NOT_TESTED",
+        "NOT_TRIGGERED",
+        "PARTIALLY_TRIGGERED",
+        "TRIGGERED",
+        "INCONCLUSIVE"
+      ],
+      "title": "FalsifierStatus",
+      "type": "string"
+    },
+    "FindingDirection": {
+      "enum": [
+        "SUPPORTS",
+        "WEAKENS",
+        "FALSIFIES",
+        "MIXED",
+        "NEUTRAL",
+        "INCONCLUSIVE"
+      ],
+      "title": "FindingDirection",
+      "type": "string"
+    },
+    "ModelFamily": {
+      "enum": [
+        "INTRINSIC_RECOGNITION",
+        "MULTIFACTORIAL_DEVELOPMENTAL_INSTITUTIONAL",
+        "ASCERTAINMENT_SERVICE",
+        "MIXTURE_HETEROGENEITY",
+        "NULL_OR_ALTERNATIVE"
+      ],
+      "title": "ModelFamily",
+      "type": "string"
+    },
+    "ScopeContext": {
+      "additionalProperties": false,
+      "properties": {
+        "construct": {
+          "minLength": 1,
+          "title": "Construct",
+          "type": "string"
+        },
+        "estimand": {
+          "minLength": 1,
+          "title": "Estimand",
+          "type": "string"
+        },
+        "jurisdiction": {
+          "minLength": 1,
+          "title": "Jurisdiction",
+          "type": "string"
+        },
+        "period": {
+          "minLength": 1,
+          "title": "Period",
+          "type": "string"
+        },
+        "population": {
+          "minLength": 1,
+          "title": "Population",
+          "type": "string"
+        }
+      },
+      "required": [
+        "construct",
+        "population",
+        "period",
+        "jurisdiction",
+        "estimand"
+      ],
+      "title": "ScopeContext",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "certainty": {
+      "$ref": "#/$defs/CertaintyVector"
+    },
+    "claim_tier": {
+      "$ref": "#/$defs/ClaimTier"
+    },
+    "counterevidence_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Counterevidence Ids",
+      "type": "array"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    },
+    "dependency_families": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Dependency Families",
+      "type": "array"
+    },
+    "effect_estimate": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Effect Estimate"
+    },
+    "epistemic_status": {
+      "$ref": "#/$defs/EpistemicStatus"
+    },
+    "evidence_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Evidence Ids",
+      "type": "array"
+    },
+    "falsifier_status": {
+      "$ref": "#/$defs/FalsifierStatus",
+      "default": "NOT_TESTED"
+    },
+    "finding_direction": {
+      "$ref": "#/$defs/FindingDirection"
+    },
+    "kernel_name": {
+      "title": "Kernel Name",
+      "type": "string"
+    },
+    "limitations": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Limitations",
+      "type": "array"
+    },
+    "model_family": {
+      "$ref": "#/$defs/ModelFamily"
+    },
+    "model_impacts": {
+      "additionalProperties": {
+        "type": "number"
+      },
+      "title": "Model Impacts",
+      "type": "object"
+    },
+    "narrative": {
+      "title": "Narrative",
+      "type": "string"
+    },
+    "proposition_id": {
+      "title": "Proposition Id",
+      "type": "string"
+    },
+    "result_id": {
+      "title": "Result Id",
+      "type": "string"
+    },
+    "run_id": {
+      "title": "Run Id",
+      "type": "string"
+    },
+    "scope": {
+      "$ref": "#/$defs/ScopeContext"
+    },
+    "uncertainty": {
+      "title": "Uncertainty",
+      "type": "string"
+    }
+  },
+  "required": [
+    "result_id",
+    "run_id",
+    "proposition_id",
+    "kernel_name",
+    "model_family",
+    "scope",
+    "finding_direction",
+    "epistemic_status",
+    "uncertainty",
+    "certainty",
+    "evidence_ids",
+    "claim_tier",
+    "narrative"
+  ],
+  "title": "KernelResult",
+  "type": "object"
+}

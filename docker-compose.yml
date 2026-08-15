@@ -1,0 +1,18 @@
+services:
+  oslt-api:
+    build: .
+    environment:
+      OSLT_DATABASE_URL: sqlite:////runtime/oslt.db
+      OSLT_MODEL_GATEWAY: disabled
+    ports:
+      - "8000:8000"
+    volumes:
+      - oslt-runtime:/runtime
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+
+volumes:
+  oslt-runtime:

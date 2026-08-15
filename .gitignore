@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+dist/
+build/
+*.egg-info/
+
+# Secrets and local config
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*credentials*.json
+*token*.json
+
+# Databases and runtime outputs
+*.db
+*.sqlite
+*.sqlite3
+runtime/
+logs/
+
+# Raw/restricted data never belongs in Git
+/data/open/*
+!/data/open/.gitkeep
+!/data/open/README.md
+/data/licensed/*
+!/data/licensed/.gitkeep
+!/data/licensed/README.md
+/data/participant/*
+!/data/participant/.gitkeep
+!/data/participant/README.md
+/data/tre/*
+!/data/tre/.gitkeep
+!/data/tre/README.md
+
+# Study outputs may contain licensed or disclosure-controlled material
+/studies/**/outputs/*
+!/studies/**/outputs/.gitkeep
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

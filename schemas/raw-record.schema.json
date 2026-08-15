@@ -1,0 +1,75 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "authors": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Authors",
+      "type": "array"
+    },
+    "content": {
+      "title": "Content",
+      "type": "string"
+    },
+    "identifiers": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Identifiers",
+      "type": "object"
+    },
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "published_at": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Published At"
+    },
+    "raw_response_hash": {
+      "title": "Raw Response Hash",
+      "type": "string"
+    },
+    "retrieved_at": {
+      "format": "date-time",
+      "title": "Retrieved At",
+      "type": "string"
+    },
+    "source_name": {
+      "title": "Source Name",
+      "type": "string"
+    },
+    "source_record_id": {
+      "title": "Source Record Id",
+      "type": "string"
+    },
+    "source_uri": {
+      "title": "Source Uri",
+      "type": "string"
+    },
+    "title": {
+      "title": "Title",
+      "type": "string"
+    }
+  },
+  "required": [
+    "source_name",
+    "source_record_id",
+    "title",
+    "content",
+    "source_uri",
+    "raw_response_hash"
+  ],
+  "title": "RawRecord",
+  "type": "object"
+}

@@ -1,0 +1,101 @@
+criterion_id,category,requirement,status,evidence
+G100-001,SCOPE_OBJECTIVE_NEUTRALITY,Research-only boundary,PASS,OSLT_ARCHITECTURE_v2_3_RC1.md:experimental research architecture
+G100-002,SCOPE_OBJECTIVE_NEUTRALITY,No clinical decision authority,PASS,OSLT_ARCHITECTURE_v2_3_RC1.md:not a clinical
+G100-003,SCOPE_OBJECTIVE_NEUTRALITY,Objective lock,PASS,oslt_research/query_decomposition.py:ObjectiveLock
+G100-004,SCOPE_OBJECTIVE_NEUTRALITY,Discriminating subquestions,PASS,oslt_research/query_decomposition.py:NO_DISCRIMINATING_SUBQUESTION
+G100-005,SCOPE_OBJECTIVE_NEUTRALITY,Neutral rival hypotheses,PASS,OSLT_ARCHITECTURE_v2_3_RC1.md:rival
+G100-006,SCOPE_OBJECTIVE_NEUTRALITY,Identity truth/falsity prohibited,PASS,oslt_research/vocabulary.py:IDENTITY_TRUE
+G100-007,SCOPE_OBJECTIVE_NEUTRALITY,Individual causal attribution prohibited,PASS,oslt_research/vocabulary.py:INDIVIDUAL_CAUSAL_ATTRIBUTION
+G100-008,SCOPE_OBJECTIVE_NEUTRALITY,Paper-count shortcut prohibited,PASS,oslt_research/vocabulary.py:PAPER_COUNT_PROVES_TRUTH
+G100-009,SCOPE_OBJECTIVE_NEUTRALITY,Single causal model prohibited,PASS,oslt_research/vocabulary.py:SINGLE_CAUSAL_MODEL_APPLIES_TO_ALL
+G100-010,SCOPE_OBJECTIVE_NEUTRALITY,Theory-dependent methods bounded,PASS,OSLT_ARCHITECTURE_v2_3_RC1.md:theory-dependent
+G100-011,CAUSAL_METHOD_CONTRAST,Explicit estimand,PASS,oslt_research/estimand.py:estimand
+G100-012,CAUSAL_METHOD_CONTRAST,Explicit time zero,PASS,oslt_research/estimand.py:time_zero
+G100-013,CAUSAL_METHOD_CONTRAST,Adjustment set,PASS,oslt_research/estimand.py:adjustment_set
+G100-014,CAUSAL_METHOD_CONTRAST,DAG collider role,PASS,oslt_research/vocabulary.py:COLLIDER
+G100-015,CAUSAL_METHOD_CONTRAST,Reverse causation control,PASS,oslt_research/identification.py:REVERSE_CAUSATION
+G100-016,CAUSAL_METHOD_CONTRAST,Negative controls,PASS,oslt_research/estimand.py:negative_control
+G100-017,CAUSAL_METHOD_CONTRAST,Counterfactual contrast,PASS,oslt_research/contrast.py:ContrastType
+G100-018,CAUSAL_METHOD_CONTRAST,A/B randomised method,PASS,OSLT_ANALYTICAL_METHOD_REGISTER_v2_0_RC1.csv:RANDOMISED_AB_TEST
+G100-019,CAUSAL_METHOD_CONTRAST,Target trial emulation,PASS,OSLT_ANALYTICAL_METHOD_REGISTER_v2_0_RC1.csv:TARGET_TRIAL_EMULATION
+G100-020,CAUSAL_METHOD_CONTRAST,Versioned frozen causal specification,PASS,oslt_research/causal_versioning.py:CausalSpecification
+G100-021,MEASUREMENT_TEMPORAL_CONCEPT,Measurement validity,PASS,oslt_research/measurement.py:MeasurementInvariance
+G100-022,MEASUREMENT_TEMPORAL_CONCEPT,Differential item functioning,PASS,OSLT_ANALYTICAL_METHOD_REGISTER_v2_0_RC1.csv:DIFFERENTIAL_ITEM_FUNCTIONING
+G100-023,MEASUREMENT_TEMPORAL_CONCEPT,Measurement error model,PASS,OSLT_ANALYTICAL_METHOD_REGISTER_v2_0_RC1.csv:MEASUREMENT_ERROR_MODEL
+G100-024,MEASUREMENT_TEMPORAL_CONCEPT,Misclassification analysis,PASS,OSLT_ANALYTICAL_METHOD_REGISTER_v2_0_RC1.csv:LABEL_NOISE_MISCLASSIFICATION
+G100-025,MEASUREMENT_TEMPORAL_CONCEPT,Missingness diagnostics,PASS,OSLT_ANALYTICAL_METHOD_REGISTER_v2_0_RC1.csv:MISSINGNESS_MECHANISM_DIAGNOSTICS
+G100-026,MEASUREMENT_TEMPORAL_CONCEPT,Temporal scope,PASS,oslt_research/evidence_fabric.py:TemporalJurisdictionScope
+G100-027,MEASUREMENT_TEMPORAL_CONCEPT,Concept validity periods,PASS,oslt_research/concept_resolution.py:valid_from
+G100-028,MEASUREMENT_TEMPORAL_CONCEPT,Concept ambiguity flag,PASS,oslt_research/concept_resolution.py:AMBIGUOUS_CONCEPT_RESOLUTION
+G100-029,MEASUREMENT_TEMPORAL_CONCEPT,640-variable ontology,PASS,OSLT_VARIABLE_METHOD_CROSSWALK_v2_0_RC1.csv:ROWCOUNT=640
+G100-030,MEASUREMENT_TEMPORAL_CONCEPT,Variable weight prohibition,PASS,OSLT_ARCHITECTURE_v2_3_RC1.md:VARIABLE IMPORTANCE
+G100-031,EVIDENCE_FABRIC_RETRIEVAL,Keyword retrieval,PASS,oslt_research/evidence_fabric.py:KEYWORD
+G100-032,EVIDENCE_FABRIC_RETRIEVAL,Vector retrieval,PASS,oslt_research/evidence_fabric.py:VECTOR
+G100-033,EVIDENCE_FABRIC_RETRIEVAL,Hybrid retrieval,PASS,oslt_research/evidence_fabric.py:HYBRID
+G100-034,EVIDENCE_FABRIC_RETRIEVAL,Structured retrieval,PASS,oslt_research/evidence_fabric.py:STRUCTURED
+G100-035,EVIDENCE_FABRIC_RETRIEVAL,Graph retrieval,PASS,oslt_research/evidence_fabric.py:GRAPH
+G100-036,EVIDENCE_FABRIC_RETRIEVAL,Multimodal retrieval,PASS,oslt_research/evidence_fabric.py:MULTIMODAL
+G100-037,EVIDENCE_FABRIC_RETRIEVAL,Balanced retrieval planner,PASS,oslt_research/retrieval_planner.py:RetrievalPlanner
+G100-038,EVIDENCE_FABRIC_RETRIEVAL,Contradict lane,PASS,oslt_research/evidence_fabric.py:CONTRADICT
+G100-039,EVIDENCE_FABRIC_RETRIEVAL,Null-results lane,PASS,oslt_research/evidence_fabric.py:NULL
+G100-040,EVIDENCE_FABRIC_RETRIEVAL,Retraction/correction lane,PASS,oslt_research/evidence_fabric.py:CORRECTION_RETRACTION
+G100-041,PROVENANCE_DEPENDENCY_COUNTER_RAG,Evidence chunk content hash,PASS,oslt_research/evidence_fabric.py:chunk_hash
+G100-042,PROVENANCE_DEPENDENCY_COUNTER_RAG,Source URI provenance,PASS,oslt_research/evidence_fabric.py:source_uri
+G100-043,PROVENANCE_DEPENDENCY_COUNTER_RAG,Retrieval query provenance,PASS,oslt_research/evidence_fabric.py:retrieval_query_id
+G100-044,PROVENANCE_DEPENDENCY_COUNTER_RAG,Dataset family dependency,PASS,oslt_research/evidence_fabric.py:dataset_family
+G100-045,PROVENANCE_DEPENDENCY_COUNTER_RAG,Source family dependency,PASS,oslt_research/evidence_fabric.py:source_family
+G100-046,PROVENANCE_DEPENDENCY_COUNTER_RAG,Dependency graph,PASS,oslt_research/evidence_graph.py:EvidenceDependencyGraph
+G100-047,PROVENANCE_DEPENDENCY_COUNTER_RAG,Shared cohort relation,PASS,oslt_research/evidence_graph.py:SAME_COHORT
+G100-048,PROVENANCE_DEPENDENCY_COUNTER_RAG,Bias critique retrieval,PASS,oslt_research/evidence_fabric.py:BIAS_CRITIQUE
+G100-049,PROVENANCE_DEPENDENCY_COUNTER_RAG,Replication retrieval,PASS,oslt_research/evidence_fabric.py:REPLICATION
+G100-050,PROVENANCE_DEPENDENCY_COUNTER_RAG,Source review not truth score,PASS,oslt_research/source_review.py:may_establish_causal_effect_alone
+G100-051,ADVERSARIAL_BLINDING_HARNESS,Primary analyst role,PASS,oslt_research/harness.py:PRIMARY
+G100-052,ADVERSARIAL_BLINDING_HARNESS,Rival analyst role,PASS,oslt_research/harness.py:RIVAL
+G100-053,ADVERSARIAL_BLINDING_HARNESS,Methods critic role,PASS,oslt_research/harness.py:METHODS_CRITIC
+G100-054,ADVERSARIAL_BLINDING_HARNESS,Source verifier role,PASS,oslt_research/harness.py:SOURCE_VERIFIER
+G100-055,ADVERSARIAL_BLINDING_HARNESS,Shared-evidence warning,PASS,oslt_research/harness.py:ANALYSTS_HIGHLY_DEPENDENT
+G100-056,ADVERSARIAL_BLINDING_HARNESS,Analytical sealing,PASS,oslt_research/blinding.py:SealedAnalysis
+G100-057,ADVERSARIAL_BLINDING_HARNESS,Cross-domain firewall,PASS,oslt_research/blinding.py:FirewallPolicy
+G100-058,ADVERSARIAL_BLINDING_HARNESS,Model agreement not evidential replication,PASS,oslt_research/model_policy.py:MODEL_AGREEMENT_IS_NOT_EVIDENTIAL_REPLICATION
+G100-059,ADVERSARIAL_BLINDING_HARNESS,Single-primary deployment mode,PASS,oslt_research/model_policy.py:SINGLE_PRIMARY
+G100-060,ADVERSARIAL_BLINDING_HARNESS,Rival explanation distillation,PASS,oslt_research/contrast.py:PairwiseHypothesisContrast
+G100-061,HISTORICAL_INTERPRETIVE_MULTIMODAL,Process tracing,PASS,OSLT_ANALYTICAL_METHOD_REGISTER_v2_0_RC1.csv:PROCESS_TRACING
+G100-062,HISTORICAL_INTERPRETIVE_MULTIMODAL,Historical mechanism links,PASS,oslt_research/historical.py:MechanismLink
+G100-063,HISTORICAL_INTERPRETIVE_MULTIMODAL,Diachronic semantics,PASS,OSLT_ANALYTICAL_METHOD_REGISTER_v2_0_RC1.csv:DIACHRONIC_SEMANTIC_ANALYSIS
+G100-064,HISTORICAL_INTERPRETIVE_MULTIMODAL,Content analysis,PASS,OSLT_ANALYTICAL_METHOD_REGISTER_v2_0_RC1.csv:QUANTITATIVE_CONTENT_ANALYSIS
+G100-065,HISTORICAL_INTERPRETIVE_MULTIMODAL,Discourse analysis,PASS,OSLT_ANALYTICAL_METHOD_REGISTER_v2_0_RC1.csv:DISCOURSE_ANALYSIS
+G100-066,HISTORICAL_INTERPRETIVE_MULTIMODAL,Narrative analysis,PASS,OSLT_ANALYTICAL_METHOD_REGISTER_v2_0_RC1.csv:NARRATIVE_ANALYSIS
+G100-067,HISTORICAL_INTERPRETIVE_MULTIMODAL,Psychodynamic output bounded,PASS,oslt_research/interpretive.py:PSYCHODYNAMIC
+G100-068,HISTORICAL_INTERPRETIVE_MULTIMODAL,Multimodal artifact provenance,PASS,oslt_research/multimodal.py:DerivedArtifact
+G100-069,HISTORICAL_INTERPRETIVE_MULTIMODAL,Source location retained,PASS,oslt_research/multimodal.py:source_location
+G100-070,HISTORICAL_INTERPRETIVE_MULTIMODAL,Human verification state,PASS,oslt_research/multimodal.py:human_verified
+G100-071,SYNTHESIS_CERTAINTY_CLAIMS,Independence-aware triangulation,PASS,oslt_research/triangulation.py:effective_independent_families
+G100-072,SYNTHESIS_CERTAINTY_CLAIMS,Cross-kernel contradiction resolution,PASS,oslt_research/contradiction.py:SUBSTANTIVE_CONTRADICTION
+G100-073,SYNTHESIS_CERTAINTY_CLAIMS,Certainty vector,PASS,oslt_research/certainty.py:CertaintyVector
+G100-074,SYNTHESIS_CERTAINTY_CLAIMS,Statistical certainty,PASS,oslt_research/certainty.py:STATISTICAL_PRECISION
+G100-075,SYNTHESIS_CERTAINTY_CLAIMS,Causal certainty,PASS,oslt_research/certainty.py:CAUSAL_IDENTIFICATION
+G100-076,SYNTHESIS_CERTAINTY_CLAIMS,Epistemic status separation,PASS,oslt_research/epistemic_status.py:EpistemicStatus
+G100-077,SYNTHESIS_CERTAINTY_CLAIMS,Explanatory contribution,PASS,oslt_research/certainty.py:EXPLANATORY_CONTRIBUTION
+G100-078,SYNTHESIS_CERTAINTY_CLAIMS,Atomic claim evidence binding,PASS,oslt_research/claim_verification.py:AtomicClaim
+G100-079,SYNTHESIS_CERTAINTY_CLAIMS,Claim entailment state,PASS,oslt_research/claim_verification.py:EntailmentState
+G100-080,SYNTHESIS_CERTAINTY_CLAIMS,Unsupported claim blocked,PASS,oslt_research/claim_verification.py:NOT_SUPPORTED
+G100-081,SECURITY_GOVERNANCE_REPRODUCIBILITY,Retrieved content untrusted,PASS,oslt_research/security.py:UNTRUSTED_EXTERNAL_DATA
+G100-082,SECURITY_GOVERNANCE_REPRODUCIBILITY,Prompt-injection detection,PASS,oslt_research/security.py:previous\s+instructions
+G100-083,SECURITY_GOVERNANCE_REPRODUCIBILITY,Least-privilege tool policy,PASS,oslt_research/security.py:ToolPolicy
+G100-084,SECURITY_GOVERNANCE_REPRODUCIBILITY,Risk-based human expert review,PASS,oslt_research/human_review.py:MULTIDISCIPLINARY_PANEL
+G100-085,SECURITY_GOVERNANCE_REPRODUCIBILITY,Verified provenance,PASS,oslt_research/evidence.py:VerificationState
+G100-086,SECURITY_GOVERNANCE_REPRODUCIBILITY,Execution manifest prompt hashes,PASS,oslt_research/execution.py:system_prompt_hash
+G100-087,SECURITY_GOVERNANCE_REPRODUCIBILITY,RAG version binding,PASS,oslt_research/execution.py:rag_version
+G100-088,SECURITY_GOVERNANCE_REPRODUCIBILITY,Analysis-code hash,PASS,oslt_research/analysis_execution.py:code_hash
+G100-089,SECURITY_GOVERNANCE_REPRODUCIBILITY,Environment hash,PASS,oslt_research/analysis_execution.py:environment_hash
+G100-090,SECURITY_GOVERNANCE_REPRODUCIBILITY,Hash-chained research journal,PASS,oslt_research/adjudication.py:ResearchComputationJournal
+G100-091,EVALUATION_DISCOVERY_RELEASE,Retrieval recall at K,PASS,oslt_research/retrieval_eval.py:recall_at_k
+G100-092,EVALUATION_DISCOVERY_RELEASE,Evidence-lane recall,PASS,oslt_research/retrieval_eval.py:lane_recall
+G100-093,EVALUATION_DISCOVERY_RELEASE,OSLT-specific model qualification,PASS,oslt_research/model_benchmark.py:ModelQualificationPolicy
+G100-094,EVALUATION_DISCOVERY_RELEASE,Evidence completeness and saturation,PASS,oslt_research/evidence_completeness.py:DISCOVERY_SATURATION_NOT_REACHED
+G100-095,EVALUATION_DISCOVERY_RELEASE,Execution resource circuit breaker,PASS,oslt_research/execution_budget.py:ExecutionBudget
+G100-096,EVALUATION_DISCOVERY_RELEASE,Integrated execution architecture,PASS,oslt_research/engine.py:ExecutionArchitecturePlan
+G100-097,EVALUATION_DISCOVERY_RELEASE,Graph node contracts,PASS,oslt_research/workflow_graph.py:NodeContract
+G100-098,EVALUATION_DISCOVERY_RELEASE,Controlled convergent loops,PASS,oslt_research/workflow_graph.py:LoopPolicy
+G100-099,EVALUATION_DISCOVERY_RELEASE,Fail-closed release readiness,PASS,oslt_research/release_readiness.py:ReleaseReadiness
+G100-100,EVALUATION_DISCOVERY_RELEASE,Executable Global-100 assurance overlay,PASS,oslt_research/global100_assurance.py:run_assurance

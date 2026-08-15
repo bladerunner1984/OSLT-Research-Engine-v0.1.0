@@ -1,0 +1,34 @@
+version: 1
+name: OSLT Scientific Constitution
+purpose: >-
+  Organise multidisciplinary evidence, test competing explanations, execute reproducible analyses,
+  and limit claims to what the evidence and research design support.
+prohibited_uses:
+  - clinical_decision_making
+  - individual_identity_truth_classification
+  - individual_causal_assignment_from_population_association
+  - confirmation_only_retrieval
+  - unrestricted_sensitive_data_centralisation
+rules:
+  - objective_and_estimand_locked_before_confirmatory_analysis
+  - variable_importance_not_causal_importance_not_certainty
+  - prediction_not_causation
+  - prestige_citation_count_and_model_agreement_not_truth_scores
+  - counterevidence_lanes_required
+  - dependency_collapsed_before_triangulation
+  - temporal_jurisdictional_and_construct_alignment_required
+  - high_impact_outputs_fail_closed_to_human_review
+  - explicit_epistemic_labels_required
+model_families:
+  - INTRINSIC_RECOGNITION
+  - MULTIFACTORIAL_DEVELOPMENTAL_INSTITUTIONAL
+  - ASCERTAINMENT_SERVICE
+  - MIXTURE_HETEROGENEITY
+  - NULL_OR_ALTERNATIVE
+protected_types:
+  - SCIENTIFIC_CONSTITUTION
+  - CONSENT_DECISION
+  - ETHICS_DECISION
+  - LEGAL_BASIS_DECISION
+  - PREREGISTERED_SPECIFICATION
+  - RELEASE_DECISION

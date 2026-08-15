@@ -1,0 +1,140 @@
+{
+  "$defs": {
+    "ClaimTier": {
+      "enum": [
+        "DESCRIPTIVE_EVIDENCE_ONLY",
+        "ASSOCIATION_ONLY",
+        "LIMITED_CAUSAL_EVIDENCE",
+        "MODERATE_TRIANGULATED_CAUSAL_EVIDENCE",
+        "HIGH_TRIANGULATED_CAUSAL_EVIDENCE",
+        "THEORY_DEPENDENT_INTERPRETATION",
+        "SIMULATION_ONLY"
+      ],
+      "title": "ClaimTier",
+      "type": "string"
+    },
+    "ContradictionAssessment": {
+      "properties": {
+        "classification": {
+          "title": "Classification",
+          "type": "string"
+        },
+        "explanation": {
+          "title": "Explanation",
+          "type": "string"
+        },
+        "left_result_id": {
+          "title": "Left Result Id",
+          "type": "string"
+        },
+        "right_result_id": {
+          "title": "Right Result Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "left_result_id",
+        "right_result_id",
+        "classification",
+        "explanation"
+      ],
+      "title": "ContradictionAssessment",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "bounded_conclusion": {
+      "title": "Bounded Conclusion",
+      "type": "string"
+    },
+    "claim_tier": {
+      "$ref": "#/$defs/ClaimTier"
+    },
+    "comparative_support_index": {
+      "additionalProperties": {
+        "type": "number"
+      },
+      "title": "Comparative Support Index",
+      "type": "object"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    },
+    "excluded_result_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Excluded Result Ids",
+      "type": "array"
+    },
+    "human_review_required": {
+      "title": "Human Review Required",
+      "type": "boolean"
+    },
+    "included_result_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Included Result Ids",
+      "type": "array"
+    },
+    "leading_models": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Leading Models",
+      "type": "array"
+    },
+    "limiting_dimension": {
+      "title": "Limiting Dimension",
+      "type": "string"
+    },
+    "limiting_score": {
+      "maximum": 1,
+      "minimum": 0,
+      "title": "Limiting Score",
+      "type": "number"
+    },
+    "run_id": {
+      "title": "Run Id",
+      "type": "string"
+    },
+    "synthesis_id": {
+      "title": "Synthesis Id",
+      "type": "string"
+    },
+    "unresolved_contradictions": {
+      "items": {
+        "$ref": "#/$defs/ContradictionAssessment"
+      },
+      "title": "Unresolved Contradictions",
+      "type": "array"
+    },
+    "warnings": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Warnings",
+      "type": "array"
+    }
+  },
+  "required": [
+    "synthesis_id",
+    "run_id",
+    "included_result_ids",
+    "excluded_result_ids",
+    "comparative_support_index",
+    "leading_models",
+    "unresolved_contradictions",
+    "limiting_dimension",
+    "limiting_score",
+    "claim_tier",
+    "bounded_conclusion",
+    "human_review_required"
+  ],
+  "title": "SynthesisOutcome",
+  "type": "object"
+}

@@ -1,0 +1,437 @@
+{
+  "file_count": 86,
+  "files": [
+    {
+      "bytes": 8360,
+      "path": "CLAUDE_V1_0_REVIEW_AND_OPTIMISATION_REPORT_v1_1.md",
+      "sha256": "634a8f3d8cec8af73c823e585dcf30dbb5b76c193ca50a2ebe34df4dbc0b72f7"
+    },
+    {
+      "bytes": 2943,
+      "path": "HYPOTHESIS_AND_FALSIFIER_MATRIX_v1_1.csv",
+      "sha256": "a03fa20350ef6e94170c4e4f878e3c68b8e2269d3b8bbf5bfb7701a6e9682f7e"
+    },
+    {
+      "bytes": 6953,
+      "path": "METHODS_AND_GOVERNANCE_SOURCE_NOTE_v1_1.md",
+      "sha256": "a7d1b30c096aa63cd0110f124456f116fede16b7f63c29205f6ec838371f8259"
+    },
+    {
+      "bytes": 558877,
+      "path": "OSLT_640_VARIABLE_FIELD_LEVEL_HARVEST_DICTIONARY_v2_4_RC1.csv",
+      "sha256": "f55f452aaf3c4489e8447796bbec80855caba324c832e7f237d05ef3efc3e3b1"
+    },
+    {
+      "bytes": 18803,
+      "path": "OSLT_ANALYTICAL_METHOD_REGISTER_v2_0_RC1.csv",
+      "sha256": "cc30669a0ec56fc6b764a9383ee5dfb54b3d52112d9bead41771f714bd43f706"
+    },
+    {
+      "bytes": 12917,
+      "path": "OSLT_ARCHITECTURE_v2_0_RC1.md",
+      "sha256": "783b7d3881fb39d3db90596fc0bebaea0e5d02cac335c0ca5daa137428e7d77a"
+    },
+    {
+      "bytes": 7297,
+      "path": "OSLT_ARCHITECTURE_v2_2_RC1.md",
+      "sha256": "89ed6e0aaa26b250b5b7069c64d495f0ca8a2df298a02da1f95e7e8a23420a83"
+    },
+    {
+      "bytes": 7224,
+      "path": "OSLT_ARCHITECTURE_v2_3_RC1.md",
+      "sha256": "6b4cb6b712e8519d3965d0684daa2b5f3a92804f648a2f4aab4c89628ed4e4c8"
+    },
+    {
+      "bytes": 8727,
+      "path": "OSLT_ARCHITECTURE_v2_4_RC1.md",
+      "sha256": "92912e6d641a9c9b3e78fdf82e75f14dba923c30feb1a63370c02c8b5630dc50"
+    },
+    {
+      "bytes": 3876,
+      "path": "OSLT_DATA_ACCESS_AND_HARVEST_SEQUENCE_v2_4_RC1.md",
+      "sha256": "70a98d8b2339b59c2ef2a8c0db60daaa31d9e4fe801dbb182c3189cfb414a05b"
+    },
+    {
+      "bytes": 6230,
+      "path": "OSLT_DATA_ACQUISITION_PLAN_v2_3_RC1.md",
+      "sha256": "664a896731cafae2ed3408a1db1260409b9ce54d2da0570afd0853d2d15f70f8"
+    },
+    {
+      "bytes": 4485,
+      "path": "OSLT_DATA_ACQUISITION_WORKSTREAMS_v2_3_RC1.csv",
+      "sha256": "38f4b03950f8d9eb68705baa29aa7bc18b6910eec75fd6b72c32c863a6b308e6"
+    },
+    {
+      "bytes": 20871,
+      "path": "OSLT_DATA_DISCOVERY_ROADMAP_v2_0_RC1.md",
+      "sha256": "98284b3ddddc8bd4255ec4afc9d6a96cd47ca6f60fccbcb3887011ac82b90325"
+    },
+    {
+      "bytes": 3309,
+      "path": "OSLT_DATA_HARVESTING_MANUAL_v2_4_RC1.md",
+      "sha256": "3bee7477d7f85cde64b2274c12d114405ff3b00491b6807325de5cd69a2cbb83"
+    },
+    {
+      "bytes": 2066,
+      "path": "OSLT_DATA_HARVEST_MASTER_INDEX_v2_4_RC1.md",
+      "sha256": "04bc436fa5be83cd397997540d7f46ff0593bae9a69671525f368dc0320e0b03"
+    },
+    {
+      "bytes": 56505,
+      "path": "OSLT_DATA_HARVEST_SOURCE_REGISTER_v2_4_RC1.csv",
+      "sha256": "bf6b2769e9cdbd3de3b731d4f8a9268044a2c3b8503bf2a91f4c5f00595508c5"
+    },
+    {
+      "bytes": 1517,
+      "path": "OSLT_DATA_QUALITY_AND_PROVENANCE_STANDARD_v2_4_RC1.md",
+      "sha256": "424180b232ae87bba1e0e8d43e0887c62329a34cac427e9a78e564baed27c690"
+    },
+    {
+      "bytes": 33059,
+      "path": "OSLT_DATA_SOURCE_REGISTER_v2_0_RC1.csv",
+      "sha256": "5b991b87e7a0edcfa2cd0ace1527dceee6dc249a5902d74bf81dabb3f1d7162c"
+    },
+    {
+      "bytes": 51011,
+      "path": "OSLT_DOMAIN_METHOD_MATRIX_v2_0_RC1.csv",
+      "sha256": "beeb4dccc6ceda96fbb37096e3cc0d8fd923467b8fce19321c2017b64f30cfbc"
+    },
+    {
+      "bytes": 2174,
+      "path": "OSLT_EVIDENCE_FABRIC_v2_1_RC1.md",
+      "sha256": "7d0d884d13f965896a7f33ff5634f608992ebb83405406368da22b70a29955a3"
+    },
+    {
+      "bytes": 4384,
+      "path": "OSLT_EXECUTIVE_SUMMARY_v2_3_RC1.md",
+      "sha256": "a3dbc261a96f92b23e46a05aaa4a88d1f411629746b692934f4d6c608f009084"
+    },
+    {
+      "bytes": 898339,
+      "path": "OSLT_EXECUTIVE_SUMMARY_v2_3_RC1.pdf",
+      "sha256": "5c1e446c68586907846969685e8886274e83149eebbbc7975a70e254b5b80a74"
+    },
+    {
+      "bytes": 11675,
+      "path": "OSLT_GLOBAL100_AUDIT_FINAL.csv",
+      "sha256": "143174c945803b778eced09671373f4fe7e524bf09a30bf752b9eb691030a801"
+    },
+    {
+      "bytes": 608,
+      "path": "OSLT_GLOBAL100_AUDIT_FINAL.md",
+      "sha256": "25aa6df9c7a1fe505a7c829936738b458b77819bf9377ec3934e0f0bf750692a"
+    },
+    {
+      "bytes": 11055,
+      "path": "OSLT_GLOBAL100_AUDIT_LOOP1.csv",
+      "sha256": "c3acf78eb429c9e2482628519057fb6d71b9a7d1c37d4abd6bb7a50e91c94e65"
+    },
+    {
+      "bytes": 1472,
+      "path": "OSLT_GLOBAL100_AUDIT_LOOP1.md",
+      "sha256": "81d8054652860fb55c7169dcd2eb6f7d8bdf1ccd9d834afaa62b4d519569b22c"
+    },
+    {
+      "bytes": 11675,
+      "path": "OSLT_GLOBAL100_AUDIT_LOOP2.csv",
+      "sha256": "143174c945803b778eced09671373f4fe7e524bf09a30bf752b9eb691030a801"
+    },
+    {
+      "bytes": 608,
+      "path": "OSLT_GLOBAL100_AUDIT_LOOP2.md",
+      "sha256": "25aa6df9c7a1fe505a7c829936738b458b77819bf9377ec3934e0f0bf750692a"
+    },
+    {
+      "bytes": 11890,
+      "path": "OSLT_GLOBAL100_AUDIT_V2_1_FINAL.csv",
+      "sha256": "d15ad914c2f8800c1a8f6d373c75da3928b425924bea1f746d645da15f923d79"
+    },
+    {
+      "bytes": 694,
+      "path": "OSLT_GLOBAL100_AUDIT_V2_1_FINAL.md",
+      "sha256": "656ff23baf18e6b09e95dc3e59d7af9ccbf495d5e66b61b270fd9c4e4739d423"
+    },
+    {
+      "bytes": 11542,
+      "path": "OSLT_GLOBAL100_AUDIT_V2_1_LOOP1.csv",
+      "sha256": "7699b0e828cc25847110e4f75dddabcddddcfcbddf40a42953b7f69eb7cf43ba"
+    },
+    {
+      "bytes": 1132,
+      "path": "OSLT_GLOBAL100_AUDIT_V2_1_LOOP1.md",
+      "sha256": "eb08750004a413ebd158dd55a26e813da3246f32fddfb8b1cf0476449dc56b3f"
+    },
+    {
+      "bytes": 11890,
+      "path": "OSLT_GLOBAL100_AUDIT_V2_1_LOOP2.csv",
+      "sha256": "d15ad914c2f8800c1a8f6d373c75da3928b425924bea1f746d645da15f923d79"
+    },
+    {
+      "bytes": 694,
+      "path": "OSLT_GLOBAL100_AUDIT_V2_1_LOOP2.md",
+      "sha256": "656ff23baf18e6b09e95dc3e59d7af9ccbf495d5e66b61b270fd9c4e4739d423"
+    },
+    {
+      "bytes": 11887,
+      "path": "OSLT_GLOBAL100_AUDIT_V2_2_FINAL.csv",
+      "sha256": "804a7dfcd31b134bfa5c80672ba4773a765b13f1c18ad990e963a47dc9232b33"
+    },
+    {
+      "bytes": 694,
+      "path": "OSLT_GLOBAL100_AUDIT_V2_2_FINAL.md",
+      "sha256": "656ff23baf18e6b09e95dc3e59d7af9ccbf495d5e66b61b270fd9c4e4739d423"
+    },
+    {
+      "bytes": 12045,
+      "path": "OSLT_GLOBAL100_AUDIT_V2_3_FINAL.csv",
+      "sha256": "7c34aa8b6a1c16b5c0614e08016f968ab195353acf0c9d144c568a39bad6a753"
+    },
+    {
+      "bytes": 694,
+      "path": "OSLT_GLOBAL100_AUDIT_V2_3_FINAL.md",
+      "sha256": "656ff23baf18e6b09e95dc3e59d7af9ccbf495d5e66b61b270fd9c4e4739d423"
+    },
+    {
+      "bytes": 694,
+      "path": "OSLT_GLOBAL100_AUDIT_V2_4_FINAL.md",
+      "sha256": "656ff23baf18e6b09e95dc3e59d7af9ccbf495d5e66b61b270fd9c4e4739d423"
+    },
+    {
+      "bytes": 2460,
+      "path": "OSLT_GLOBAL100_EXECUTABLE_ASSURANCE_V2_3_FINAL.md",
+      "sha256": "6caf9221811ff870c11508f7faf613705218f745f450c85e7a67eab220e91a97"
+    },
+    {
+      "bytes": 3093,
+      "path": "OSLT_GLOBAL100_EXECUTABLE_ASSURANCE_V2_4_FINAL.md",
+      "sha256": "2ee949a6dc350adbfcd89a4cad839349b9c007da96f36ce8bb17162f8776a98f"
+    },
+    {
+      "bytes": 1332,
+      "path": "OSLT_GLOBAL100_V2_3_DEVELOPMENT_LOOP.md",
+      "sha256": "6d77f2e906e55c977c7c5faf7e85a9b55f21ec066366eb470acae94cf5d31bae"
+    },
+    {
+      "bytes": 2945,
+      "path": "OSLT_GRAPH_ORCHESTRATION_AND_MODEL_POLICY_v2_2_RC1.md",
+      "sha256": "15ef64744d7716d015e274e102fdf6e08dc3ec1ba3bcd51eb9c8036f79e9bb9f"
+    },
+    {
+      "bytes": 1716,
+      "path": "OSLT_HARNESS_WRAPPER_SPEC_v2_1_RC1.md",
+      "sha256": "c4124fb09d388f5c60579f170ff99f9973f208981f5f1f47fd51243e6a782979"
+    },
+    {
+      "bytes": 28583,
+      "path": "OSLT_MASTER_HYPOTHESIS_REGISTRY_v2_4_RC1.csv",
+      "sha256": "eb1de4893fddc34169587f25e0a800aca19e19fd7c0cb00204ecc3af3dc62154"
+    },
+    {
+      "bytes": 920,
+      "path": "OSLT_MODEL_QUALIFICATION_PROTOCOL_v2_3_RC1.md",
+      "sha256": "5686820f6f8b4ce4906130af6a9cbb238417e2cf425329a406ca3a06788226aa"
+    },
+    {
+      "bytes": 1754,
+      "path": "OSLT_MODEL_SELECTION_NOTE_2026-07-25.md",
+      "sha256": "192785ad7adc5734756362f7a5529a9cd590ad5146fdb71417131c5a573fa911"
+    },
+    {
+      "bytes": 1420,
+      "path": "OSLT_PILOT_1_ACADEMIC_KNOWLEDGE_PRODUCTION_PROTOCOL_v2_4_RC1.md",
+      "sha256": "7d7af8e058b445de6f2121201cfb885d8d75f98bb09f412f6d5f19464e1d08c4"
+    },
+    {
+      "bytes": 1072,
+      "path": "OSLT_PILOT_2_REFERRAL_CHANGEPOINT_PROTOCOL_v2_4_RC1.md",
+      "sha256": "224726606ae8e69dc1620e0e9141ecbd2576a14cda3ba21043041a942bb14988"
+    },
+    {
+      "bytes": 1146,
+      "path": "OSLT_PILOT_3_DEVELOPMENTAL_HETEROGENEITY_PROTOCOL_v2_4_RC1.md",
+      "sha256": "9e64866c9fb947e5fd05be09bd63c449539e7dbb64390e4f38db004e551b7888"
+    },
+    {
+      "bytes": 1538,
+      "path": "OSLT_RAG_EVALUATION_PROTOCOL_v2_1_RC1.md",
+      "sha256": "b72e327c5c254d83817227828c130f1fd630f448a446beed9524dbbc81e3ff46"
+    },
+    {
+      "bytes": 2179,
+      "path": "OSLT_REENGINEERING_CHANGELOG_v2_0_RC1.md",
+      "sha256": "15b7d6760bc3f82bef577ba356442ea2b860b7296a9cfc9595e21f0a8f23c260"
+    },
+    {
+      "bytes": 2126,
+      "path": "OSLT_REENGINEERING_CHANGELOG_v2_2_RC1.md",
+      "sha256": "72ad1074dc4ed311e6fe0d51e44ca40cb177abaf96530f08eec50ae3a57df23b"
+    },
+    {
+      "bytes": 2104,
+      "path": "OSLT_REENGINEERING_CHANGELOG_v2_3_RC1.md",
+      "sha256": "a54ed0a6d81783583af65cd6f69051fea2e015032bbe12d681044d2feb99555e"
+    },
+    {
+      "bytes": 1295,
+      "path": "OSLT_REENGINEERING_CHANGELOG_v2_4_RC1.md",
+      "sha256": "ea5a7918db392403ad78e66bcb40975928b3cb87b4586209328894f8ef7e7c58"
+    },
+    {
+      "bytes": 833,
+      "path": "OSLT_RELEASE_GATES_v2_3_RC1.md",
+      "sha256": "6d9b17955241e0cdf60302c118c03211228b276c24e61bed0cc76373d46633f7"
+    },
+    {
+      "bytes": 2172,
+      "path": "OSLT_RELEASE_VALIDATION_REPORT_v2_0_RC1.md",
+      "sha256": "4c3a71e2aa53889b1a7da87876d78ea9dbd90282e2886ad7ae9e154195515601"
+    },
+    {
+      "bytes": 1013,
+      "path": "OSLT_RELEASE_VALIDATION_REPORT_v2_2_RC1.md",
+      "sha256": "cabe3f4e078d6ff10036dc610cfc3aa90d291e97bf69371bf5437253ae192fd1"
+    },
+    {
+      "bytes": 2132,
+      "path": "OSLT_RELEASE_VALIDATION_REPORT_v2_3_RC1.md",
+      "sha256": "e48aa690bf5bfc69eab4c81ad15e716a3b210abf570dcfa44a23f73bfdb335bb"
+    },
+    {
+      "bytes": 1659,
+      "path": "OSLT_RELEASE_VALIDATION_REPORT_v2_4_RC1.md",
+      "sha256": "788c8f9a71f44fd834b492532f92d098f4eefff3ebbb143ca6444a1222d0aa9a"
+    },
+    {
+      "bytes": 1465,
+      "path": "OSLT_RESTRICTED_DATA_GOVERNANCE_AND_CONSENT_v2_4_RC1.md",
+      "sha256": "b15d109038fe1acaec7ec49e59f877b9fd18857425cf37b2b029df96a059965c"
+    },
+    {
+      "bytes": 1294,
+      "path": "OSLT_SAMPLE_SIZE_AND_INFORMATION_GAIN_PROTOCOL_v2_4_RC1.md",
+      "sha256": "a3f29dd40bd2f3d7e7a9002d5d54f92a4dde27866b0d10b49ee06873528fca13"
+    },
+    {
+      "bytes": 2164,
+      "path": "OSLT_SCIENTIFIC_CONSTITUTION_AND_COMPETING_MODELS_v2_4_RC1.md",
+      "sha256": "134edd3d4bc8cf5b50e90b4a537ea5c0ffb9ef5ced8a3a23382d609b70aa7ac4"
+    },
+    {
+      "bytes": 753,
+      "path": "OSLT_SECURITY_BLINDING_SPEC_v2_1_RC1.md",
+      "sha256": "ed2aad915767e42b7d36410060293c077d69e7e420dba728a3cc6e0b00ef56d4"
+    },
+    {
+      "bytes": 386702,
+      "path": "OSLT_SOURCE_VARIABLE_LINKAGE_v2_0_RC1.csv",
+      "sha256": "acff80c14cb302c35d459e5628128fa3396d662c7d017d3726447a0b692cab3b"
+    },
+    {
+      "bytes": 1872,
+      "path": "OSLT_THESIS_MECHANISM_IMPORT_NOTE_v2_4_RC1.md",
+      "sha256": "41833a01d590633e073187ffd3e47f77526c6e8128b863289fcd5144fbc4ac4e"
+    },
+    {
+      "bytes": 2090,
+      "path": "OSLT_V2_4_IMPLEMENTATION_AND_DATA_HARVEST_ROADMAP.md",
+      "sha256": "38a43338d1b3dfaeaf192c9ed296e77ebc0966c69bff110fcc47be1dd1fffa68"
+    },
+    {
+      "bytes": 243592,
+      "path": "OSLT_VARIABLE_METHOD_CROSSWALK_v2_0_RC1.csv",
+      "sha256": "b32886e708756fcc8e1086f2be3168ef52ea5c1aefa0043728e5374f6cb6901f"
+    },
+    {
+      "bytes": 36813,
+      "path": "OSL_INFLUENCE_AND_DIAGNOSTIC_HETEROGENEITY_RESEARCH_PROTOCOL_v2_1.md",
+      "sha256": "e1fc97d58ed114e91cdd24928c8d4e5da8b8a0e8b684f86b31702aadf03612d6"
+    },
+    {
+      "bytes": 423,
+      "path": "README.md",
+      "sha256": "229af8f1d524c7d1c45d66c2f7fb739f7af6b4533b27b13d8b5a939a5f5f2cd9"
+    },
+    {
+      "bytes": 2103,
+      "path": "README_OSLT_v2_0_RC1.md",
+      "sha256": "2342b7f990542d6f3ce3620278c8e2bc493c1fa68e61c5af95b5b1ac0fd88929"
+    },
+    {
+      "bytes": 1267,
+      "path": "README_OSLT_v2_2_RC1.md",
+      "sha256": "3905a33ed244cad33cbb0fca4b2b05160ed3c9cb9cea101602de4e4e73027311"
+    },
+    {
+      "bytes": 741,
+      "path": "README_OSLT_v2_3_RC1.md",
+      "sha256": "f89b348a9c28fe63e859492782c5fab2413c79132285a6cd198767cc6b48af6c"
+    },
+    {
+      "bytes": 7849,
+      "path": "README_OSL_v1_1_LINEAGE.md",
+      "sha256": "6e44d38140c8f4b24b3bb6130278ffc98df8917cffc1dc1b638214b08c72caff"
+    },
+    {
+      "bytes": 2515,
+      "path": "REMAINING_RESEARCH_GAPS_v1_1.md",
+      "sha256": "dd901646b14f49e4174f2ef7d5966ea848430972a9ee08250e91f20ee1f34d71"
+    },
+    {
+      "bytes": 1372,
+      "path": "RESEARCH_CONTROL_REGISTER_v1_1.csv",
+      "sha256": "996685108ff0899db26001e182cf548b697a2d23ad9cd68026be1615741737c3"
+    },
+    {
+      "bytes": 6493,
+      "path": "RESEARCH_DATA_REQUIREMENTS_v2_1.md",
+      "sha256": "d5f198bcad3ec9cab4e565237c1c0d828b6d703859538991ab7f9a8803b1f113"
+    },
+    {
+      "bytes": 5399,
+      "path": "RESEARCH_KERNEL_VALIDATION_REPORT_v1_1.md",
+      "sha256": "d04b1b0d786280622a2bb2f439f32ef52e10276eed961f3c3c9f30d694a2e5ef"
+    },
+    {
+      "bytes": 1569,
+      "path": "SECURITY_SURFACE_AUDIT_v1_1.md",
+      "sha256": "e0ac2bd62cb771b6b2ff52a73312794fa01c36c64ca46364ed502b5c4acf7c6e"
+    },
+    {
+      "bytes": 883,
+      "path": "templates/DATA_MANAGEMENT_PLAN_TEMPLATE_v2_4_RC1.md",
+      "sha256": "daa719d707c4ac2ae6dfd1b887a9e92903eb0277d98510ae9f3377f817de335e"
+    },
+    {
+      "bytes": 789,
+      "path": "templates/DPIA_AND_ETHICS_READINESS_CHECKLIST_v2_4_RC1.md",
+      "sha256": "bd168ae2a82790a91db9326e9aa253d6ea0252bab3c57bb7210eaf2b6118d699"
+    },
+    {
+      "bytes": 198,
+      "path": "templates/FIELD_VERIFICATION_TEMPLATE_v2_4_RC1.csv",
+      "sha256": "aa29746c7f1f69cc29f8c9c1f61fb8fa4d14ffec12ef3d392132c9608926387e"
+    },
+    {
+      "bytes": 1405,
+      "path": "templates/PARTICIPANT_DATA_DONATION_AND_CONSENT_SPEC_v2_4_RC1.md",
+      "sha256": "3ad21fe15927f8b4f33ae8af45788c74bc2245b0379cebea01e010bad3f59be6"
+    },
+    {
+      "bytes": 956,
+      "path": "templates/PREREGISTRATION_AND_SAP_TEMPLATE_v2_4_RC1.md",
+      "sha256": "b6ceb8bb083d81eaf8f763ae16dbc4e8be7f8fb303fed21089e78993322058bc"
+    },
+    {
+      "bytes": 1196,
+      "path": "templates/RESTRICTED_DATA_ACCESS_APPLICATION_TEMPLATE_v2_4_RC1.md",
+      "sha256": "7cce5140c0ed478c63840fb2d1c1a81e1a9ff156fa8b62c90d2b259eb21ca891"
+    },
+    {
+      "bytes": 214,
+      "path": "templates/SOURCE_INGEST_LOG_TEMPLATE_v2_4_RC1.csv",
+      "sha256": "8a5d9e4fe2585d5189c7127fbe9f8feb62bcd88372257a106eb87b350f9f680d"
+    }
+  ],
+  "immutability_rule": "reference package changes require an explicit new lineage version",
+  "package": "OSLT_Research_Engine_v2_4_RC1"
+}

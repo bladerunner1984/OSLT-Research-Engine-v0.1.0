@@ -1,0 +1,65 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "concept": {
+      "minLength": 1,
+      "title": "Concept",
+      "type": "string"
+    },
+    "extra_filters": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Extra Filters",
+      "type": "object"
+    },
+    "from_date": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "From Date"
+    },
+    "max_records": {
+      "default": 100,
+      "maximum": 10000,
+      "minimum": 1,
+      "title": "Max Records",
+      "type": "integer"
+    },
+    "proposition_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Proposition Ids",
+      "type": "array"
+    },
+    "query_id": {
+      "title": "Query Id",
+      "type": "string"
+    },
+    "to_date": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "To Date"
+    }
+  },
+  "required": [
+    "query_id",
+    "concept"
+  ],
+  "title": "HarvestQuery",
+  "type": "object"
+}

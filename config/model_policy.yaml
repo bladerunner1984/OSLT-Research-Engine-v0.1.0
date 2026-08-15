@@ -1,0 +1,10 @@
+version: 1
+default_gateway: disabled
+single_gateway_module: src/oslt_research/ai/gateway.py
+rules:
+  - no_direct_provider_calls_outside_gateway
+  - model_must_pass_oslt_specific_qualification
+  - model_agreement_has_zero_evidential_weight
+  - economy_models_only_for_bounded_schema_validated_tasks
+  - prompts_and_model_versions_bound_into_run_manifest
+  - sensitive_data_requires_environment_specific_approval

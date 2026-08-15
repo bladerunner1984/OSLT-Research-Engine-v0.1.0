@@ -1,0 +1,10 @@
+version: 1
+triggers:
+  - high_policy_or_clinical_consequence
+  - child_or_vulnerable_population
+  - novel_or_contested_claim
+  - substantive_cross_kernel_contradiction
+  - causal_claim_below_moderate_certainty
+  - low_provenance_or_source_independence
+  - privacy_or_defamation_risk
+  - film_or_public_communication_release

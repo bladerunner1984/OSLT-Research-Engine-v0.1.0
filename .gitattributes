@@ -1,0 +1,19 @@
+# Normalise executable/source text while preserving evidence and register bytes exactly.
+* text=auto
+
+*.py text eol=lf
+*.toml text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.json text eol=lf
+*.md text eol=lf
+*.txt text eol=lf
+*.ps1 text eol=crlf
+
+# These estates are hash-pinned lineage and canonical registers. Never rewrite line endings.
+docs/reference/v2.4-rc1/** -text
+registries/*.csv -text
+
+*.pdf binary
+*.zip binary
+*.whl binary

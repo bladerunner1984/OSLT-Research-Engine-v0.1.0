@@ -1,0 +1,12 @@
+version: 1
+status: EXPLORATORY_ONLY
+queries:
+  - id: P1-Q01
+    concept: gender dysphoria autism child adolescent
+    sources: [openalex, crossref, pubmed]
+  - id: P1-Q02
+    concept: gender identity adolescent social media longitudinal
+    sources: [openalex, crossref, pubmed]
+notes:
+  - These seed queries are scaffolding and are not a preregistered confirmatory search strategy.
+  - A human-reviewed systematic search protocol must replace them before confirmatory analysis.

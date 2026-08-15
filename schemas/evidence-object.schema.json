@@ -1,0 +1,240 @@
+{
+  "$defs": {
+    "AccessClass": {
+      "enum": [
+        "OPEN",
+        "LICENSED",
+        "PARTICIPANT_SECURE",
+        "TRE_SDE"
+      ],
+      "title": "AccessClass",
+      "type": "string"
+    },
+    "EpistemicStatus": {
+      "enum": [
+        "OBSERVATION",
+        "MEASUREMENT",
+        "ASSOCIATION",
+        "CAUSAL_INFERENCE",
+        "INTERPRETATION",
+        "SIMULATION",
+        "RECOMMENDATION"
+      ],
+      "title": "EpistemicStatus",
+      "type": "string"
+    },
+    "EvidenceLane": {
+      "enum": [
+        "UNCLASSIFIED",
+        "SUPPORT",
+        "CONTRADICT",
+        "RIVAL",
+        "NULL",
+        "BIAS_CRITIQUE",
+        "REPLICATION",
+        "CORRECTION_RETRACTION"
+      ],
+      "title": "EvidenceLane",
+      "type": "string"
+    },
+    "ProvenanceRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "access_class": {
+          "$ref": "#/$defs/AccessClass",
+          "default": "OPEN"
+        },
+        "checksum_sha256": {
+          "pattern": "^[a-f0-9]{64}$",
+          "title": "Checksum Sha256",
+          "type": "string"
+        },
+        "codebook_or_schema_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Codebook Or Schema Ref"
+        },
+        "field_or_document_locator": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Field Or Document Locator"
+        },
+        "licence_or_approval": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Licence Or Approval"
+        },
+        "published_at": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Published At"
+        },
+        "retrieval_query": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Retrieval Query"
+        },
+        "retrieved_at": {
+          "format": "date-time",
+          "title": "Retrieved At",
+          "type": "string"
+        },
+        "source_id": {
+          "minLength": 1,
+          "title": "Source Id",
+          "type": "string"
+        },
+        "source_uri": {
+          "minLength": 1,
+          "title": "Source Uri",
+          "type": "string"
+        },
+        "source_version": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Source Version"
+        },
+        "transformation_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Transformation Ids",
+          "type": "array"
+        }
+      },
+      "required": [
+        "source_id",
+        "source_uri",
+        "checksum_sha256"
+      ],
+      "title": "ProvenanceRecord",
+      "type": "object"
+    },
+    "SourceStatus": {
+      "enum": [
+        "VERIFIED",
+        "ASSERTED",
+        "UNVERIFIED"
+      ],
+      "title": "SourceStatus",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "admission_failures": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Admission Failures",
+      "type": "array"
+    },
+    "admitted": {
+      "default": false,
+      "title": "Admitted",
+      "type": "boolean"
+    },
+    "content": {
+      "default": "",
+      "title": "Content",
+      "type": "string"
+    },
+    "dependency_family": {
+      "minLength": 1,
+      "title": "Dependency Family",
+      "type": "string"
+    },
+    "epistemic_status": {
+      "$ref": "#/$defs/EpistemicStatus",
+      "default": "OBSERVATION"
+    },
+    "evidence_id": {
+      "minLength": 1,
+      "title": "Evidence Id",
+      "type": "string"
+    },
+    "lane": {
+      "$ref": "#/$defs/EvidenceLane",
+      "default": "UNCLASSIFIED"
+    },
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "proposition_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Proposition Ids",
+      "type": "array"
+    },
+    "provenance": {
+      "$ref": "#/$defs/ProvenanceRecord"
+    },
+    "raw_person_level_payload_included": {
+      "default": false,
+      "title": "Raw Person Level Payload Included",
+      "type": "boolean"
+    },
+    "source_status": {
+      "$ref": "#/$defs/SourceStatus",
+      "default": "UNVERIFIED"
+    },
+    "title": {
+      "minLength": 1,
+      "title": "Title",
+      "type": "string"
+    }
+  },
+  "required": [
+    "evidence_id",
+    "title",
+    "provenance",
+    "dependency_family"
+  ],
+  "title": "EvidenceObject",
+  "type": "object"
+}
