@@ -9,6 +9,38 @@ from oslt_research.evidence.provenance import sha256_bytes
 from oslt_research.pipelines.registries import registry_summary
 
 
+# Directories that are gitignored build/environment artefacts rather than repository
+# payload. The secret-filename gate exists to stop credentials entering the repository,
+# and nothing under these paths can enter it, so scanning them only yields false
+# positives (e.g. certifi ships cacert.pem inside .venv, which the Makefile install
+# target creates in the repository root).
+EXCLUDED_SCAN_DIRECTORIES = frozenset(
+    {
+        ".git",
+        ".venv",
+        "venv",
+        ".tox",
+        ".nox",
+        "node_modules",
+        "__pycache__",
+        ".mypy_cache",
+        ".ruff_cache",
+        ".pytest_cache",
+        "htmlcov",
+        "dist",
+        "build",
+    }
+)
+
+
+def _is_scannable(path: Path, root: Path) -> bool:
+    relative = path.relative_to(root)
+    return not any(
+        part in EXCLUDED_SCAN_DIRECTORIES or part.endswith(".egg-info")
+        for part in relative.parts
+    )
+
+
 @dataclass(frozen=True)
 class PreflightFinding:
     code: str
@@ -129,7 +161,7 @@ def _check_secret_filenames(root: Path) -> list[PreflightFinding]:
     ]
     findings: list[PreflightFinding] = []
     for path in root.rglob("*"):
-        if not path.is_file() or ".git" in path.parts:
+        if not path.is_file() or not _is_scannable(path, root):
             continue
         if path.name == ".env.example":
             continue
