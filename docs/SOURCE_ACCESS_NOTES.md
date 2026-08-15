@@ -119,3 +119,36 @@ consecutive refusals rather than thrashing.
 **4. A failed request is not a zero.** A year whose Hansard request failed marks the series
 incomplete and cannot be used as a calibration target, because a hole treated as a trough
 is fabricated data in the very series a mechanism is tested against.
+
+---
+
+## Closed: thin-abstract enrichment (811 records)
+
+Two enrichment passes recovered 0 of the remaining 811 short records. This is not a
+retrieval failure and must not be retried.
+
+| Origin of the thin record | Count |
+|---|---|
+| Europe PMC | 748 |
+| Crossref | 55 |
+| OpenAlex | 6 |
+| PubMed | 2 |
+
+748 of the 811 were harvested *from* Europe PMC in the first place, so re-querying Europe
+PMC for them asks the source that already answered. A spot check confirmed the records
+exist there with an empty `abstractText`.
+
+**Why they are empty:** they are not papers. Their titles are
+"Proceedings of the World Molecular Imaging Congress", "Scientific Abstracts: 16th Asian
+Congress of ...", "Oral Presentations", "Canadian Society of Plastic Surgeons". These are
+conference front-matter and session headers — container records with no abstract to hold.
+1 of 6 sampled had any abstract text at all, and that one had 76 characters.
+
+**Consequence:** these records carry a title and provenance but cannot be lane-coded from
+content. They should be excluded from content-dependent analysis with a recorded reason,
+not counted as evidence with an empty field, and not treated as an outstanding gap.
+
+**Standing lesson:** an empty field is not necessarily a missing value. Before building a
+backfill pipeline, check whether the value exists at the source. Two passes and a full day
+of a P0 source's rate budget went to recovering data that was never there — the corpus
+composition would have shown it in one query.
