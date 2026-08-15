@@ -8,7 +8,7 @@ from oslt_research.connectors.retractions import (
     RetractionConnector,
     RetractionRecord,
 )
-from oslt_research.domain.enums import AccessClass, EvidenceLane
+from oslt_research.domain.enums import AccessClass, EvidenceLane, SourceStatus
 from oslt_research.domain.models import EvidenceObject, ProvenanceRecord
 
 
@@ -32,6 +32,7 @@ def corpus_record(doi: str) -> EvidenceObject:
     return EvidenceObject(
         evidence_id=f"EV-{doi[-6:]}",
         title="An original paper",
+        source_status=SourceStatus.VERIFIED,
         provenance=ProvenanceRecord(
             source_id="SRC", source_uri="https://example.org/x",
             checksum_sha256="a" * 64, access_class=AccessClass.OPEN,

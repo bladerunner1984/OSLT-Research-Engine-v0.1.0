@@ -22,7 +22,7 @@ def blocked(reachability: Reachability, proposition_id: str = "P1") -> Propositi
     )
 
 
-def testable() -> PropositionFeasibility:
+def open_testable_item() -> PropositionFeasibility:
     return PropositionFeasibility(
         proposition_id="OK1",
         model_family="FAMILY_A",
@@ -89,7 +89,7 @@ def test_clustering_inflates_the_required_sample():
 
 
 def test_only_blocked_propositions_are_priced():
-    results = [blocked(Reachability.NEEDS_PRIMARY_COLLECTION), testable()]
+    results = [blocked(Reachability.NEEDS_PRIMARY_COLLECTION), open_testable_item()]
     priced = requirements_for_blocked(results, replicates=200)
     assert [item.proposition_id for item in priced] == ["P1"]
 
