@@ -122,6 +122,52 @@ merely degrading it.
 
 # Second comparator: secondary mental health referrals by age, 2017/18 – 2023/24
 
+> ## ⚠️ SEVERELY CONFOUNDED — added 2026-08-16, read before anything below
+>
+> **This comparator is very likely a coverage artefact and should not be relied on.**
+>
+> Fingertips indicator 93623 declares its source as *"OHID, based on NHS England and Office
+> for National Statistics data"*. NHS England's mental health referral collection is the
+> **Mental Health Services Data Set (MHSDS)**, now downloaded and read directly. MHSDS
+> provider participation was incomplete in the early years and grew steadily:
+>
+> | Financial year | Providers submitting to MHSDS |
+> |---|---|
+> | 2016/17 | 94 |
+> | **2017/18** | **103** |
+> | 2018/19 | 137 |
+> | 2019/20 | 243 |
+> | 2020/21 | 300 |
+> | 2021/22 | 334 |
+> | 2022/23 | 372 |
+> | **2023/24** | **389** |
+>
+> Across the exact window used below, **submitting providers rose ×3.76 while the referral
+> rate rose ×2.02.** The ascertainment ramp is nearly twice the apparent trend.
+>
+> **What this does to the finding.** The under-18 rise, the monotonic age gradient and the
+> emerging female excess are all consistent with a growing share of activity simply becoming
+> *visible* to the collection, rather than with any change in referral behaviour. If the
+> providers joining later were disproportionately children and young people's services — which
+> is plausible and has not been checked — that would inflate the under-18 band specifically,
+> which is precisely the stratum the argument rested on.
+>
+> **The claim built on this comparator is withdrawn.** The section below argued that
+> adolescent-concentrated, female-predominant referral growth is not domain-specific. That
+> argument is not currently supported, because the comparator itself may not describe a real
+> rise. It is retained unaltered for the record and because the *method* remains right — but
+> the conclusion does not stand on this evidence.
+>
+> **What would settle it.** A coverage-adjusted series: restrict to providers submitting
+> continuously across the whole window, or model participation explicitly. MHSDS supports
+> this and it has not been done. Until then, treat every figure below as an upper bound on a
+> real change and quite possibly as no change at all.
+>
+> The cancer comparator is **unaffected** — it comes from a separate, mature collection with
+> no comparable participation ramp — and the diabetes and epilepsy negative controls are
+> likewise unaffected, being hospital admissions rather than MHSDS submissions.
+
+
 Added because one comparator domain is weak, and because cancer — while sharing the referral
 system — is remote from the target in every other respect. This one is not.
 
