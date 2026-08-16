@@ -162,11 +162,15 @@ def test_persisted_manifests_state_a_preregistration_and_an_authority(
 @pytest.mark.xfail(
     strict=True,
     reason=(
-        "WIRING AUDIT: no RunManifest is persisted for any run in the store. "
-        "`save_run` is called only by pipelines/pilot1.py, which is not the corpus path; "
-        "the corpus path (kernel_harvest.harvest_for_kernels -> execute_harvest) builds "
-        "no manifest and has no production caller at all. Every persisted KernelResult "
-        "and SynthesisOutcome therefore names a run that cannot be reproduced. "
+        "WIRING AUDIT (partially fixed 2026-08-16): the corpus path now seals a "
+        "RunManifest - kernel_harvest.harvest_for_kernels builds one, persists it via "
+        "save_run at A3_VERIFIED_EVIDENCE_COMPUTATION and journals RUN_MANIFEST_SEALED - "
+        "and save_kernel_result/save_synthesis refuse to write without one, so no NEW "
+        "orphan run can be created. What still fails is the historic run "
+        "P1-20260815123808, written before the gate existed: its commit, config hashes "
+        "and environment are unrecoverable, and a reconstructed manifest would assert a "
+        "reproducibility that does not exist. The honest remedy is to re-run that "
+        "analysis through the gated path, not to backfill a manifest. "
         "See docs/WIRING_AUDIT.md."
     ),
 )

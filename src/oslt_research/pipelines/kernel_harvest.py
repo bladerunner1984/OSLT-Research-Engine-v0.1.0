@@ -3,12 +3,17 @@ from __future__ import annotations
 import csv
 import re
 from dataclasses import dataclass, field
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Iterable, Sequence
 
 from oslt_research.connectors.base import HarvestQuery, SourceConnector
-from oslt_research.domain.enums import EvidenceLane
-from oslt_research.domain.models import EvidenceObject
+from oslt_research.domain.enums import AuthorityLevel, EvidenceLane
+from oslt_research.domain.models import EvidenceObject, RunManifest
+from oslt_research.evidence.journal import ResearchComputationJournal
+from oslt_research.evidence.provenance import canonical_json_hash, sha256_bytes
+from oslt_research.governance.authority import NOT_PREREGISTERED
+from oslt_research.settings import repository_root
 
 from .counterevidence import (
     MANDATORY_LANES,
@@ -17,6 +22,19 @@ from .counterevidence import (
     save_lane_searches,
 )
 from .harvest import execute_harvest
+from .run_manifest import build_run_manifest
+
+
+#: Recorded on every corpus-path manifest. The bibliographic APIs this pipeline reads are
+#: live services whose server-side indexes are revised without notice and which expose no
+#: snapshot identifier, so an identical query on an identical commit can legitimately
+#: return a different record set. Stating that limit is part of the manifest's job;
+#: omitting it would let the commit and config hashes imply a reproducibility the sources
+#: cannot actually provide.
+_SERVER_STATE_LIMIT = (
+    "NOT_CAPTURABLE: upstream bibliographic APIs expose no index snapshot id or version; "
+    "re-running this manifest reproduces the query, not necessarily the record set"
+)
 
 
 #: Words that carry no discriminating power in a bibliographic search and only dilute it.
@@ -43,6 +61,7 @@ class KernelHarvestReport:
     per_proposition: dict[str, int] = field(default_factory=dict)
     failures: dict[str, str] = field(default_factory=dict)
     evidence: list[EvidenceObject] = field(default_factory=list)
+    run_id: str = ""
 
     @property
     def attempted(self) -> int:
@@ -51,6 +70,7 @@ class KernelHarvestReport:
     def summary(self) -> dict[str, object]:
         counts = sorted(self.per_proposition.values())
         return {
+            "run_id": self.run_id,
             "propositions_attempted": self.attempted,
             "propositions_harvested": len(self.per_proposition),
             "propositions_failed": len(self.failures),
@@ -61,6 +81,23 @@ class KernelHarvestReport:
             ],
             "failures": self.failures,
         }
+
+
+def _registry_hashes(root: Path | None = None) -> dict[str, str]:
+    """Hash the registry files that decide which propositions were searched and how.
+
+    Concepts are derived from `hypotheses.csv`, so a change to that file changes what the
+    run means even when the code and the query parameters are byte-identical.
+    """
+
+    resolved = (root or repository_root()) / "registries"
+    hashes: dict[str, str] = {}
+    for path in sorted(resolved.glob("*.csv")):
+        try:
+            hashes[f"registries/{path.name}"] = sha256_bytes(path.read_bytes())
+        except OSError:
+            continue
+    return hashes
 
 
 def _terms(text: str, limit: int) -> list[str]:
@@ -113,14 +150,109 @@ async def harvest_for_kernels(
     store=None,
     max_records_per_proposition: int = 100,
     cohort_lexicon: Sequence[str] = (),
+    run_id: str | None = None,
+    journal: ResearchComputationJournal | None = None,
+    preregistration_ref: str = NOT_PREREGISTERED,
+    authority: AuthorityLevel = AuthorityLevel.A3_VERIFIED_EVIDENCE_COMPUTATION,
+    explicit_human_authorisation: bool = False,
 ) -> KernelHarvestReport:
     """Harvest evidence for every proposition, tagging each record with its proposition.
 
     One connector failing on one proposition must not sink the sweep: a partial corpus
     with the gaps named is usable, and an aborted sweep is not.
+
+    When a `store` is given the sweep also seals a :class:`RunManifest`, because a record
+    in the store with no run describing how it was obtained is not evidence of anything.
+    The manifest is sealed twice: once before the first request, so a run interrupted
+    half-way still leaves a run record rather than orphan rows, and once on completion
+    carrying the record counts, per-proposition corpus hashes and the completion time.
+
+    `preregistration_ref` defaults to `NOT_PREREGISTERED` and never to the frozen
+    specification id. Rule EXC2 of the frozen record makes this corpus permanently
+    exploratory, and binding a run to a preregistration is a PROTECTED_TYPE mutation
+    requiring explicit human authorisation - so the parameter is exposed and not
+    exercised. An A3 pipeline computation cannot promote its own run to confirmatory.
     """
 
     connector_list = list(connectors)
+    resolved_run_id = run_id or f"KH-{datetime.now(timezone.utc).strftime('%Y%m%d%H%M%S')}"
+    proposition_ids = [item.proposition_id for item in queries]
+    query_parameters = {
+        "harvest.max_records_per_proposition": str(max_records_per_proposition),
+        "harvest.query_id_prefix": "KH-<proposition_id>",
+        "harvest.concept_derivation": "registry domain + primary_outcome_construct",
+        "harvest.cohort_lexicon_terms": str(len(list(cohort_lexicon))),
+        "harvest.source_ids": ",".join(
+            sorted(connector.source_name for connector in connector_list)
+        ),
+        "harvest.server_side_state": _SERVER_STATE_LIMIT,
+    }
+    concept_hashes = {
+        f"concept:{item.proposition_id}": canonical_json_hash(
+            {"concept": item.concept, "max_records": max_records_per_proposition}
+        )
+        for item in queries
+    }
+
+    def _seal(report: KernelHarvestReport | None) -> RunManifest:
+        """Build and persist this run's manifest at its current state of completion.
+
+        Called with `None` before the first request and with the report afterwards, so an
+        aborted run is still described - as a STARTED run with no counts, which is honest,
+        rather than as no run at all.
+        """
+
+        corpus_hashes = dict(concept_hashes)
+        environment_extra = dict(query_parameters)
+        if report is None:
+            environment_extra["harvest.status"] = "STARTED"
+        else:
+            environment_extra["harvest.status"] = "COMPLETED"
+            environment_extra["harvest.records_total"] = str(len(report.evidence))
+            environment_extra["harvest.propositions_attempted"] = str(report.attempted)
+            environment_extra["harvest.propositions_failed"] = str(len(report.failures))
+            for key, value in sorted(report.per_proposition.items()):
+                environment_extra[f"harvest.records.{key}"] = str(value)
+            for key, value in sorted(report.failures.items()):
+                environment_extra[f"harvest.failure.{key}"] = value
+            corpus_hashes["evidence_ids"] = canonical_json_hash(
+                sorted(record.evidence_id for record in report.evidence)
+            )
+            for item in queries:
+                ids = sorted(
+                    record.evidence_id
+                    for record in report.evidence
+                    if item.proposition_id in record.proposition_ids
+                )
+                corpus_hashes[f"records:{item.proposition_id}"] = canonical_json_hash(ids)
+
+        manifest = build_run_manifest(
+            run_id=resolved_run_id,
+            objective="Kernel corpus harvest: one search per registry proposition",
+            proposition_ids=proposition_ids,
+            connectors=connector_list,
+            corpus_hashes=corpus_hashes,
+            registry_hashes=_registry_hashes(),
+            preregistration_ref=preregistration_ref,
+        )
+        manifest = manifest.model_copy(
+            update={
+                "environment": {**manifest.environment, **environment_extra},
+                "completed_at": datetime.now(timezone.utc) if report is not None else None,
+            }
+        )
+        if store is not None:
+            store.save_run(
+                manifest,
+                authority=authority,
+                explicit_human_authorisation=explicit_human_authorisation,
+            )
+        if journal is not None:
+            journal.append("RUN_MANIFEST_SEALED", manifest.model_dump(mode="json"))
+        return manifest
+
+    if store is not None or journal is not None:
+        _seal(None)
     per_proposition: dict[str, int] = {}
     failures: dict[str, str] = {}
     collected: dict[str, EvidenceObject] = {}
@@ -160,11 +292,15 @@ async def harvest_for_kernels(
         else:
             per_proposition[item.proposition_id] = found
 
-    return KernelHarvestReport(
+    report = KernelHarvestReport(
         per_proposition=per_proposition,
         failures=failures,
         evidence=list(collected.values()),
+        run_id=resolved_run_id,
     )
+    if store is not None or journal is not None:
+        _seal(report)
+    return report
 
 
 # ------------------------------------------------- counterevidence on the corpus path

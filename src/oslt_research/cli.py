@@ -17,6 +17,8 @@ from oslt_research.connectors.crossref import CrossrefConnector
 from oslt_research.connectors.europepmc import EuropePmcConnector
 from oslt_research.connectors.openalex import OpenAlexConnector
 from oslt_research.connectors.pubmed import PubMedConnector
+from oslt_research.evidence.journal import ResearchComputationJournal
+from oslt_research.governance.authority import NOT_PREREGISTERED
 from oslt_research.governance.preflight import run_preflight
 from oslt_research.governance.sample_size import attainable_envelope
 from oslt_research.persistence.sqlite import SQLiteStore
@@ -154,12 +156,37 @@ def kernel_harvest_command(
     proposition: Annotated[list[str] | None, typer.Option(help="Limit to these ids")] = None,
     max_records: Annotated[int, typer.Option(min=1, max=1000)] = 100,
     output: Annotated[Path | None, typer.Option()] = None,
+    run_id: Annotated[str | None, typer.Option()] = None,
+    journal_root: Annotated[Path, typer.Option()] = Path("runtime/journals"),
+    preregistration_ref: Annotated[
+        str,
+        typer.Option(
+            help=(
+                "Specification id this run tests. Leave as NOT_PREREGISTERED unless a human "
+                "is authorising a confirmatory binding; the 2026-08-15 corpus is exploratory "
+                "by rule EXC2 of the frozen record."
+            )
+        ),
+    ] = NOT_PREREGISTERED,
+    human_authorisation: Annotated[
+        bool,
+        typer.Option(
+            help=(
+                "Assert explicit human authorisation for binding this run to a "
+                "preregistration. Required by the authority lattice; never set by a script."
+            )
+        ),
+    ] = False,
 ) -> None:
     """Harvest the corpus path: one search per registry proposition.
 
     This is the documented main corpus path and it had no production caller before this
     command existed, which is why no `KernelHarvestReport` had ever been produced for the
     live corpus.
+
+    The sweep seals a `RunManifest` at A3_VERIFIED_EVIDENCE_COMPUTATION - a pipeline
+    computation, not a human governance decision - and writes `RUN_MANIFEST_SEALED` into a
+    per-run hash-chained journal, so every record it persists belongs to a described run.
     """
 
     queries = build_proposition_queries(repository_root() / "registries")
@@ -169,14 +196,24 @@ def kernel_harvest_command(
     if not queries:
         raise typer.BadParameter("no propositions matched")
     connectors = [_connector(name.strip()) for name in sources.split(",") if name.strip()]
+    resolved_run = run_id or f"KH-{datetime.now(timezone.utc).strftime('%Y%m%d%H%M%S')}"
+    journal = ResearchComputationJournal(
+        journal_root / resolved_run / "computation-journal.jsonl"
+    )
     report = asyncio.run(
         harvest_for_kernels(
             queries=queries,
             connectors=connectors,
             store=SQLiteStore(database_path()),
             max_records_per_proposition=max_records,
+            run_id=resolved_run,
+            journal=journal,
+            preregistration_ref=preregistration_ref,
+            explicit_human_authorisation=human_authorisation,
         )
     )
+    if not journal.verify():
+        raise RuntimeError("COMPUTATION_JOURNAL_VERIFICATION_FAILED")
     summary = report.summary()
     if output:
         output.parent.mkdir(parents=True, exist_ok=True)
