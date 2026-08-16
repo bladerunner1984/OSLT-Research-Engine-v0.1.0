@@ -1,0 +1,1438 @@
+{
+ "all_ages_decomposition": {
+  "cohort_share_of_final_month_activity": 0.8612083182494671,
+  "continuous_cohort_ratio": 1.4110979603447216,
+  "final_month": "2024-03",
+  "joiner_share_of_final_month_activity": 0.13879168175053297,
+  "log_growth_share_attributable_to_coverage": 0.17429930077159383,
+  "log_growth_share_surviving_cohort_restriction": 0.8257006992284062,
+  "note": "This is all ages. It is reproduced here only so the age-specific question has its all-ages context on the same page; it does not answer it.",
+  "unrestricted_ratio": 1.5174960648190872
+ },
+ "archive": "runtime\\mhsds\\MHSDS Time_Series_data_Apr_2016_Jun_2026_Perf.zip",
+ "claim_tier": "DESCRIPTIVE_EVIDENCE_ONLY",
+ "classifier_intensity": {
+  "by_size_tertile": [
+   {
+    "comparable": false,
+    "continuous_cohort_n": 0,
+    "joiners_n": 56,
+    "median_index": 0.11973575557390587,
+    "median_size": 205.86206896551724,
+    "n": 63,
+    "reason": "one of the two groups has no member in this size tertile, so there is no common support and no adjustment can compare them here",
+    "spearman_rho_join_against_index": 0.04740832095766882,
+    "tertile": "small"
+   },
+   {
+    "continuous_cohort_median": 0.04290479465614858,
+    "continuous_cohort_n": 10,
+    "joiners_median": 0.08583314359441407,
+    "joiners_n": 50,
+    "mann_whitney_p_two_sided": 0.11711570521140859,
+    "median_index": 0.07949142030183998,
+    "median_size": 1217.948717948718,
+    "n": 63,
+    "spearman_rho_join_against_index": 0.08243789242389629,
+    "tertile": "mid"
+   },
+   {
+    "continuous_cohort_median": 0.014960735758305786,
+    "continuous_cohort_n": 56,
+    "joiners_median": 0.007830691206022136,
+    "joiners_n": 5,
+    "mann_whitney_p_two_sided": 0.3177569483141148,
+    "median_index": 0.014586335094366474,
+    "median_size": 26536.923076923078,
+    "n": 63,
+    "spearman_rho_join_against_index": -0.14213897859748495,
+    "tertile": "large"
+   }
+  ],
+  "common_support": {
+   "cohort_inside_joiner_size_range": 38,
+   "cohort_total": 66,
+   "continuous_cohort_size_range": [
+    577.027027027027,
+    68938.78378378379
+   ],
+   "joiner_size_range": [
+    27.083333333333332,
+    28669.305555555555
+   ],
+   "joiners_inside_cohort_size_range": 52,
+   "joiners_total": 111,
+   "overlap_computable": true
+  },
+  "definition": "MHS110 (closed referrals for CYP aged 0-17 with at least two contacts) over the same provider's MHS01, over months where both are usable",
+  "distinct_join_months": 54,
+  "interpretation": "The raw association is large and would, taken alone, say later joiners were far more CYP-focused. Controlling for provider size removes it. The index is a CYP flow over an all-ages stock and is mechanically larger for small providers; later joiners are much smaller. This classifier therefore cannot answer the question.",
+  "median_index": 0.04650853794310481,
+  "minimum_detectable_rho_at_80_percent_power": 0.20258066077617679,
+  "n": 189,
+  "partial_spearman_controlling_for_log_size": 0.03941193522314254,
+  "permutation_p_two_sided": 4.999750012499375e-05,
+  "size_confounded": true,
+  "spearman_rho_index_against_log_size": -0.7698229482496664,
+  "spearman_rho_join_against_log_size": -0.743068947837479,
+  "spearman_rho_raw": 0.5888656034057084,
+  "test": "Spearman rank correlation, join month against CYP intensity index"
+ },
+ "classifier_share": {
+  "continuous_cohort_median_share": 0.1358839050131926,
+  "continuous_cohort_n": 53,
+  "definition": "median across measure families of (published under-18 sibling / its own published parent), per provider",
+  "distinct_join_months": 5,
+  "families": {
+   "CCR117": {
+    "mean_within_provider_share_stdev": 0.11301131948911643,
+    "measure": "New very urgent referrals to crisis care teams",
+    "median_share": 0.45474613686534215,
+    "providers_with_a_share": 17
+   },
+   "CCR118": {
+    "mean_within_provider_share_stdev": 0.10306165483505526,
+    "measure": "New very urgent crisis referrals reaching a face-to-face contact",
+    "median_share": 0.769811320754717,
+    "providers_with_a_share": 13
+   },
+   "CCR119": {
+    "mean_within_provider_share_stdev": 0.10891711042240523,
+    "measure": "New very urgent crisis referrals seen within 4 hours",
+    "median_share": 0.7898244639646881,
+    "providers_with_a_share": 12
+   },
+   "CCR120": {
+    "mean_within_provider_share_stdev": 0.08778417296715098,
+    "measure": "New urgent crisis referrals seen within 24 hours",
+    "median_share": 0.15781487101669195,
+    "providers_with_a_share": 25
+   },
+   "CCR70": {
+    "mean_within_provider_share_stdev": 0.13334971112585922,
+    "measure": "New emergency referrals to crisis care teams",
+    "median_share": 0.28297785772409956,
+    "providers_with_a_share": 22
+   },
+   "CCR71": {
+    "mean_within_provider_share_stdev": 0.052636368417482385,
+    "measure": "New urgent referrals to crisis care teams",
+    "median_share": 0.11944267512522294,
+    "providers_with_a_share": 44
+   },
+   "CCR73": {
+    "mean_within_provider_share_stdev": 0.06691781005757046,
+    "measure": "New urgent crisis referrals reaching a face-to-face contact",
+    "median_share": 0.1663778162911612,
+    "providers_with_a_share": 33
+   },
+   "PLS121": {
+    "mean_within_provider_share_stdev": 0.019853523434738677,
+    "measure": "New referrals to liaison psychiatry teams from A&E",
+    "median_share": 0.08204174416201694,
+    "providers_with_a_share": 41
+   },
+   "PLS122": {
+    "mean_within_provider_share_stdev": 0.02780575076385044,
+    "measure": "A&E liaison referrals reaching a face-to-face contact",
+    "median_share": 0.08865602129075183,
+    "providers_with_a_share": 39
+   },
+   "PLS123": {
+    "mean_within_provider_share_stdev": 0.03136486490863446,
+    "measure": "A&E liaison referrals seen within 1 hour",
+    "median_share": 0.08321821029872228,
+    "providers_with_a_share": 36
+   }
+  },
+  "joiner_shares": [
+   0.7638190954773869,
+   0.9985294117647059,
+   1.0
+  ],
+  "joiners_median_share": 0.9985294117647059,
+  "joiners_n": 3,
+  "mann_whitney_p_two_sided": 0.016260031363869172,
+  "minimum_detectable_rho_at_80_percent_power": 0.3637903242003822,
+  "n_paired": 57,
+  "permutation_p_two_sided": 0.09334533273336333,
+  "powered": false,
+  "providers_with_a_share": 57,
+  "sensitivity_to_the_month_threshold": [
+   {
+    "continuous_cohort_median_share": 0.1358839050131926,
+    "continuous_cohort_n": 53,
+    "joiner_shares": [
+     0.7638190954773869,
+     0.9985294117647059,
+     1.0
+    ],
+    "joiners_median_share": 0.9985294117647059,
+    "joiners_n": 3,
+    "mann_whitney_p_two_sided": 0.016260031363869172,
+    "min_months": 12,
+    "providers_with_a_share": 57
+   },
+   {
+    "continuous_cohort_median_share": 0.1358839050131926,
+    "continuous_cohort_n": 55,
+    "joiner_shares": [
+     0.7638190954773869,
+     1.0,
+     1.0
+    ],
+    "joiners_median_share": 1.0,
+    "joiners_n": 3,
+    "mann_whitney_p_two_sided": 0.014555342862556988,
+    "min_months": 6,
+    "providers_with_a_share": 59
+   },
+   {
+    "continuous_cohort_median_share": 0.1331912993433372,
+    "continuous_cohort_n": 56,
+    "joiner_shares": [
+     0.05405405405405406,
+     0.7638190954773869,
+     1.0,
+     1.0
+    ],
+    "joiners_median_share": 0.8819095477386935,
+    "joiners_n": 4,
+    "mann_whitney_p_two_sided": 0.15440817101146545,
+    "min_months": 3,
+    "providers_with_a_share": 61
+   }
+  ],
+  "spearman_rho": 0.22324647074770518,
+  "why_so_few": "The parent measures are crisis-care and A&E-liaison referral counts, run by a minority of providers: across the observation window the parent is missing in roughly 93% of provider-months. The joiners are also small, so their cells are the ones most often suppressed - and a suppressed cell is excluded, never read as zero."
+ },
+ "cohort": {
+  "all_ages_continuous_ratio": {
+   "by_financial_year": {
+    "2017/18": 1165965.0,
+    "2018/19": 1207930.4166666667,
+    "2019/20": 1217740.0,
+    "2020/21": 1211032.0833333333,
+    "2021/22": 1350517.0833333333,
+    "2022/23": 1496382.9166666667,
+    "2023/24": 1645290.8333333333
+   },
+   "first_year": "2017/18",
+   "last_year": "2023/24",
+   "ratio": 1.4110979603447216
+  },
+  "all_ages_unrestricted_ratio": {
+   "by_financial_year": {
+    "2017/18": 1264236.6666666667,
+    "2018/19": 1339673.75,
+    "2019/20": 1395124.1666666667,
+    "2020/21": 1390972.9166666667,
+    "2021/22": 1555213.3333333333,
+    "2022/23": 1705608.3333333333,
+    "2023/24": 1918474.1666666667
+   },
+   "first_year": "2017/18",
+   "last_year": "2023/24",
+   "ratio": 1.5174960648190872
+  },
+  "continuous_cohort_size": 71,
+  "joiner_set_size": 309,
+  "providers_ever_present": 539,
+  "providers_present_first_month": 92,
+  "providers_present_last_month": 397
+ },
+ "cyp_observation_window": {
+  "first": "2023-04",
+  "last": "2026-06"
+ },
+ "england_age_bands": {
+  "MHS01": {
+   "bands": {
+    "0 to 5": {
+     "by_financial_year": {
+      "2022/23": 25907.833333333332,
+      "2023/24": 34717.666666666664,
+      "2024/25": 36972.0,
+      "2025/26": 31198.916666666668
+     },
+     "complete_financial_years": [
+      "2022/23",
+      "2023/24",
+      "2024/25",
+      "2025/26"
+     ],
+     "months_missing_or_suppressed": 0,
+     "months_with_a_usable_value": 51,
+     "ratio": 1.2042271642424751
+    },
+    "11 to 15": {
+     "by_financial_year": {
+      "2022/23": 235365.41666666666,
+      "2023/24": 263845.5,
+      "2024/25": 289183.25,
+      "2025/26": 299071.5
+     },
+     "complete_financial_years": [
+      "2022/23",
+      "2023/24",
+      "2024/25",
+      "2025/26"
+     ],
+     "months_missing_or_suppressed": 0,
+     "months_with_a_usable_value": 51,
+     "ratio": 1.2706688358704639
+    },
+    "16": {
+     "by_financial_year": {
+      "2022/23": 53665.5,
+      "2023/24": 57158.583333333336,
+      "2024/25": 60721.833333333336,
+      "2025/26": 62190.666666666664
+     },
+     "complete_financial_years": [
+      "2022/23",
+      "2023/24",
+      "2024/25",
+      "2025/26"
+     ],
+     "months_missing_or_suppressed": 0,
+     "months_with_a_usable_value": 51,
+     "ratio": 1.1588574906907914
+    },
+    "17": {
+     "by_financial_year": {
+      "2022/23": 44910.666666666664,
+      "2023/24": 48359.75,
+      "2024/25": 51036.166666666664,
+      "2025/26": 53517.333333333336
+     },
+     "complete_financial_years": [
+      "2022/23",
+      "2023/24",
+      "2024/25",
+      "2025/26"
+     ],
+     "months_missing_or_suppressed": 0,
+     "months_with_a_usable_value": 51,
+     "ratio": 1.1916396995517027
+    },
+    "18": {
+     "by_financial_year": {
+      "2022/23": 28832.25,
+      "2023/24": 32235.416666666668,
+      "2024/25": 33341.916666666664,
+      "2025/26": 34475.416666666664
+     },
+     "complete_financial_years": [
+      "2022/23",
+      "2023/24",
+      "2024/25",
+      "2025/26"
+     ],
+     "months_missing_or_suppressed": 0,
+     "months_with_a_usable_value": 51,
+     "ratio": 1.1957241168020762
+    },
+    "19": {
+     "by_financial_year": {
+      "2022/23": 24967.916666666668,
+      "2023/24": 29240.666666666668,
+      "2024/25": 30093.583333333332,
+      "2025/26": 32127.25
+     },
+     "complete_financial_years": [
+      "2022/23",
+      "2023/24",
+      "2024/25",
+      "2025/26"
+     ],
+     "months_missing_or_suppressed": 0,
+     "months_with_a_usable_value": 51,
+     "ratio": 1.2867413180247984
+    },
+    "20 to 24": {
+     "by_financial_year": {
+      "2022/23": 125492.58333333333,
+      "2023/24": 141817.5,
+      "2024/25": 150361.75,
+      "2025/26": 166156.66666666666
+     },
+     "complete_financial_years": [
+      "2022/23",
+      "2023/24",
+      "2024/25",
+      "2025/26"
+     ],
+     "months_missing_or_suppressed": 0,
+     "months_with_a_usable_value": 51,
+     "ratio": 1.3240357497886661
+    },
+    "25 to 29": {
+     "by_financial_year": {
+      "2022/23": 120705.08333333333,
+      "2023/24": 141254.83333333334,
+      "2024/25": 154090.75,
+      "2025/26": 173133.66666666666
+     },
+     "complete_financial_years": [
+      "2022/23",
+      "2023/24",
+      "2024/25",
+      "2025/26"
+     ],
+     "months_missing_or_suppressed": 0,
+     "months_with_a_usable_value": 51,
+     "ratio": 1.4343527371465299
+    },
+    "30 to 34": {
+     "by_financial_year": {
+      "2022/23": 114241.08333333333,
+      "2023/24": 134576.0,
+      "2024/25": 149886.58333333334,
+      "2025/26": 170807.5
+     },
+     "complete_financial_years": [
+      "2022/23",
+      "2023/24",
+      "2024/25",
+      "2025/26"
+     ],
+     "months_missing_or_suppressed": 0,
+     "months_with_a_usable_value": 51,
+     "ratio": 1.4951495120333973
+    },
+    "35 to 39": {
+     "by_financial_year": {
+      "2022/23": 97073.91666666667,
+      "2023/24": 114539.75,
+      "2024/25": 130384.5,
+      "2025/26": 152166.91666666666
+     },
+     "complete_financial_years": [
+      "2022/23",
+      "2023/24",
+      "2024/25",
+      "2025/26"
+     ],
+     "months_missing_or_suppressed": 0,
+     "months_with_a_usable_value": 51,
+     "ratio": 1.5675365936781849
+    },
+    "40 to 44": {
+     "by_financial_year": {
+      "2022/23": 83374.75,
+      "2023/24": 95876.5,
+      "2024/25": 106742.25,
+      "2025/26": 122321.91666666667
+     },
+     "complete_financial_years": [
+      "2022/23",
+      "2023/24",
+      "2024/25",
+      "2025/26"
+     ],
+     "months_missing_or_suppressed": 0,
+     "months_with_a_usable_value": 51,
+     "ratio": 1.4671338344842615
+    },
+    "45 to 49": {
+     "by_financial_year": {
+      "2022/23": 72015.83333333333,
+      "2023/24": 78346.5,
+      "2024/25": 85941.08333333333,
+      "2025/26": 98344.0
+     },
+     "complete_financial_years": [
+      "2022/23",
+      "2023/24",
+      "2024/25",
+      "2025/26"
+     ],
+     "months_missing_or_suppressed": 0,
+     "months_with_a_usable_value": 51,
+     "ratio": 1.365588585843391
+    },
+    "50 to 54": {
+     "by_financial_year": {
+      "2022/23": 74466.16666666667,
+      "2023/24": 79505.33333333333,
+      "2024/25": 83804.0,
+      "2025/26": 89490.66666666667
+     },
+     "complete_financial_years": [
+      "2022/23",
+      "2023/24",
+      "2024/25",
+      "2025/26"
+     ],
+     "months_missing_or_suppressed": 0,
+     "months_with_a_usable_value": 51,
+     "ratio": 1.2017627692218167
+    },
+    "55 to 59": {
+     "by_financial_year": {
+      "2022/23": 68361.33333333333,
+      "2023/24": 73074.0,
+      "2024/25": 76435.75,
+      "2025/26": 80790.58333333333
+     },
+     "complete_financial_years": [
+      "2022/23",
+      "2023/24",
+      "2024/25",
+      "2025/26"
+     ],
+     "months_missing_or_suppressed": 0,
+     "months_with_a_usable_value": 51,
+     "ratio": 1.1818169628054846
+    },
+    "6 to 10": {
+     "by_financial_year": {
+      "2022/23": 123097.58333333333,
+      "2023/24": 154684.0,
+      "2024/25": 185002.41666666666,
+      "2025/26": 193794.33333333334
+     },
+     "complete_financial_years": [
+      "2022/23",
+      "2023/24",
+      "2024/25",
+      "2025/26"
+     ],
+     "months_missing_or_suppressed": 0,
+     "months_with_a_usable_value": 51,
+     "ratio": 1.5743146866544226
+    },
+    "60 to 64": {
+     "by_financial_year": {
+      "2022/23": 54224.166666666664,
+      "2023/24": 58796.416666666664,
+      "2024/25": 63258.833333333336,
+      "2025/26": 67321.33333333333
+     },
+     "complete_financial_years": [
+      "2022/23",
+      "2023/24",
+      "2024/25",
+      "2025/26"
+     ],
+     "months_missing_or_suppressed": 0,
+     "months_with_a_usable_value": 51,
+     "ratio": 1.2415374448662189
+    },
+    "65 to 69": {
+     "by_financial_year": {
+      "2022/23": 43682.083333333336,
+      "2023/24": 47071.416666666664,
+      "2024/25": 49029.25,
+      "2025/26": 50980.25
+     },
+     "complete_financial_years": [
+      "2022/23",
+      "2023/24",
+      "2024/25",
+      "2025/26"
+     ],
+     "months_missing_or_suppressed": 0,
+     "months_with_a_usable_value": 51,
+     "ratio": 1.167074601524271
+    },
+    "70 to 74": {
+     "by_financial_year": {
+      "2022/23": 47790.333333333336,
+      "2023/24": 48510.583333333336,
+      "2024/25": 48135.25,
+      "2025/26": 48151.833333333336
+     },
+     "complete_financial_years": [
+      "2022/23",
+      "2023/24",
+      "2024/25",
+      "2025/26"
+     ],
+     "months_missing_or_suppressed": 0,
+     "months_with_a_usable_value": 51,
+     "ratio": 1.0075642912443938
+    },
+    "75 to 79": {
+     "by_financial_year": {
+      "2022/23": 63090.583333333336,
+      "2023/24": 66157.41666666667,
+      "2024/25": 65617.5,
+      "2025/26": 64778.416666666664
+     },
+     "complete_financial_years": [
+      "2022/23",
+      "2023/24",
+      "2024/25",
+      "2025/26"
+     ],
+     "months_missing_or_suppressed": 0,
+     "months_with_a_usable_value": 51,
+     "ratio": 1.0267525396684924
+    },
+    "80 to 84": {
+     "by_financial_year": {
+      "2022/23": 61829.75,
+      "2023/24": 64054.916666666664,
+      "2024/25": 64837.5,
+      "2025/26": 63875.333333333336
+     },
+     "complete_financial_years": [
+      "2022/23",
+      "2023/24",
+      "2024/25",
+      "2025/26"
+     ],
+     "months_missing_or_suppressed": 0,
+     "months_with_a_usable_value": 51,
+     "ratio": 1.0330841275168239
+    },
+    "85 to 89": {
+     "by_financial_year": {
+      "2022/23": 52541.666666666664,
+      "2023/24": 53933.416666666664,
+      "2024/25": 53135.916666666664,
+      "2025/26": 51392.25
+     },
+     "complete_financial_years": [
+      "2022/23",
+      "2023/24",
+      "2024/25",
+      "2025/26"
+     ],
+     "months_missing_or_suppressed": 0,
+     "months_with_a_usable_value": 51,
+     "ratio": 0.9781237113402063
+    },
+    "90 or over": {
+     "by_financial_year": {
+      "2022/23": 31056.25,
+      "2023/24": 30836.0,
+      "2024/25": 29897.583333333332,
+      "2025/26": 29163.583333333332
+     },
+     "complete_financial_years": [
+      "2022/23",
+      "2023/24",
+      "2024/25",
+      "2025/26"
+     ],
+     "months_missing_or_suppressed": 0,
+     "months_with_a_usable_value": 51,
+     "ratio": 0.9390568189441202
+    },
+    "UNKNOWN": {
+     "by_financial_year": {
+      "2022/23": 1675.6666666666667,
+      "2023/24": 2678.75,
+      "2024/25": 6644.583333333333,
+      "2025/26": 5207.083333333333
+     },
+     "complete_financial_years": [
+      "2022/23",
+      "2023/24",
+      "2024/25",
+      "2025/26"
+     ],
+     "months_missing_or_suppressed": 0,
+     "months_with_a_usable_value": 51,
+     "ratio": 3.1074696638153965
+    }
+   },
+   "first_month": "2022-04",
+   "last_month": "2026-06",
+   "note": "Bands are reported separately. They are not summed into an 'under 18' aggregate; merging published age bands is forbidden here. These are also England totals with no provider dimension, so no cohort restriction is possible on them."
+  },
+  "MHS32": {
+   "bands": {
+    "0 to 5": {
+     "by_financial_year": {
+      "2022/23": 4787.916666666667,
+      "2023/24": 6345.0,
+      "2024/25": 6125.833333333333,
+      "2025/26": 5326.416666666667
+     },
+     "complete_financial_years": [
+      "2022/23",
+      "2023/24",
+      "2024/25",
+      "2025/26"
+     ],
+     "months_missing_or_suppressed": 0,
+     "months_with_a_usable_value": 51,
+     "ratio": 1.1124706291880602
+    },
+    "11 to 15": {
+     "by_financial_year": {
+      "2022/23": 50817.75,
+      "2023/24": 49837.583333333336,
+      "2024/25": 52536.5,
+      "2025/26": 51332.416666666664
+     },
+     "complete_financial_years": [
+      "2022/23",
+      "2023/24",
+      "2024/25",
+      "2025/26"
+     ],
+     "months_missing_or_suppressed": 0,
+     "months_with_a_usable_value": 51,
+     "ratio": 1.0101276948835134
+    },
+    "16": {
+     "by_financial_year": {
+      "2022/23": 10162.75,
+      "2023/24": 9658.916666666666,
+      "2024/25": 10172.833333333334,
+      "2025/26": 10277.25
+     },
+     "complete_financial_years": [
+      "2022/23",
+      "2023/24",
+      "2024/25",
+      "2025/26"
+     ],
+     "months_missing_or_suppressed": 0,
+     "months_with_a_usable_value": 51,
+     "ratio": 1.0112666355071216
+    },
+    "17": {
+     "by_financial_year": {
+      "2022/23": 9625.166666666666,
+      "2023/24": 9362.416666666666,
+      "2024/25": 9902.083333333334,
+      "2025/26": 10030.5
+     },
+     "complete_financial_years": [
+      "2022/23",
+      "2023/24",
+      "2024/25",
+      "2025/26"
+     ],
+     "months_missing_or_suppressed": 0,
+     "months_with_a_usable_value": 51,
+     "ratio": 1.0421118249034649
+    },
+    "18": {
+     "by_financial_year": {
+      "2022/23": 8497.583333333334,
+      "2023/24": 8622.083333333334,
+      "2024/25": 8813.916666666666,
+      "2025/26": 9031.833333333334
+     },
+     "complete_financial_years": [
+      "2022/23",
+      "2023/24",
+      "2024/25",
+      "2025/26"
+     ],
+     "months_missing_or_suppressed": 0,
+     "months_with_a_usable_value": 51,
+     "ratio": 1.0628708162124525
+    },
+    "19": {
+     "by_financial_year": {
+      "2022/23": 7387.833333333333,
+      "2023/24": 7720.083333333333,
+      "2024/25": 7698.666666666667,
+      "2025/26": 8088.166666666667
+     },
+     "complete_financial_years": [
+      "2022/23",
+      "2023/24",
+      "2024/25",
+      "2025/26"
+     ],
+     "months_missing_or_suppressed": 0,
+     "months_with_a_usable_value": 51,
+     "ratio": 1.0947954971010898
+    },
+    "20 to 24": {
+     "by_financial_year": {
+      "2022/23": 34501.666666666664,
+      "2023/24": 35712.083333333336,
+      "2024/25": 35878.833333333336,
+      "2025/26": 37135.75
+     },
+     "complete_financial_years": [
+      "2022/23",
+      "2023/24",
+      "2024/25",
+      "2025/26"
+     ],
+     "months_missing_or_suppressed": 0,
+     "months_with_a_usable_value": 51,
+     "ratio": 1.0763465533066037
+    },
+    "25 to 29": {
+     "by_financial_year": {
+      "2022/23": 33397.166666666664,
+      "2023/24": 36528.583333333336,
+      "2024/25": 36999.333333333336,
+      "2025/26": 37848.833333333336
+     },
+     "complete_financial_years": [
+      "2022/23",
+      "2023/24",
+      "2024/25",
+      "2025/26"
+     ],
+     "months_missing_or_suppressed": 0,
+     "months_with_a_usable_value": 51,
+     "ratio": 1.1332947405718052
+    },
+    "30 to 34": {
+     "by_financial_year": {
+      "2022/23": 32342.916666666668,
+      "2023/24": 36388.166666666664,
+      "2024/25": 37534.583333333336,
+      "2025/26": 38530.083333333336
+     },
+     "complete_financial_years": [
+      "2022/23",
+      "2023/24",
+      "2024/25",
+      "2025/26"
+     ],
+     "months_missing_or_suppressed": 0,
+     "months_with_a_usable_value": 51,
+     "ratio": 1.191298970665911
+    },
+    "35 to 39": {
+     "by_financial_year": {
+      "2022/23": 27598.0,
+      "2023/24": 32213.583333333332,
+      "2024/25": 34400.75,
+      "2025/26": 35960.083333333336
+     },
+     "complete_financial_years": [
+      "2022/23",
+      "2023/24",
+      "2024/25",
+      "2025/26"
+     ],
+     "months_missing_or_suppressed": 0,
+     "months_with_a_usable_value": 51,
+     "ratio": 1.302995990047588
+    },
+    "40 to 44": {
+     "by_financial_year": {
+      "2022/23": 22788.75,
+      "2023/24": 26847.75,
+      "2024/25": 28642.583333333332,
+      "2025/26": 29898.25
+     },
+     "complete_financial_years": [
+      "2022/23",
+      "2023/24",
+      "2024/25",
+      "2025/26"
+     ],
+     "months_missing_or_suppressed": 0,
+     "months_with_a_usable_value": 51,
+     "ratio": 1.3119741100323625
+    },
+    "45 to 49": {
+     "by_financial_year": {
+      "2022/23": 19026.083333333332,
+      "2023/24": 21312.916666666668,
+      "2024/25": 22958.083333333332,
+      "2025/26": 24457.25
+     },
+     "complete_financial_years": [
+      "2022/23",
+      "2023/24",
+      "2024/25",
+      "2025/26"
+     ],
+     "months_missing_or_suppressed": 0,
+     "months_with_a_usable_value": 51,
+     "ratio": 1.2854589970785721
+    },
+    "50 to 54": {
+     "by_financial_year": {
+      "2022/23": 18732.416666666668,
+      "2023/24": 21267.25,
+      "2024/25": 22554.166666666668,
+      "2025/26": 23353.333333333332
+     },
+     "complete_financial_years": [
+      "2022/23",
+      "2023/24",
+      "2024/25",
+      "2025/26"
+     ],
+     "months_missing_or_suppressed": 0,
+     "months_with_a_usable_value": 51,
+     "ratio": 1.2466802201175322
+    },
+    "55 to 59": {
+     "by_financial_year": {
+      "2022/23": 16670.583333333332,
+      "2023/24": 18926.583333333332,
+      "2024/25": 20000.166666666668,
+      "2025/26": 20685.0
+     },
+     "complete_financial_years": [
+      "2022/23",
+      "2023/24",
+      "2024/25",
+      "2025/26"
+     ],
+     "months_missing_or_suppressed": 0,
+     "months_with_a_usable_value": 51,
+     "ratio": 1.2408084100236445
+    },
+    "6 to 10": {
+     "by_financial_year": {
+      "2022/23": 20481.666666666668,
+      "2023/24": 24690.166666666668,
+      "2024/25": 26746.25,
+      "2025/26": 26982.916666666668
+     },
+     "complete_financial_years": [
+      "2022/23",
+      "2023/24",
+      "2024/25",
+      "2025/26"
+     ],
+     "months_missing_or_suppressed": 0,
+     "months_with_a_usable_value": 51,
+     "ratio": 1.31741801611197
+    },
+    "60 to 64": {
+     "by_financial_year": {
+      "2022/23": 12863.083333333334,
+      "2023/24": 14856.416666666666,
+      "2024/25": 16663.5,
+      "2025/26": 18019.833333333332
+     },
+     "complete_financial_years": [
+      "2022/23",
+      "2023/24",
+      "2024/25",
+      "2025/26"
+     ],
+     "months_missing_or_suppressed": 0,
+     "months_with_a_usable_value": 51,
+     "ratio": 1.4008953270664757
+    },
+    "65 to 69": {
+     "by_financial_year": {
+      "2022/23": 9774.833333333334,
+      "2023/24": 11053.5,
+      "2024/25": 11871.333333333334,
+      "2025/26": 12872.75
+     },
+     "complete_financial_years": [
+      "2022/23",
+      "2023/24",
+      "2024/25",
+      "2025/26"
+     ],
+     "months_missing_or_suppressed": 0,
+     "months_with_a_usable_value": 51,
+     "ratio": 1.3169278248563487
+    },
+    "70 to 74": {
+     "by_financial_year": {
+      "2022/23": 10473.5,
+      "2023/24": 10985.0,
+      "2024/25": 11304.416666666666,
+      "2025/26": 11570.416666666666
+     },
+     "complete_financial_years": [
+      "2022/23",
+      "2023/24",
+      "2024/25",
+      "2025/26"
+     ],
+     "months_missing_or_suppressed": 0,
+     "months_with_a_usable_value": 51,
+     "ratio": 1.1047325790487101
+    },
+    "75 to 79": {
+     "by_financial_year": {
+      "2022/23": 13436.916666666666,
+      "2023/24": 14476.5,
+      "2024/25": 15076.0,
+      "2025/26": 15404.083333333334
+     },
+     "complete_financial_years": [
+      "2022/23",
+      "2023/24",
+      "2024/25",
+      "2025/26"
+     ],
+     "months_missing_or_suppressed": 0,
+     "months_with_a_usable_value": 51,
+     "ratio": 1.1464001538051265
+    },
+    "80 to 84": {
+     "by_financial_year": {
+      "2022/23": 12933.25,
+      "2023/24": 13597.583333333334,
+      "2024/25": 14347.166666666666,
+      "2025/26": 14741.75
+     },
+     "complete_financial_years": [
+      "2022/23",
+      "2023/24",
+      "2024/25",
+      "2025/26"
+     ],
+     "months_missing_or_suppressed": 0,
+     "months_with_a_usable_value": 51,
+     "ratio": 1.1398333752150465
+    },
+    "85 to 89": {
+     "by_financial_year": {
+      "2022/23": 11070.166666666666,
+      "2023/24": 11425.666666666666,
+      "2024/25": 11873.166666666666,
+      "2025/26": 11880.333333333334
+     },
+     "complete_financial_years": [
+      "2022/23",
+      "2023/24",
+      "2024/25",
+      "2025/26"
+     ],
+     "months_missing_or_suppressed": 0,
+     "months_with_a_usable_value": 51,
+     "ratio": 1.073184685566312
+    },
+    "90 or over": {
+     "by_financial_year": {
+      "2022/23": 6979.583333333333,
+      "2023/24": 7001.25,
+      "2024/25": 7149.916666666667,
+      "2025/26": 7322.833333333333
+     },
+     "complete_financial_years": [
+      "2022/23",
+      "2023/24",
+      "2024/25",
+      "2025/26"
+     ],
+     "months_missing_or_suppressed": 0,
+     "months_with_a_usable_value": 51,
+     "ratio": 1.049179153483374
+    },
+    "UNKNOWN": {
+     "by_financial_year": {
+      "2022/23": 431.75,
+      "2023/24": 915.8333333333334,
+      "2024/25": 4680.0,
+      "2025/26": 3988.8333333333335
+     },
+     "complete_financial_years": [
+      "2022/23",
+      "2023/24",
+      "2024/25",
+      "2025/26"
+     ],
+     "months_missing_or_suppressed": 0,
+     "months_with_a_usable_value": 51,
+     "ratio": 9.23875699671878
+    }
+   },
+   "first_month": "2022-04",
+   "last_month": "2026-06",
+   "note": "Bands are reported separately. They are not summed into an 'under 18' aggregate; merging published age bands is forbidden here. These are also England totals with no provider dimension, so no cohort restriction is possible on them."
+  }
+ },
+ "generated_at": "2026-08-16T08:31:32.647282+00:00",
+ "join_dates": {
+  "by_financial_year": {
+   "2016/17": 100,
+   "2017/18": 14,
+   "2018/19": 71,
+   "2019/20": 131,
+   "2020/21": 56,
+   "2021/22": 52,
+   "2022/23": 50,
+   "2023/24": 69,
+   "2024/25": 93,
+   "2025/26": 64,
+   "2026/27": 16
+  },
+  "earliest": "2016-05",
+  "latest": "2026-06",
+  "providers_with_a_join_month": 716
+ },
+ "released": false,
+ "sex_within_under_18": {
+  "reason": "MHSDS publishes 'England; Age' and 'England; Gender' as two separate breakdowns of the same England total. No breakdown in the archive crosses age with sex at any geography, and constructing one would require summing across nesting levels. The 'emerging female excess within the adolescent band' half of the withdrawn claim has no MHSDS test at any cohort size.",
+  "testable": false
+ },
+ "structural_limits": {
+  "breakdowns_in_archive": [
+   "CCG - GP Practice or Residence",
+   "CCG of Residence",
+   "Commissioning Region",
+   "England",
+   "England; Accommodation Type",
+   "England; Age",
+   "England; Autism Status",
+   "England; Disability",
+   "England; Employment Status",
+   "England; Ethnicity",
+   "England; Gender",
+   "England; IMD Decile",
+   "England; LD Status",
+   "England; Rural/Urban Classification",
+   "England; Sexual Orientation",
+   "ICB - GP Practice or Residence",
+   "ICB of GP Practice or Residence",
+   "ICB of Residence",
+   "Provider",
+   "Provider of Responsibility",
+   "STP",
+   "Sub ICB - GP Practice or Residence",
+   "Sub ICB - GP Practice or Residence; Provider of Responsibility",
+   "Sub ICB of GP Practice or Residence",
+   "Sub ICB of GP Practice or Residence; Provider",
+   "Sub ICB of Residence",
+   "Sub ICB of Residence; Provider"
+  ],
+  "earliest_provider_level_age_split_month": "2023-04",
+  "england_age_first_month": "2022-04",
+  "provider_age_split_spans": {
+   "CCR117b": {
+    "first": "2023-04",
+    "last": "2026-06",
+    "months": 39
+   },
+   "CCR118b": {
+    "first": "2023-04",
+    "last": "2026-06",
+    "months": 39
+   },
+   "CCR119b": {
+    "first": "2023-04",
+    "last": "2026-06",
+    "months": 39
+   },
+   "CCR120b": {
+    "first": "2023-04",
+    "last": "2026-06",
+    "months": 39
+   },
+   "CCR70b": {
+    "first": "2023-04",
+    "last": "2026-06",
+    "months": 39
+   },
+   "CCR71b": {
+    "first": "2023-04",
+    "last": "2026-06",
+    "months": 39
+   },
+   "CCR73b": {
+    "first": "2023-04",
+    "last": "2026-06",
+    "months": 39
+   },
+   "PLS121b": {
+    "first": "2023-04",
+    "last": "2026-06",
+    "months": 39
+   },
+   "PLS122b": {
+    "first": "2023-04",
+    "last": "2026-06",
+    "months": 39
+   },
+   "PLS123b": {
+    "first": "2023-04",
+    "last": "2026-06",
+    "months": 39
+   }
+  },
+  "provider_by_age_breakdown_exists": false,
+  "under_18_cohort_over_comparator_window_possible": false,
+  "why": "Every provider-level age split in the archive begins 2023-04 and the comparator window closes 2024-03; England; Age begins 2022-04. There is no under-18 provider-level series over 2017/18-2023/24 to restrict, so the fixed-cohort computation AS08 ran on all ages cannot be run on the under-18 band at all."
+ },
+ "under_18_fixed_cohort": {
+  "bears_on_the_comparator_window": false,
+  "by_family": {
+   "CCR117": {
+    "complete_financial_years": [
+     "2023/24",
+     "2024/25",
+     "2025/26"
+    ],
+    "continuous_cohort_by_financial_year": {
+     "2023/24": 354.1666666666667,
+     "2024/25": 381.25,
+     "2025/26": 357.9166666666667
+    },
+    "continuous_cohort_ratio": 1.0105882352941176,
+    "continuous_cohort_size": 5,
+    "measure": "New very urgent referrals to crisis care teams",
+    "months_in_window": 39,
+    "parent_measure": "CCR117",
+    "providers_present_first_month": 381,
+    "providers_present_last_month": 417,
+    "under_18_measure": "CCR117b",
+    "unrestricted_by_financial_year": {
+     "2023/24": 570.4166666666666,
+     "2024/25": 833.3333333333334,
+     "2025/26": 1115.4166666666667
+    },
+    "unrestricted_ratio": 1.9554419284149016
+   },
+   "CCR118": {
+    "complete_financial_years": [
+     "2023/24",
+     "2024/25",
+     "2025/26"
+    ],
+    "continuous_cohort_by_financial_year": {
+     "2023/24": 252.08333333333334,
+     "2024/25": 235.0,
+     "2025/26": 255.41666666666666
+    },
+    "continuous_cohort_ratio": 1.0132231404958676,
+    "continuous_cohort_size": 4,
+    "measure": "New very urgent crisis referrals reaching a face-to-face contact",
+    "months_in_window": 39,
+    "parent_measure": "CCR118",
+    "providers_present_first_month": 381,
+    "providers_present_last_month": 417,
+    "under_18_measure": "CCR118b",
+    "unrestricted_by_financial_year": {
+     "2023/24": 335.4166666666667,
+     "2024/25": 447.5,
+     "2025/26": 735.0
+    },
+    "unrestricted_ratio": 2.1913043478260867
+   },
+   "CCR119": {
+    "complete_financial_years": [
+     "2023/24",
+     "2024/25",
+     "2025/26"
+    ],
+    "continuous_cohort_by_financial_year": {
+     "2023/24": 178.75,
+     "2024/25": 174.16666666666666,
+     "2025/26": 197.5
+    },
+    "continuous_cohort_ratio": 1.1048951048951048,
+    "continuous_cohort_size": 4,
+    "measure": "New very urgent crisis referrals seen within 4 hours",
+    "months_in_window": 39,
+    "parent_measure": "CCR119",
+    "providers_present_first_month": 381,
+    "providers_present_last_month": 417,
+    "under_18_measure": "CCR119b",
+    "unrestricted_by_financial_year": {
+     "2023/24": 216.25,
+     "2024/25": 309.5833333333333,
+     "2025/26": 556.6666666666666
+    },
+    "unrestricted_ratio": 2.5741811175337186
+   },
+   "CCR120": {
+    "complete_financial_years": [
+     "2023/24",
+     "2024/25",
+     "2025/26"
+    ],
+    "continuous_cohort_by_financial_year": {
+     "2023/24": 442.5,
+     "2024/25": 487.0833333333333,
+     "2025/26": 624.1666666666666
+    },
+    "continuous_cohort_ratio": 1.4105461393596985,
+    "continuous_cohort_size": 8,
+    "measure": "New urgent crisis referrals seen within 24 hours",
+    "months_in_window": 39,
+    "parent_measure": "CCR120",
+    "providers_present_first_month": 381,
+    "providers_present_last_month": 417,
+    "under_18_measure": "CCR120b",
+    "unrestricted_by_financial_year": {
+     "2023/24": 658.75,
+     "2024/25": 723.3333333333334,
+     "2025/26": 904.5833333333334
+    },
+    "unrestricted_ratio": 1.373181530676787
+   },
+   "CCR70": {
+    "complete_financial_years": [
+     "2023/24",
+     "2024/25",
+     "2025/26"
+    ],
+    "continuous_cohort_by_financial_year": {
+     "2023/24": 200.83333333333334,
+     "2024/25": 141.66666666666666,
+     "2025/26": 152.91666666666666
+    },
+    "continuous_cohort_ratio": 0.7614107883817427,
+    "continuous_cohort_size": 3,
+    "measure": "New emergency referrals to crisis care teams",
+    "months_in_window": 39,
+    "parent_measure": "CCR70",
+    "providers_present_first_month": 381,
+    "providers_present_last_month": 417,
+    "under_18_measure": "CCR70b",
+    "unrestricted_by_financial_year": {
+     "2023/24": 837.9166666666666,
+     "2024/25": 717.5,
+     "2025/26": 343.3333333333333
+    },
+    "unrestricted_ratio": 0.40974639482844355
+   },
+   "CCR71": {
+    "complete_financial_years": [
+     "2023/24",
+     "2024/25",
+     "2025/26"
+    ],
+    "continuous_cohort_by_financial_year": {
+     "2023/24": 2377.5,
+     "2024/25": 2765.4166666666665,
+     "2025/26": 2670.4166666666665
+    },
+    "continuous_cohort_ratio": 1.1232036452856642,
+    "continuous_cohort_size": 19,
+    "measure": "New urgent referrals to crisis care teams",
+    "months_in_window": 39,
+    "parent_measure": "CCR71",
+    "providers_present_first_month": 381,
+    "providers_present_last_month": 417,
+    "under_18_measure": "CCR71b",
+    "unrestricted_by_financial_year": {
+     "2023/24": 3380.0,
+     "2024/25": 4042.5,
+     "2025/26": 3783.3333333333335
+    },
+    "unrestricted_ratio": 1.1193293885601578
+   },
+   "CCR73": {
+    "complete_financial_years": [
+     "2023/24",
+     "2024/25",
+     "2025/26"
+    ],
+    "continuous_cohort_by_financial_year": {
+     "2023/24": 722.5,
+     "2024/25": 762.5,
+     "2025/26": 896.25
+    },
+    "continuous_cohort_ratio": 1.240484429065744,
+    "continuous_cohort_size": 13,
+    "measure": "New urgent crisis referrals reaching a face-to-face contact",
+    "months_in_window": 39,
+    "parent_measure": "CCR73",
+    "providers_present_first_month": 381,
+    "providers_present_last_month": 417,
+    "under_18_measure": "CCR73b",
+    "unrestricted_by_financial_year": {
+     "2023/24": 1074.5833333333333,
+     "2024/25": 1106.25,
+     "2025/26": 1306.25
+    },
+    "unrestricted_ratio": 1.215587436991082
+   },
+   "PLS121": {
+    "complete_financial_years": [
+     "2023/24",
+     "2024/25",
+     "2025/26"
+    ],
+    "continuous_cohort_by_financial_year": {
+     "2023/24": 1628.3333333333333,
+     "2024/25": 1662.5,
+     "2025/26": 1671.25
+    },
+    "continuous_cohort_ratio": 1.0263561924257933,
+    "continuous_cohort_size": 23,
+    "measure": "New referrals to liaison psychiatry teams from A&E",
+    "months_in_window": 39,
+    "parent_measure": "PLS121",
+    "providers_present_first_month": 381,
+    "providers_present_last_month": 417,
+    "under_18_measure": "PLS121b",
+    "unrestricted_by_financial_year": {
+     "2023/24": 2262.9166666666665,
+     "2024/25": 2236.25,
+     "2025/26": 2306.6666666666665
+    },
+    "unrestricted_ratio": 1.0193334560854355
+   },
+   "PLS122": {
+    "complete_financial_years": [
+     "2023/24",
+     "2024/25",
+     "2025/26"
+    ],
+    "continuous_cohort_by_financial_year": {
+     "2023/24": 1135.0,
+     "2024/25": 1220.8333333333333,
+     "2025/26": 1204.1666666666667
+    },
+    "continuous_cohort_ratio": 1.0609397944199708,
+    "continuous_cohort_size": 21,
+    "measure": "A&E liaison referrals reaching a face-to-face contact",
+    "months_in_window": 39,
+    "parent_measure": "PLS122",
+    "providers_present_first_month": 381,
+    "providers_present_last_month": 417,
+    "under_18_measure": "PLS122b",
+    "unrestricted_by_financial_year": {
+     "2023/24": 1615.4166666666667,
+     "2024/25": 1665.4166666666667,
+     "2025/26": 1729.5833333333333
+    },
+    "unrestricted_ratio": 1.070673200928553
+   },
+   "PLS123": {
+    "complete_financial_years": [
+     "2023/24",
+     "2024/25",
+     "2025/26"
+    ],
+    "continuous_cohort_by_financial_year": {
+     "2023/24": 516.25,
+     "2024/25": 579.5833333333334,
+     "2025/26": 590.8333333333334
+    },
+    "continuous_cohort_ratio": 1.1444713478611785,
+    "continuous_cohort_size": 15,
+    "measure": "A&E liaison referrals seen within 1 hour",
+    "months_in_window": 39,
+    "parent_measure": "PLS123",
+    "providers_present_first_month": 381,
+    "providers_present_last_month": 417,
+    "under_18_measure": "PLS123b",
+    "unrestricted_by_financial_year": {
+     "2023/24": 824.5833333333334,
+     "2024/25": 974.5833333333334,
+     "2025/26": 1050.8333333333333
+    },
+    "unrestricted_ratio": 1.2743810005053056
+   }
+  },
+  "why": "The comparator window is 2017/18-2023/24. This one opens 2023-04, inside its final year, and runs past it. Provider participation is also nearly flat here (381 to 417 against 4.32x over the comparator window), so there is no coverage ramp for a cohort restriction to remove and the test has nothing to bite on.",
+  "window": {
+   "first": "2023-04",
+   "last": "2026-06"
+  }
+ },
+ "verdict": {
+  "basis": "the broad classifier's association with join date (+0.589, n=189, p=0.0000) collapses to +0.039 once provider size is controlled, and the smallest size stratum contains no continuous-cohort provider at all, so there is no common support to adjust across; the unconfounded classifier reaches only 3 joiner(s) against 53 cohort providers, below the 10 needed on each side",
+  "call": "UNRESOLVED_WITHDRAWAL_STANDS",
+  "decided_by": "neither classifier reached a testable state",
+  "direction_of_the_weak_evidence": "What little unconfounded evidence exists points TOWARD the confounder: the 3 joiners with a measurable under-18 share have a median of 0.999 against a cohort median of 0.136. It flips on the inclusion of a single provider (see the threshold table below) and is not a result."
+ },
+ "window": {
+  "first": "2017-04",
+  "last": "2024-03"
+ }
+}
