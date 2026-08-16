@@ -6,7 +6,7 @@ from typing import Iterable, Sequence
 from oslt_research.connectors.base import HarvestQuery, SourceConnector
 from oslt_research.domain.enums import EvidenceLane
 from oslt_research.domain.models import EvidenceObject
-from oslt_research.evidence.lane_coding import LaneClassifier
+from oslt_research.evidence.lane_coding import LaneClassifier, apply_lane_assignment
 
 from .harvest import execute_harvest
 
@@ -173,8 +173,13 @@ class CounterevidenceHarvester:
                     sources.append(connector.source_name)
                     returned += len(result.evidence)
                     for item in result.evidence:
+                        # execute_harvest now lane-codes on construction, so trust the
+                        # persisted lane; only re-classify a record that arrived uncoded,
+                        # otherwise the report could disagree with the stored corpus.
+                        if item.lane_coding is None:
+                            item = apply_lane_assignment(item, self.classifier.classify(item))
                         collected.setdefault(item.evidence_id, item)
-                        if self.classifier.classify(item).lane is lane:
+                        if item.lane is lane:
                             confirmed += 1
                 queries_run.append(concept)
 

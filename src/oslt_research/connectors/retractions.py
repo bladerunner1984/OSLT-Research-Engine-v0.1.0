@@ -13,6 +13,7 @@ from oslt_research.domain.enums import (
     SourceStatus,
 )
 from oslt_research.domain.models import EvidenceObject, ProvenanceRecord
+from oslt_research.evidence.lane_coding import apply_lane_assignment
 from oslt_research.evidence.provenance import admit_evidence, sha256_text
 from oslt_research.pipelines.harvest import normalise_doi
 
@@ -123,30 +124,32 @@ class RetractionConnector:
             f"{record.update_type} notice for {record.retracted_doi}. {record.notice_title}"
         )
         return admit_evidence(
-            EvidenceObject(
-                evidence_id=f"EV-RETRACT-{sha256_text(record.notice_doi)[:16].upper()}",
-                lane=EvidenceLane.CORRECTION_RETRACTION,
-                source_status=SourceStatus.VERIFIED,
-                epistemic_status=EpistemicStatus.OBSERVATION,
-                title=record.notice_title or f"{record.update_type} notice",
-                content=content,
-                provenance=ProvenanceRecord(
-                    source_id=SOURCE_ID,
-                    source_uri=f"https://doi.org/{record.notice_doi}",
-                    published_at=record.issued,
-                    field_or_document_locator=record.notice_doi,
-                    checksum_sha256=raw_hash,
-                    access_class=AccessClass.OPEN,
-                    licence_or_approval="CROSSREF_OPEN_METADATA",
-                    transformation_ids=["CROSSREF_UPDATE_TO_RETRACTION_EVIDENCE_V1"],
-                ),
-                dependency_family=DEPENDENCY_FAMILY,
-                metadata={
-                    "retracted_doi": record.retracted_doi,
-                    "update_type": record.update_type,
-                    "invalidates": record.invalidates,
-                    "content_sha256": sha256_text(content),
-                },
+            apply_lane_assignment(
+                EvidenceObject(
+                    evidence_id=f"EV-RETRACT-{sha256_text(record.notice_doi)[:16].upper()}",
+                    lane=EvidenceLane.CORRECTION_RETRACTION,
+                    source_status=SourceStatus.VERIFIED,
+                    epistemic_status=EpistemicStatus.OBSERVATION,
+                    title=record.notice_title or f"{record.update_type} notice",
+                    content=content,
+                    provenance=ProvenanceRecord(
+                        source_id=SOURCE_ID,
+                        source_uri=f"https://doi.org/{record.notice_doi}",
+                        published_at=record.issued,
+                        field_or_document_locator=record.notice_doi,
+                        checksum_sha256=raw_hash,
+                        access_class=AccessClass.OPEN,
+                        licence_or_approval="CROSSREF_OPEN_METADATA",
+                        transformation_ids=["CROSSREF_UPDATE_TO_RETRACTION_EVIDENCE_V1"],
+                    ),
+                    dependency_family=DEPENDENCY_FAMILY,
+                    metadata={
+                        "retracted_doi": record.retracted_doi,
+                        "update_type": record.update_type,
+                        "invalidates": record.invalidates,
+                        "content_sha256": sha256_text(content),
+                    },
+                )
             )
         )
 

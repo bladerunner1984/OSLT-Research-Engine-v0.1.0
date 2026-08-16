@@ -34,3 +34,40 @@ def test_sqlite_roundtrip_evidence_and_results(tmp_path, result_factory):
     result = result_factory(result_id="KR-1")
     store.save_kernel_result(result)
     assert store.list_kernel_results("RUN-1")[0].result_id == "KR-1"
+
+
+def test_lane_and_its_coding_survive_a_persistence_round_trip(tmp_path):
+    """A lane that does not round-trip is indistinguishable from one never assigned."""
+
+    from oslt_research.connectors.base import HarvestQuery
+    from oslt_research.domain.enums import EvidenceLane, LaneCodingMethod
+    from oslt_research.pipelines.harvest import raw_record_to_evidence
+    from oslt_research.connectors.base import RawRecord
+
+    record = RawRecord(
+        source_name="Fixture",
+        source_record_id="1",
+        title="A Study",
+        content="Risk of bias in the included studies",
+        source_uri="fixture://1",
+        identifiers={"doi": "10.1000/abc"},
+        raw_response_hash="a" * 64,
+    )
+    item = raw_record_to_evidence(record, HarvestQuery(query_id="Q1", concept="c"))
+    assert item.lane is EvidenceLane.BIAS_CRITIQUE
+
+    store = SQLiteStore(tmp_path / "oslt.db")
+    store.initialise()
+    store.save_evidence(item)
+
+    (loaded,) = store.list_evidence()
+    assert loaded.lane is EvidenceLane.BIAS_CRITIQUE
+    assert loaded.lane_coding is not None
+    assert loaded.lane_coding.method is LaneCodingMethod.AUTOMATED_CLASSIFIER
+    assert loaded.lane_coding.coder_ref == item.lane_coding.coder_ref
+
+    with store.connect() as connection:
+        row = connection.execute(
+            "SELECT lane FROM evidence_objects WHERE evidence_id = ?", (item.evidence_id,)
+        ).fetchone()
+    assert row["lane"] == EvidenceLane.BIAS_CRITIQUE.value

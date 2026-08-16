@@ -7,11 +7,13 @@ from pydantic import BaseModel, ConfigDict, Field, field_validator, model_valida
 
 from .enums import (
     AccessClass,
+    AuthorityLevel,
     ClaimTier,
     EpistemicStatus,
     EvidenceLane,
     FalsifierStatus,
     FindingDirection,
+    LaneCodingMethod,
     ModelFamily,
     SourceStatus,
 )
@@ -57,12 +59,51 @@ class ProvenanceRecord(BaseModel):
     codebook_or_schema_ref: str | None = None
 
 
+class LaneCoding(BaseModel):
+    """Provenance for a record's EvidenceLane: who coded it, how sure, and on what cues.
+
+    The lane alone is not enough. A lane set by a regex screening pass carries
+    A5_MODEL_PROPOSAL authority and is a proposal; a lane set by a named human coder
+    carries A2_HUMAN_GOVERNANCE_DECISION and is a decision. Collapsing the two would
+    silently corrupt the inter-rater-reliability machinery, which compares coders and
+    therefore has to be able to tell them apart.
+    """
+
+    model_config = ConfigDict(extra="forbid", frozen=True)
+
+    method: LaneCodingMethod
+    confidence: float = Field(ge=0, le=1)
+    matched_signals: list[str] = Field(default_factory=list)
+    rationale: str = ""
+    requires_human_adjudication: bool = True
+    coder_ref: str | None = Field(
+        default=None,
+        description="Classifier version or the human coder's name; unattributed coding is not a code",
+    )
+    coded_at: datetime = Field(default_factory=utc_now)
+
+    @property
+    def authority_level(self) -> AuthorityLevel:
+        """A classifier proposes; only a human coder decides."""
+
+        if self.method is LaneCodingMethod.HUMAN_CODER:
+            return AuthorityLevel.A2_HUMAN_GOVERNANCE_DECISION
+        if self.method is LaneCodingMethod.SOURCE_DECLARED:
+            return AuthorityLevel.A3_VERIFIED_EVIDENCE_COMPUTATION
+        return AuthorityLevel.A5_MODEL_PROPOSAL
+
+    @property
+    def is_verified_code(self) -> bool:
+        return self.method is LaneCodingMethod.HUMAN_CODER
+
+
 class EvidenceObject(BaseModel):
     model_config = ConfigDict(extra="forbid")
 
     evidence_id: str = Field(min_length=1)
     proposition_ids: list[str] = Field(default_factory=list)
     lane: EvidenceLane = EvidenceLane.UNCLASSIFIED
+    lane_coding: LaneCoding | None = None
     source_status: SourceStatus = SourceStatus.UNVERIFIED
     epistemic_status: EpistemicStatus = EpistemicStatus.OBSERVATION
     title: str = Field(min_length=1)

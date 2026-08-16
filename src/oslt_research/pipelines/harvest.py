@@ -7,6 +7,7 @@ from dataclasses import dataclass
 from oslt_research.connectors.base import HarvestQuery, RawRecord, SourceConnector
 from oslt_research.domain.enums import AccessClass, EpistemicStatus, EvidenceLane, SourceStatus
 from oslt_research.domain.models import EvidenceObject, ProvenanceRecord
+from oslt_research.evidence.lane_coding import apply_lane_assignment
 from oslt_research.evidence.provenance import admit_evidence, sha256_text
 from oslt_research.persistence.sqlite import SQLiteStore
 
@@ -51,6 +52,8 @@ def raw_record_to_evidence(record: RawRecord, query: HarvestQuery) -> EvidenceOb
     evidence = EvidenceObject(
         evidence_id=evidence_id_for(record),
         proposition_ids=query.proposition_ids,
+        # Left UNCLASSIFIED here and set below: the classifier reads title+content, so
+        # it needs the assembled record rather than the raw one.
         lane=EvidenceLane.UNCLASSIFIED,
         source_status=SourceStatus.VERIFIED,
         epistemic_status=EpistemicStatus.OBSERVATION,
@@ -84,7 +87,10 @@ def raw_record_to_evidence(record: RawRecord, query: HarvestQuery) -> EvidenceOb
             "connector_source": record.source_name,
         },
     )
-    return admit_evidence(evidence)
+    # Lane-code every harvested record at the point of construction. Without this the
+    # corpus persists lane-blind, and a lane-blind corpus cannot support triangulation
+    # at all - the lanes are how evidence is partitioned before it is compared.
+    return admit_evidence(apply_lane_assignment(evidence))
 
 
 @dataclass(frozen=True)

@@ -69,3 +69,25 @@ async def test_execute_harvest_with_fixture_connector():
         == f"connector:Fixture:v{connector.connector_version}"
         for item in result.evidence
     )
+
+
+def test_harvested_records_are_lane_coded_at_construction():
+    """The defect this guards: harvest persisted the whole corpus as UNCLASSIFIED."""
+
+    from oslt_research.domain.enums import EvidenceLane, LaneCodingMethod
+
+    item = raw_record_to_evidence(
+        raw(content="An independent replication of the earlier finding"),
+        HarvestQuery(query_id="Q1", concept="c"),
+    )
+    assert item.lane is EvidenceLane.REPLICATION
+    assert item.lane_coding is not None
+    assert item.lane_coding.method is LaneCodingMethod.AUTOMATED_CLASSIFIER
+
+
+def test_harvested_record_with_no_cue_records_that_it_was_screened():
+    item = raw_record_to_evidence(raw(), HarvestQuery(query_id="Q1", concept="c"))
+    from oslt_research.domain.enums import EvidenceLane
+
+    assert item.lane is EvidenceLane.UNCLASSIFIED
+    assert item.lane_coding is not None, "screened-but-uncoded must differ from never screened"

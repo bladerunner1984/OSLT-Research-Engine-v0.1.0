@@ -2,10 +2,17 @@ from __future__ import annotations
 
 import pytest
 
-from oslt_research.domain.enums import AccessClass, EvidenceLane
-from oslt_research.domain.models import EvidenceObject, ProvenanceRecord
+from oslt_research.domain.enums import (
+    AccessClass,
+    AuthorityLevel,
+    EvidenceLane,
+    LaneCodingMethod,
+)
+from oslt_research.domain.models import EvidenceObject, LaneCoding, ProvenanceRecord
 from oslt_research.evidence.lane_coding import (
+    CLASSIFIER_VERSION,
     LaneClassifier,
+    apply_lane_assignment,
     cohens_kappa,
     simulate_coder_drift,
 )
@@ -192,3 +199,78 @@ def test_drift_rejects_invalid_input():
         simulate_coder_drift(true_labels=["A"], drift_probability=1.5)
     with pytest.raises(ValueError):
         simulate_coder_drift(true_labels=[], drift_probability=0.1)
+
+
+# ------------------------------------------------- coding provenance (A5, not A2)
+
+
+def test_classifier_assignment_carries_model_proposal_authority():
+    """An AI-assigned lane must never look like a human coding decision."""
+
+    assignment = LaneClassifier().classify(evidence("EV1", content="This has been retracted"))
+    assert assignment.authority_level is AuthorityLevel.A5_MODEL_PROPOSAL
+
+    coding = assignment.to_lane_coding()
+    assert coding.method is LaneCodingMethod.AUTOMATED_CLASSIFIER
+    assert coding.authority_level is AuthorityLevel.A5_MODEL_PROPOSAL
+    assert coding.authority_level < AuthorityLevel.A2_HUMAN_GOVERNANCE_DECISION
+    assert coding.is_verified_code is False
+    assert coding.requires_human_adjudication is True
+    assert coding.coder_ref == CLASSIFIER_VERSION
+
+
+def test_apply_lane_assignment_sets_lane_and_its_provenance_together():
+    coded = apply_lane_assignment(evidence("EV1", content="Risk of bias in included studies"))
+    assert coded.lane is EvidenceLane.BIAS_CRITIQUE
+    assert coded.lane_coding is not None
+    assert coded.lane_coding.matched_signals
+
+
+def test_screened_but_uncoded_is_distinguishable_from_never_screened():
+    """"No cue found" and "nobody looked" are different states."""
+
+    never_screened = evidence("EV1", title="Cohort profile")
+    assert never_screened.lane_coding is None
+
+    screened = apply_lane_assignment(never_screened)
+    assert screened.lane is EvidenceLane.UNCLASSIFIED
+    assert screened.lane_coding is not None
+    assert screened.lane_coding.confidence == 0.0
+    assert screened.lane_coding.rationale
+
+
+def test_a_human_code_is_never_overwritten_by_the_classifier():
+    human = evidence("EV1", content="This has been retracted").model_copy(
+        update={
+            "lane": EvidenceLane.NULL,
+            "lane_coding": LaneCoding(
+                method=LaneCodingMethod.HUMAN_CODER,
+                confidence=1.0,
+                coder_ref="A. Coder",
+                requires_human_adjudication=False,
+            ),
+        }
+    )
+    coded = apply_lane_assignment(human)
+    assert coded.lane is EvidenceLane.NULL
+    assert coded.lane_coding is not None
+    assert coded.lane_coding.method is LaneCodingMethod.HUMAN_CODER
+    assert coded.lane_coding.authority_level is AuthorityLevel.A2_HUMAN_GOVERNANCE_DECISION
+
+
+def test_a_source_declared_lane_is_recorded_as_such_not_reclassified():
+    declared = evidence("EV1", content="notice for 10.1/x").model_copy(
+        update={"lane": EvidenceLane.CORRECTION_RETRACTION}
+    )
+    coded = apply_lane_assignment(declared)
+    assert coded.lane is EvidenceLane.CORRECTION_RETRACTION
+    assert coded.lane_coding is not None
+    assert coded.lane_coding.method is LaneCodingMethod.SOURCE_DECLARED
+
+
+def test_backfill_is_idempotent_on_lane():
+    once = apply_lane_assignment(evidence("EV1", content="An independent replication"))
+    twice = apply_lane_assignment(once)
+    assert twice.lane is once.lane
+    assert twice.lane_coding is not None
+    assert twice.lane_coding.method is LaneCodingMethod.AUTOMATED_CLASSIFIER

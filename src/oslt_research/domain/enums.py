@@ -14,6 +14,18 @@ class EvidenceLane(StrEnum):
     CORRECTION_RETRACTION = "CORRECTION_RETRACTION"
 
 
+class LaneCodingMethod(StrEnum):
+    """How a record's EvidenceLane came to be set.
+
+    Exists because an automated code and a human code must never be indistinguishable:
+    inter-rater reliability is only meaningful if you can tell which coder was a model.
+    """
+
+    AUTOMATED_CLASSIFIER = "AUTOMATED_CLASSIFIER"
+    HUMAN_CODER = "HUMAN_CODER"
+    SOURCE_DECLARED = "SOURCE_DECLARED"
+
+
 class SourceStatus(StrEnum):
     VERIFIED = "VERIFIED"
     ASSERTED = "ASSERTED"

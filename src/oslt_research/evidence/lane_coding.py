@@ -7,8 +7,8 @@ from typing import Iterable, Sequence
 
 import numpy as np
 
-from oslt_research.domain.enums import EvidenceLane
-from oslt_research.domain.models import EvidenceObject
+from oslt_research.domain.enums import AuthorityLevel, EvidenceLane, LaneCodingMethod
+from oslt_research.domain.models import EvidenceObject, LaneCoding
 
 
 @dataclass(frozen=True)
@@ -19,6 +19,32 @@ class LaneAssignment:
     matched_signals: list[str] = field(default_factory=list)
     requires_human_adjudication: bool = True
     rationale: str = ""
+
+    @property
+    def authority_level(self) -> AuthorityLevel:
+        """A classifier proposal, never a human coding decision.
+
+        Stated on the assignment itself so no caller has to remember it.
+        """
+
+        return AuthorityLevel.A5_MODEL_PROPOSAL
+
+    def to_lane_coding(self) -> LaneCoding:
+        """Render as the persistable record of HOW this lane was assigned."""
+
+        return LaneCoding(
+            method=LaneCodingMethod.AUTOMATED_CLASSIFIER,
+            confidence=self.confidence,
+            matched_signals=list(self.matched_signals),
+            rationale=self.rationale,
+            requires_human_adjudication=self.requires_human_adjudication,
+            coder_ref=CLASSIFIER_VERSION,
+        )
+
+
+#: Bumped whenever LANE_SIGNALS or the scoring rule changes, so a stored code can be
+#: traced to the exact ruleset that produced it and re-coded when the ruleset moves on.
+CLASSIFIER_VERSION = "lane-classifier-v1"
 
 
 #: Lane cues, ordered by precedence. A retraction outranks everything: a retracted paper
@@ -262,3 +288,58 @@ def simulate_coder_drift(
         else:
             drifted.append(label)
     return drifted
+
+
+def apply_lane_assignment(
+    item: EvidenceObject, assignment: LaneAssignment | None = None
+) -> EvidenceObject:
+    """Attach a classifier lane to a record together with its coding provenance.
+
+    Two invariants make this safe to run unsupervised:
+
+    * A lane already coded by a human (or declared by the source, as a retraction notice
+      is) is never overwritten by a screening pass - the model must not silently outrank
+      the coder it exists to assist.
+    * The lane and its `lane_coding` always move together, so a record can never claim a
+      lane without also carrying the fact that a regex, not a person, assigned it.
+
+    Records below the confidence floor stay UNCLASSIFIED but still gain a `lane_coding`
+    recording that they were looked at and why nothing was assigned. "Screened, no cue"
+    and "never screened" are different states and must not be confusable.
+    """
+
+    if item.lane_coding is not None and not (
+        item.lane_coding.method is LaneCodingMethod.AUTOMATED_CLASSIFIER
+    ):
+        return item
+    if item.lane is not EvidenceLane.UNCLASSIFIED and item.lane_coding is None:
+        # Lane set by a connector that knows what the record is (e.g. a retraction
+        # notice). Record that provenance rather than second-guessing it.
+        return item.model_copy(
+            update={
+                "lane_coding": LaneCoding(
+                    method=LaneCodingMethod.SOURCE_DECLARED,
+                    confidence=1.0,
+                    rationale="Lane declared by the source connector, not inferred from text.",
+                    requires_human_adjudication=False,
+                    coder_ref=item.provenance.source_id,
+                )
+            }
+        )
+
+    assignment = assignment or LaneClassifier().classify(item)
+    coding = assignment.to_lane_coding()
+
+    existing = item.lane_coding
+    if (
+        existing is not None
+        and item.lane is assignment.lane
+        and existing.coder_ref == coding.coder_ref
+        and existing.matched_signals == coding.matched_signals
+        and existing.confidence == coding.confidence
+    ):
+        # Same ruleset, same outcome. Returning a fresh record would only move `coded_at`,
+        # which would make a re-run look like a re-coding and churn every row in the store.
+        return item
+
+    return item.model_copy(update={"lane": assignment.lane, "lane_coding": coding})
