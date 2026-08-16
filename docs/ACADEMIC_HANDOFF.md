@@ -64,7 +64,7 @@ that could have destroyed it.
 | Institutional graph | **824 typed entities**, **1,286 typed dated relations** — `FUNDS` (926), `ADVISES` (227), `CONTRACTS_WITH` (103), `ISSUES_GUIDANCE_TO` (30) |
 | W02 calibration targets | **218 usable series** (56 from the first Fingertips harvest, 162 from the recovery run), against **zero** at the start of this work |
 | Census 2021 gender identity | **517 cells**, 13 of 24 tables, zero missing, zero refusals |
-| Propositions | 64 pre-registered; **16 open-testable**, 48 access-gated; **0 answered** |
+| Propositions | 64 pre-registered; **10 open-testable**, 6 lacking a predictor source, 48 access-gated; **16 attempted, 0 released** |
 | Descriptive analyses complete | 3 (referral baseline, second comparator, negative-control class) |
 
 Plus, as running code rather than plans: a governance kernel (admission, authority lattice,
@@ -315,10 +315,18 @@ rather than merely degrading it.
 
 ### The ballot is unequal — the most important caveat in the project
 
-Of the 16 open-testable propositions, **12 belong to `ASCERTAINMENT_SERVICE`** and 4 to
+Of the **10** open-testable propositions, **8 belong to `ASCERTAINMENT_SERVICE`** and 2 to
 `MULTIFACTORIAL_DEVELOPMENTAL_INSTITUTIONAL`. `INTRINSIC_RECOGNITION`,
 `MIXTURE_HETEROGENEITY` and `NULL_OR_ALTERNATIVE` have **zero** open-testable propositions
 between them.
+
+**Revised 2026-08-16, and it got worse.** The count was 16, of which 12 were
+`ASCERTAINMENT_SERVICE`. Six were then found to be untestable for a reason knowable in
+advance — the predictor their own prediction names sits in no required workstream — and are
+now `NEEDS_PREDICTOR_SOURCE`. Removing them raised single-family dominance from 12/16 to
+**8/10**. The correction was right and the sample is now more lopsided, not less. This is the
+reason `docs/PROJECT_V2_SPECIFICATION.md` proposes retiring the five-family contest as the
+project's headline rather than continuing to run it.
 
 An open-data-only study therefore cannot be a contest between explanations. It would return
 `ASCERTAINMENT_SERVICE` as leader whatever is true, because its rivals cannot be run. The
@@ -343,9 +351,11 @@ Stated flatly, because a sceptical reader should not have to infer it.
   simulation exist; a second human coder does not. **The AI work is a starting point requiring
   verification, not a finished result.**
 - **No individual-level data of any kind.** Everything held is aggregate and public.
-- **48 of 64 propositions cannot be tested at all** — 25 need primary collection, 16 need
-  restricted access, 7 need individuals followed through time. Only 16 are open-testable, and
-  see the ballot caveat above for why those 16 are not a fair sample.
+- **54 of 64 propositions cannot be tested** — 25 need primary collection, 16 need
+  restricted access, 7 need individuals followed through time, and **6 name a predictor that
+  no required workstream carries**. Only 10 are open-testable, and see the ballot caveat above
+  for why those 10 are not a fair sample. The last six were reported as testable until
+  2026-08-16 and produced six `INCONCLUSIVE` findings before the defect was found.
 - **The Pilot 1 result is unexecuted.** The kernel returns `WEAKENS` for MD11 and `SUPPORTS`
   for MX14 at `ASSOCIATION_ONLY`. **Do not cite this.** The corpus has no orientation coding,
   so the stratifying variable the design depends on has never been measured; the kernel is
