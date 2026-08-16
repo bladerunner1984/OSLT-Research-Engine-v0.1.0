@@ -1,0 +1,1010 @@
+{
+  "generated_at": "2026-08-16T05:13:49.628754+00:00",
+  "script": "scripts/answer_open_testable.py",
+  "released": false,
+  "release_note": "**Nothing here is a released claim.** `governance/claim_release.py` declines every claim pending human review, and zero human-coded evidence lanes exist in this repository. These are CANDIDATE findings, produced by an engine, for an academic to adjudicate, reject or re-run. No line below has passed a human gate.",
+  "ballot_warning": "**The ballot is unequal and no tally over it means what it looks like.** Twelve of these sixteen propositions belong to ASCERTAINMENT_SERVICE and four to MULTIFACTORIAL_DEVELOPMENTAL_INSTITUTIONAL. INTRINSIC_RECOGNITION, MIXTURE_HETEROGENEITY and NULL_OR_ALTERNATIVE have **zero** open-testable propositions between them. Producing twelve ascertainment findings and no rival findings is an artefact of what is cheap to measure from open sources, not a result about which family explains anything. A comparative support index computed over this set measures data access.",
+  "maximum_claim_tier": "DESCRIPTIVE_EVIDENCE_ONLY",
+  "feasibility": {
+    "propositions": 64,
+    "testable_from_open_sources": 16,
+    "by_reachability": {
+      "NEEDS_INDIVIDUAL_LEVEL": 7,
+      "NEEDS_PRIMARY_COLLECTION": 25,
+      "NEEDS_RESTRICTED_ACCESS": 16,
+      "OPEN_TESTABLE": 16
+    },
+    "testable_ids": [
+      "AS01",
+      "AS02",
+      "AS03",
+      "AS04",
+      "AS05",
+      "AS06",
+      "AS07",
+      "AS08",
+      "AS09",
+      "AS10",
+      "AS11",
+      "AS12",
+      "TH04",
+      "TH05",
+      "TH07",
+      "TH08"
+    ],
+    "testable_by_model_family": {
+      "ASCERTAINMENT_SERVICE": 12,
+      "MULTIFACTORIAL_DEVELOPMENTAL_INSTITUTIONAL": 4
+    },
+    "coverage_asymmetry": [
+      "MODEL_FAMILIES_WITH_NO_OPEN_TESTABLE_PROPOSITION:INTRINSIC_RECOGNITION,MIXTURE_HETEROGENEITY,NULL_OR_ALTERNATIVE",
+      "OPEN_TESTABLE_SET_DOMINATED_BY:ASCERTAINMENT_SERVICE:12/16",
+      "COMPARATIVE_SUPPORT_OVER_AN_UNEQUAL_BALLOT_MEASURES_DATA_ACCESS_NOT_EXPLANATION"
+    ]
+  },
+  "provenance": {
+    "MHSDS": "runtime\\mhsds\\MHSDS Time_Series_data_Apr_2016_Jun_2026_Perf.zip (local read, no network; DS077)",
+    "population": "NOMIS NM_2002_1, England, 2016-2025, live",
+    "W09": "w09_clinical_guidance.json: 171 documents, 121 distinct anchor dates",
+    "W02_fingertips": "fingertips_w02.json: 81 series",
+    "W10_legislation": "28 enactment years via legislation.gov.uk, as recorded in data/coupling_readjudication.json",
+    "census": "data/census_2021_gender_identity.json and docs/CENSUS_2021_GENDER_IDENTITY.md"
+  },
+  "direction_counts": {
+    "INCONCLUSIVE": 10,
+    "SUPPORTS": 2,
+    "WEAKENS": 4
+  },
+  "findings": [
+    {
+      "proposition_id": "AS01",
+      "model_family": "ASCERTAINMENT_SERVICE",
+      "domain": "Referral threshold",
+      "statement": "Changing referral thresholds contribute materially to observed referral growth.",
+      "prediction": "Policy/service changes create discontinuities in referral rates independent of prevalence measures.",
+      "falsifier": "Referral growth mirrors population prevalence with no threshold discontinuity.",
+      "finding_direction": "INCONCLUSIVE",
+      "falsifier_status": "INCONCLUSIVE",
+      "claim_tier": "DESCRIPTIVE_EVIDENCE_ONLY",
+      "headline": "W09 anchor months carry no larger a break in the fitted log-slope of the coverage-fixed series than any other month (permutation p=0.76), but 32 of 60 testable months carry an anchor, so the test has almost no power.",
+      "basis": "The 121 W09 anchors are undifferentiated: they include every dated NHS England, GOV.UK, NICE and professional-body document the harvest found, not the subset that changed a referral threshold. With anchors on 53% of testable months, 'anchor' and 'month' are nearly the same variable, so a null here is uninformative rather than negative. The cancer comparator does show the threshold signature - referrals x2.98 against conversion x0.55, monotonic - but in a different domain.",
+      "evidence_used": [
+        "W09: data/w09_clinical_guidance.json, 121 distinct anchor dates 2013-2026",
+        "W02: MHSDS MHS01 continuous-cohort monthly series (DS077)",
+        "W02: docs/REFERRAL_BASELINE.md cancer referral and conversion series"
+      ],
+      "quantities": {
+        "series": "MHS01, England, continuous provider cohort, 2017/18-2023/24",
+        "testable_months": 60,
+        "months_carrying_a_w09_anchor": 32,
+        "anchor_density": 0.5333333333333333,
+        "mean_abs_log_slope_change_at_anchors": 0.002995437233140024,
+        "mean_abs_log_slope_change_all_months": 0.0033024659789981834,
+        "permutation_p_value": 0.7554,
+        "permutation_draws": 20000,
+        "cancer_comparator": {
+          "referral_rate_ratio": 2.98,
+          "conversion_rate_ratio": 0.55,
+          "note": "from docs/REFERRAL_BASELINE.md; the threshold signature in a different domain, unaffected by the MHSDS coverage ramp"
+        }
+      },
+      "limits": [
+        "Anchor density is the binding limit, not sample size.",
+        "Selecting the threshold-relevant anchors requires human coding of the 121 documents. governance/claim_release.py records zero human-coded lanes, so the selection cannot be made inside this engine without inventing it.",
+        "MHS01 is general secondary mental health and is not the target domain."
+      ],
+      "what_would_settle_it": "Human coding of the W09 anchors into 'changes a referral threshold' and 'does not', pre-registered before the series is looked at, then the same permutation test on the coded subset.",
+      "released": false
+    },
+    {
+      "proposition_id": "AS02",
+      "model_family": "ASCERTAINMENT_SERVICE",
+      "domain": "Service capacity",
+      "statement": "Capacity/waiting-list/service configuration affects observed case counts.",
+      "prediction": "Capacity expansions/restrictions alter recorded referrals or throughput.",
+      "falsifier": "No relationship to service capacity after denominator control.",
+      "finding_direction": "INCONCLUSIVE",
+      "falsifier_status": "NOT_TESTED",
+      "claim_tier": "DESCRIPTIVE_EVIDENCE_ONLY",
+      "headline": "Over 53 overlapping months the IAPT mean wait fell 31.5 to 20.2 days while access rose 15.2% to 18.3% of estimated need (levels r=-0.24), but month-to-month changes are unrelated (r=0.08).",
+      "basis": "The level relationship has the sign a capacity account predicts and the first-difference relationship is null. Compatibility is not support, and no design here separates capacity causing throughput from throughput causing waits or from a common trend.",
+      "evidence_used": [
+        "W02: OHID Fingertips 92010 (mean wait to enter IAPT) and 90592 (access to IAPT), England, monthly"
+      ],
+      "quantities": {
+        "capacity_indicator": {
+          "id": 92010,
+          "name": "Average wait to enter IAPT treatment: mean wait for first treatment (days)"
+        },
+        "throughput_indicator": {
+          "id": 90592,
+          "name": "Access to IAPT services: people entering IAPT (in month) as % of those estimated to have anxiety/depression"
+        },
+        "overlapping_months": 53,
+        "first_month": "Jan 2015",
+        "last_month": "Sep 2019",
+        "gaps": [
+          [
+            "Sep 2017",
+            "Feb 2018"
+          ]
+        ],
+        "contiguous_runs": [
+          [
+            "Jan 2015",
+            "Sep 2017",
+            33
+          ],
+          [
+            "Feb 2018",
+            "Sep 2019",
+            20
+          ]
+        ],
+        "first_differences_used": 51,
+        "mean_wait_days_first": 31.5,
+        "mean_wait_days_last": 20.2,
+        "throughput_first": 15.168499195943,
+        "throughput_last": 18.28285798,
+        "level_correlation": -0.243978886807835,
+        "first_difference_correlation": 0.07547824083523402
+      },
+      "limits": [
+        "Waiting time is an OUTCOME of capacity and demand jointly, not a measure of capacity. Using it as a capacity proxy builds the simultaneity in.",
+        "The overlap ends September 2019 and does not reach the period the MHSDS work covers.",
+        "The mean-wait series has 1 hole(s) inside the overlap (Sep 2017 to Feb 2018). First differences are taken within contiguous runs only - a missing month is not a month of no change.",
+        "IAPT is a self-referral service; its access dynamics are not those of a GP-gated specialist pathway."
+      ],
+      "what_would_settle_it": "A commissioned-capacity series - funded establishment, clinic count, contracted activity - which no required workstream carries, plus variation in it that is not itself a response to demand.",
+      "released": false
+    },
+    {
+      "proposition_id": "AS03",
+      "model_family": "ASCERTAINMENT_SERVICE",
+      "domain": "Coding change",
+      "statement": "Diagnostic/coding changes create artefactual time trends.",
+      "prediction": "Trend discontinuities align with coding/definition changes.",
+      "falsifier": "Harmonised coding leaves trend unchanged.",
+      "finding_direction": "INCONCLUSIVE",
+      "falsifier_status": "PARTIALLY_TRIGGERED",
+      "claim_tier": "DESCRIPTIVE_EVIDENCE_ONLY",
+      "headline": "At the only documented definition-label change in the archive (2026-04, MHS01 renamed from 'People in contact with services' to 'People with an open referral with services'), a coverage-fixed provider cohort steps by x0.9996 - no discontinuity - while the England headline steps x1.0914.",
+      "basis": "AS03 predicts that trend discontinuities align with coding or definition changes. At the one change available, the coverage-fixed series shows no step at all. But this is a single instance, and a change of LABEL is not demonstrably a change of SPECIFICATION, so the test has little power and the falsifier is recorded as only partially triggered.",
+      "evidence_used": [
+        "W02: MHSDS MHS01 England and Provider cells with measure names carried per month (DS077); the rename was located by scanning the archive, not assumed"
+      ],
+      "quantities": {
+        "measure": "MHS01",
+        "measure_rename_month": "2026-04",
+        "measure_name_changes": [
+          {
+            "month": "2026-04",
+            "from": [
+              "People in contact with services at the end of the reporting period"
+            ],
+            "to": [
+              "People with an open referral with services at the end of the reporting period"
+            ]
+          }
+        ],
+        "window": [
+          "2025-01",
+          "2026-06"
+        ],
+        "providers_submitting_continuously": 213,
+        "step_in_continuous_cohort": 0.9996224584392067,
+        "step_in_england_published": 1.0913677421488925,
+        "months_before": 15,
+        "months_after": 3
+      },
+      "limits": [
+        "n=1. One label change, in one measure, in one collection.",
+        "The England headline's step at the same month is NOT evidence of a definition effect: England and the cohort differ precisely by the providers outside the cohort, so that step is a joiner effect and is AS08's subject, not AS03's.",
+        "Fifteen months either side, of which only three fall after the change; a step estimated on three months is fragile.",
+        "ICD and OPCS coding revisions, which are what AS03 is really about, are not carried by any workstream in hand."
+      ],
+      "what_would_settle_it": "A dated register of coding and specification changes - MHSDS technical output specification versions, ICD-10 to ICD-11 transition dates - tested against coverage-fixed series. None of the four required workstreams carries one.",
+      "released": false
+    },
+    {
+      "proposition_id": "AS04",
+      "model_family": "ASCERTAINMENT_SERVICE",
+      "domain": "Disclosure",
+      "statement": "Reduced stigma increases disclosure/help-seeking.",
+      "prediction": "Disclosure indicators change before referral without corresponding objective symptom onset shift.",
+      "falsifier": "Onset measures rise similarly before disclosure changes.",
+      "finding_direction": "INCONCLUSIVE",
+      "falsifier_status": "NOT_TESTED",
+      "claim_tier": "DESCRIPTIVE_EVIDENCE_ONLY",
+      "headline": "No disclosure or help-seeking indicator exists in any workstream in hand, so the prediction - that disclosure changes before referral without a corresponding shift in objective onset - has neither of its two terms.",
+      "basis": "AS04 needs a disclosure measure and an onset measure, separately timed. W01, W02, W09 and W10 carry population, service activity, policy dates and parliamentary material. None is a disclosure indicator, and no onset measure exists outside individual-level records.",
+      "evidence_used": [
+        "W01, W02, W09, W10 enumerated and searched; see data/feasibility_census.json"
+      ],
+      "quantities": {
+        "missing_measures": [
+          "a dated disclosure or help-seeking indicator",
+          "an objective symptom-onset measure independent of presentation"
+        ]
+      },
+      "limits": [
+        "feasibility marks this OPEN_TESTABLE on required-workstream availability, but no required workstream carries the predictor the prediction names"
+      ],
+      "what_would_settle_it": "A repeated population survey carrying both disclosure and onset items - primary collection, which is a different reachability class.",
+      "released": false
+    },
+    {
+      "proposition_id": "AS05",
+      "model_family": "ASCERTAINMENT_SERVICE",
+      "domain": "Awareness",
+      "statement": "Public/professional awareness changes ascertainment.",
+      "prediction": "Search/media/clinical awareness predicts presentation after service controls.",
+      "falsifier": "No independent association or reverse ordering.",
+      "finding_direction": "INCONCLUSIVE",
+      "falsifier_status": "NOT_TESTED",
+      "claim_tier": "DESCRIPTIVE_EVIDENCE_ONLY",
+      "headline": "The awareness predictor AS05 names - search volume, media attention, professional awareness - sits in W11, which is not one of AS05's required workstreams and has not been harvested.",
+      "basis": "AS05 requires W01, W02, W09 and W10, and predicts that search, media or clinical awareness predicts presentation after service controls. No required workstream carries an awareness measure. The GDELT connector (media_discourse.py) exists and is unharvested; even harvested it would supply an association, not the ordering AS05 needs.",
+      "evidence_used": [
+        "registries/hypotheses.csv AS05 required_workstreams = W01;W02;W09;W10",
+        "connectors/media_discourse.py present, no harvested output under data/"
+      ],
+      "quantities": {
+        "missing_measures": [
+          "a dated awareness series (search volume or media attention)",
+          "service controls at the same granularity"
+        ]
+      },
+      "limits": [
+        "feasibility marks this OPEN_TESTABLE on required-workstream availability, but no required workstream carries the predictor the prediction names"
+      ],
+      "what_would_settle_it": "Correcting the registry so AS05 requires W11, harvesting GDELT, and pre-registering the direction test - because a correlation between media attention and presentation is equally predicted by the rival families.",
+      "released": false
+    },
+    {
+      "proposition_id": "AS06",
+      "model_family": "ASCERTAINMENT_SERVICE",
+      "domain": "Case mix",
+      "statement": "Changing case mix explains part of outcome change.",
+      "prediction": "Age/sex/psychiatric/neurodevelopmental composition shifts explain part of aggregate trend.",
+      "falsifier": "Standardisation/decomposition shows minimal contribution.",
+      "finding_direction": "WEAKENS",
+      "falsifier_status": "TRIGGERED",
+      "claim_tier": "DESCRIPTIVE_EVIDENCE_ONLY",
+      "headline": "Age composition explains 1.4% of the log growth in the MHS32 referral rate between 2022/23 and 2024/25. Directly standardising to the 2022 England age structure moves the ratio from x1.1117 to x1.1100.",
+      "basis": "AS06's falsifier is 'standardisation/decomposition shows minimal contribution'. A contribution of this size is minimal on any reading. Every age band except 16-17 rose in rate; the growth is within bands, not between them.",
+      "evidence_used": [
+        "W02: MHSDS MHS32 England; Age monthly cells, 2022-04 to 2026-06 (DS077)",
+        "W01: NOMIS NM_2002_1 England population by age band, 2022 and 2024"
+      ],
+      "quantities": {
+        "period_one": [
+          "2022-04",
+          "2023-03",
+          "2022"
+        ],
+        "period_two": [
+          "2024-04",
+          "2025-03",
+          "2024"
+        ],
+        "referrals_period_one": 4732195.0,
+        "referrals_period_two": 5391001.0,
+        "unknown_age_period_one": 5181.0,
+        "unknown_age_period_two": 56160.0,
+        "unknown_age_ratio": 10.839606253618992,
+        "crude_rate_ratio": 1.1116648022763722,
+        "age_standardised_rate_ratio": 1.1099815926770125,
+        "share_of_log_growth_from_age_composition": 0.014314188423068974,
+        "band_rates_per_100k": {
+          "0_15": {
+            "period_one": 8661.626996824585,
+            "period_two": 9638.921907280219,
+            "ratio": 1.112830408284023,
+            "referral_share_period_one": 0.19294386642984915,
+            "referral_share_period_two": 0.1901136727668943
+          },
+          "16_17": {
+            "period_one": 18096.897337232334,
+            "period_two": 17309.27030596364,
+            "ratio": 0.956477233826804,
+            "referral_share_period_one": 0.0501786168997685,
+            "referral_share_period_two": 0.044685393306363695
+          },
+          "18_24": {
+            "period_one": 12732.992632850446,
+            "period_two": 12935.10627638547,
+            "ratio": 1.015873223943724,
+            "referral_share_period_one": 0.12777262982611665,
+            "referral_share_period_two": 0.11661971496573642
+          },
+          "25_49": {
+            "period_one": 8619.654194462388,
+            "period_two": 9884.759628977215,
+            "ratio": 1.146769859436772,
+            "referral_share_period_one": 0.3427236198001139,
+            "referral_share_period_two": 0.35734068682235454
+          },
+          "50_64": {
+            "period_one": 5203.7968769653735,
+            "period_two": 6336.238827093102,
+            "ratio": 1.217618399968778,
+            "referral_share_period_one": 0.12239415324178314,
+            "referral_share_period_two": 0.13181485219535297
+          },
+          "65_plus": {
+            "period_one": 7292.1252519644795,
+            "period_two": 7800.42137653662,
+            "ratio": 1.0697047989453017,
+            "referral_share_period_one": 0.16398711380236866,
+            "referral_share_period_two": 0.1594256799432981
+          }
+        }
+      },
+      "limits": [
+        "AGE composition only. AS06 also names psychiatric and neurodevelopmental composition, and no required workstream carries either at England level. The verdict is about the one component that could be measured.",
+        "Two financial years. MHS32 does not exist at England level before April 2022, so a longer window is not available.",
+        "The UNKNOWN age band rose x10.8 between the two periods (5181 to 56160 referrals). It is excluded from the standardisation because a missing age is not an age band. That drift is itself a data-quality signal and it points, weakly, AS08's way.",
+        "Six coarse bands, set by what the NOMIS codelist offers as a partition."
+      ],
+      "what_would_settle_it": "MHSDS carries no England-level psychiatric or neurodevelopmental co-occurrence breakdown. The rest of AS06 needs individual-level records, which is a different reachability class.",
+      "released": false
+    },
+    {
+      "proposition_id": "AS07",
+      "model_family": "ASCERTAINMENT_SERVICE",
+      "domain": "Geographic access",
+      "statement": "Distance/provider distribution affects referral likelihood.",
+      "prediction": "Natural variation in access predicts referral after need proxies.",
+      "falsifier": "No access gradient after adjustment.",
+      "finding_direction": "INCONCLUSIVE",
+      "falsifier_status": "NOT_TESTED",
+      "claim_tier": "DESCRIPTIVE_EVIDENCE_ONLY",
+      "headline": "MHSDS carries ICB and provider geography, but no workstream in hand carries distance-to-service or a need proxy, so an access gradient cannot be distinguished from a need gradient.",
+      "basis": "AS07 predicts that natural variation in access predicts referral AFTER need proxies. The geography exists; the need proxy does not. A raw between-area referral gradient computed without one would measure deprivation and case mix and be reported as access.",
+      "evidence_used": [
+        "W02: MHSDS Provider, ICB and Sub-ICB breakdowns present in the archive",
+        "W02: the Fingertips harvest is England-level only; no sub-national cross-section was retrieved"
+      ],
+      "quantities": {
+        "missing_measures": [
+          "a distance or provider-distribution measure by area",
+          "an area-level need proxy independent of service use"
+        ]
+      },
+      "limits": [
+        "feasibility marks this OPEN_TESTABLE on required-workstream availability, but no required workstream carries the predictor the prediction names"
+      ],
+      "what_would_settle_it": "Sub-national Fingertips extraction plus IMD and an independent need measure, with the access variation shown not to be itself a response to need.",
+      "released": false
+    },
+    {
+      "proposition_id": "AS08",
+      "model_family": "ASCERTAINMENT_SERVICE",
+      "domain": "Administrative completeness",
+      "statement": "Submission/coverage changes in administrative datasets create apparent changes.",
+      "prediction": "Data-quality metadata explain discontinuities.",
+      "falsifier": "Trends persist in stable-coverage subsets and independent data.",
+      "finding_direction": "WEAKENS",
+      "falsifier_status": "TRIGGERED",
+      "claim_tier": "DESCRIPTIVE_EVIDENCE_ONLY",
+      "headline": "Restricted to the 71 providers submitting a usable MHS01 value in every one of the 84 months, the England open-referral series still rises x1.411 across 2017/18-2023/24, against x1.517 unrestricted, while submitting providers rose x4.32. The rise is not wholly a coverage artefact.",
+      "basis": "82.6% of the log growth survives restriction to a fixed provider cohort; 17.4% is attributable to changing coverage and composition. The COVERAGE_ONLY mechanism, which predicts a flat cohort-restricted series, was refuted by compare_mechanisms - no point in its declared grid reproduced the observed cohort series. AS08's own falsifier, 'trends persist in stable-coverage subsets', is triggered.",
+      "evidence_used": [
+        "W02: MHSDS Apr-2016-Jun-2026 time-series archive, MHS01, Provider and England breakdowns (DS077), read locally, no network",
+        "W02: docs/REFERRAL_BASELINE.md second-comparator withdrawal notice",
+        "governance/mechanism_simulation.compare_mechanisms"
+      ],
+      "quantities": {
+        "window": [
+          "2017-04",
+          "2024-03"
+        ],
+        "financial_years": [
+          "2017/18",
+          "2018/19",
+          "2019/20",
+          "2020/21",
+          "2021/22",
+          "2022/23",
+          "2023/24"
+        ],
+        "providers_seen_in_window": 539,
+        "providers_submitting_continuously": 71,
+        "providers_present_first_month": 92,
+        "providers_present_last_month": 397,
+        "coverage_ratio": 4.315217391304348,
+        "continuous_cohort_by_financial_year": {
+          "2017/18": 1165965.0,
+          "2018/19": 1207930.4166666667,
+          "2019/20": 1217740.0,
+          "2020/21": 1211032.0833333333,
+          "2021/22": 1350517.0833333333,
+          "2022/23": 1496382.9166666667,
+          "2023/24": 1645290.8333333333
+        },
+        "unrestricted_by_financial_year": {
+          "2017/18": 1264236.6666666667,
+          "2018/19": 1339673.75,
+          "2019/20": 1395124.1666666667,
+          "2020/21": 1390972.9166666667,
+          "2021/22": 1555213.3333333333,
+          "2022/23": 1705608.3333333333,
+          "2023/24": 1918474.1666666667
+        },
+        "england_published_by_financial_year": {
+          "2017/18": 1225177.0,
+          "2018/19": 1300444.0833333333,
+          "2019/20": 1353628.5,
+          "2020/21": 1348435.75,
+          "2021/22": 1504431.0,
+          "2022/23": 1648368.4166666667,
+          "2023/24": 1851270.9166666667
+        },
+        "continuous_cohort_ratio": 1.4110979603447216,
+        "unrestricted_ratio": 1.5174960648190872,
+        "england_published_ratio": 1.5110232371866814,
+        "monthly_continuous_ratio": 1.4559704188537306,
+        "monthly_unrestricted_ratio": 1.6075521915662265,
+        "log_growth_surviving_coverage_restriction": 0.8257006992284062,
+        "log_growth_attributable_to_coverage": 0.17429930077159383,
+        "cohort_share_of_unrestricted_first_year": 0.922267982524369,
+        "cohort_share_of_unrestricted_last_year": 0.8576038509770568,
+        "mechanism_comparison": {
+          "observed_series": "MHSDS MHS01, England, providers submitting continuously 2017/18-2023/24",
+          "observed_source": "DS077",
+          "tolerance": 0.15,
+          "refuted": [
+            "COVERAGE_ONLY"
+          ],
+          "compatible": [
+            "REAL_GROWTH_WITHIN_FIXED_COHORT"
+          ],
+          "interpretation_bound": "Refuted mechanisms failed to reproduce a real observed series and are genuinely disfavoured. Compatible mechanisms are NOT ranked against each other: reproducing one aggregate series is a weak constraint that many mechanisms satisfy. No compatible mechanism may be reported as supported.",
+          "results": [
+            {
+              "mechanism_id": "COVERAGE_ONLY",
+              "grid_size": 25,
+              "accepted": 0,
+              "best_distance": 0.3599641164527839,
+              "best_parameters": {
+                "level": 1282562.0,
+                "wobble": 0.02
+              },
+              "finding_direction": "WEAKENS",
+              "narrative": "No parameterisation in the declared grid (25 points) reproduced MHSDS MHS01, England, providers submitting continuously 2017/18-2023/24 within a tolerance of 15% of its range; the closest managed 36%. On this series and this grid the mechanism is disfavoured. Widening the grid after the fact would convert this into a fitting exercise and is not a rebuttal."
+            },
+            {
+              "mechanism_id": "REAL_GROWTH_WITHIN_FIXED_COHORT",
+              "grid_size": 45,
+              "accepted": 2,
+              "best_distance": 0.12454368298367981,
+              "best_parameters": {
+                "level": 1107667.0,
+                "rate": 0.06
+              },
+              "finding_direction": "INCONCLUSIVE",
+              "narrative": "2 of 45 parameterisations reproduced MHSDS MHS01, England, providers submitting continuously 2017/18-2023/24 within 15%. The mechanism is COMPATIBLE with the observed series. This is not support: compatibility is cheap, and rival mechanisms must be run against the same series before any comparative statement is possible."
+            }
+          ]
+        }
+      },
+      "limits": [
+        "MHS01 is a STOCK (people with an open referral at period end), not the referral FLOW the withdrawn comparator measured. MHS32, the flow measure, is only published at England level from April 2022 and cannot cover this window.",
+        "The cohort is defined by continuous submission, which selects for organisational stability. Providers that merged, split or changed org code leave the cohort by construction, so the cohort is not a random sample and its growth need not equal true national growth.",
+        "The cohort carries 92.2% of unrestricted activity in 2017/18 and 85.8% in 2023/24 - large, but a majority-not-all subset.",
+        "Counts, not rates. The population correction is AS11's job and is small (see AS11), but it is not applied here.",
+        "Refuting COVERAGE_ONLY disfavours that mechanism on this series. The surviving mechanism is COMPATIBLE and is not thereby supported."
+      ],
+      "what_would_settle_it": "The same restriction applied to a gender-service referral series. MHSDS carries no such measure - a full scan of all 121 England-level measures found none - so this remains a comparator result about secondary mental health, and the FOI request under studies/foi_requests/ is still the route to the target series.",
+      "released": false
+    },
+    {
+      "proposition_id": "AS09",
+      "model_family": "ASCERTAINMENT_SERVICE",
+      "domain": "Diagnostic substitution",
+      "statement": "Changes reflect substitution/reclassification among diagnostic categories.",
+      "prediction": "Inverse or compensating trends appear across related categories.",
+      "falsifier": "No substitution pattern is observed.",
+      "finding_direction": "WEAKENS",
+      "falsifier_status": "TRIGGERED",
+      "claim_tier": "DESCRIPTIVE_EVIDENCE_ONLY",
+      "headline": "Across four QOF diagnostic categories on the same instrument over 10 common years, all four rose (x1.15 to x1.95) and 0 of 6 pairs of year-on-year changes are negatively correlated. No compensating pattern appears.",
+      "basis": "AS09's falsifier is 'no substitution pattern is observed'. Substitution predicts that a category gains at another's expense; here every category gains and the year-on-year movements are weakly positively correlated throughout.",
+      "evidence_used": [
+        "W02: OHID Fingertips indicators 200, 848, 90581, 90646 (QOF prevalence and incidence), England, data/fingertips_w02.json"
+      ],
+      "quantities": {
+        "common_periods": [
+          "2014/15",
+          "2015/16",
+          "2016/17",
+          "2017/18",
+          "2018/19",
+          "2019/20",
+          "2020/21",
+          "2021/22",
+          "2022/23",
+          "2024/25"
+        ],
+        "indicators": {
+          "200": {
+            "name": "Learning disability: QOF prevalence",
+            "first": 0.444309087,
+            "last": 0.58771,
+            "ratio": 1.3227503492405501
+          },
+          "848": {
+            "name": "Depression: QOF prevalence",
+            "first": 7.331568849,
+            "last": 14.26577,
+            "ratio": 1.9458004546933771
+          },
+          "90581": {
+            "name": "Mental Health: QOF prevalence",
+            "first": 0.880801942297723,
+            "last": 1.01665,
+            "ratio": 1.1542322413003474
+          },
+          "90646": {
+            "name": "Depression: QOF incidence - new diagnosis",
+            "first": 1.19807954367097,
+            "last": 1.393,
+            "ratio": 1.1626940860135087
+          }
+        },
+        "pairwise_year_on_year_log_change_correlations": [
+          {
+            "left": 200,
+            "right": 848,
+            "r": 0.13741016849002685
+          },
+          {
+            "left": 200,
+            "right": 90581,
+            "r": 0.08772791141555518
+          },
+          {
+            "left": 200,
+            "right": 90646,
+            "r": 0.08365179512214048
+          },
+          {
+            "left": 848,
+            "right": 90581,
+            "r": 0.029886076212934026
+          },
+          {
+            "left": 848,
+            "right": 90646,
+            "r": 0.4876707228650369
+          },
+          {
+            "left": 90581,
+            "right": 90646,
+            "r": 0.12181256720511578
+          }
+        ],
+        "pairs": 6,
+        "negatively_correlated_pairs": 0
+      },
+      "limits": [
+        "Four QOF categories are not the diagnostic space. Substitution between, say, an autism code and a gender-related code would appear in none of them.",
+        "QOF prevalence is a register count and is itself exposed to recording incentives; a common recording drift would produce exactly this pattern of everything rising together, which is an AS08-shaped confound on an AS09 test.",
+        "Ten common annual points, so the correlations rest on nine differences."
+      ],
+      "what_would_settle_it": "Paired series for categories that plausibly substitute for one another, coded as such in advance. No workstream in hand carries a substitution map.",
+      "released": false
+    },
+    {
+      "proposition_id": "AS10",
+      "model_family": "ASCERTAINMENT_SERVICE",
+      "domain": "Survey measurement",
+      "statement": "Survey wording/response options affect prevalence estimates.",
+      "prediction": "Mode/wording experiments or harmonisation change prevalence estimates materially.",
+      "falsifier": "Estimates invariant to wording/mode.",
+      "finding_direction": "SUPPORTS",
+      "falsifier_status": "NOT_TRIGGERED",
+      "claim_tier": "DESCRIPTIVE_EVIDENCE_ONLY",
+      "headline": "Within a single census, the same category read off a 7-category and an 8-category response list differs by x2.67 (18,074 against 48,331); the estimate varies 6-fold across ethnic groups in the order of English proficiency; and the Office for Statistics Regulation removed accreditation on 2024-09-12 because the question 'did not work as intended'.",
+      "basis": "AS10's prediction is that wording, mode or harmonisation changes prevalence estimates materially. Here the response-option set alone changes one category by 167% with no change of respondent, question or date, and the national regulator has adjudicated the instrument as having failed. Its falsifier, 'estimates invariant to wording/mode', is decisively not met.",
+      "evidence_used": [
+        "W01: ONS Census 2021 gender identity tables TS070, TS078, RM038, RM163, RM174, RM175 via NOMIS (517 cells, none missing, none non-normal)",
+        "W09/W10: OSR final report 2024-09-12; ONS quality report November 2023; ONS additional guidance 2025-03-26"
+      ],
+      "quantities": {
+        "source": "ONS Census 2021 gender identity tables via NOMIS, data/census_2021_gender_identity.json; figures as recorded in docs/CENSUS_2021_GENDER_IDENTITY.md",
+        "response_option_effect": {
+          "category": "All other gender identities",
+          "eight_category_codelist_TS070": 18074,
+          "seven_category_codelist_TS078_and_RM": 48331,
+          "ratio": 2.674062188779462,
+          "note": "same census, same respondents, same question; the 7-category list folds non-binary in and the 8-category list does not"
+        },
+        "denominator_effect": {
+          "share_of_all_16_plus": 0.0053970058665900374,
+          "share_of_those_who_answered": 0.005741576423316803,
+          "non_response": 0.06001323178899935
+        },
+        "instrument_failure_signature": {
+          "white_british_percent_of_answered": 0.362,
+          "other_ethnic_group_percent_of_answered": 2.178,
+          "spread": 6.016574585635359,
+          "ons_2025_guidance": {
+            "not_proficient_in_english_percent": 2.24,
+            "english_speakers_percent": 0.42,
+            "ratio": 5.333333333333334
+          }
+        },
+        "regulatory_disposition": {
+          "osr_final_report": "2024-09-12",
+          "outcome": "accreditation removed; reclassified official statistics in development",
+          "asymmetry": "sexual orientation rode the same form and was NOT downgraded"
+        }
+      },
+      "limits": [
+        "This is a measurement finding about a survey instrument. It says the census estimate is unreliable; it does NOT say the service-referral series is, and the two are separate collections.",
+        "One cross-section. It cannot show change, so nothing here bears on any trend.",
+        "The 6-fold ethnic spread is the ONS-identified signature, but this analysis did not harvest a language cross-tab (no language table was among the 13 pulled); the 2.24% / 0.42% figures are ONS's own, quoted.",
+        "SUPPORTS attaches to AS10 as written - that survey wording and response options affect prevalence estimates. It is not support for ASCERTAINMENT_SERVICE as an account of service referrals."
+      ],
+      "what_would_settle_it": "A split-ballot or mode experiment on the same population. ONS has not run one; the 2021 census is a single-instrument enumeration, and the 2031 question design is the live decision this bears on.",
+      "released": false
+    },
+    {
+      "proposition_id": "AS11",
+      "model_family": "ASCERTAINMENT_SERVICE",
+      "domain": "Historical denominator",
+      "statement": "Population denominator change contributes to raw-count growth.",
+      "prediction": "Age/sex demographic standardisation attenuates raw growth.",
+      "falsifier": "Standardised rates remain unchanged.",
+      "finding_direction": "SUPPORTS",
+      "falsifier_status": "NOT_TRIGGERED",
+      "claim_tier": "DESCRIPTIVE_EVIDENCE_ONLY",
+      "headline": "England's population rose x1.0426 across 2017/18-2023/24 while the MHS01 raw count rose x1.511. The denominator contributes 10.1% of the log growth; 89.9% is a rise in the rate per head.",
+      "basis": "The proposition's literal claim - that population denominator change CONTRIBUTES to raw-count growth - is directly measurable arithmetic and the measured contribution is positive and non-zero. Its prediction, that standardisation attenuates raw growth, holds: x1.511 raw becomes x1.449 per head. Its falsifier, read as 'standardisation leaves the growth unchanged', is not triggered.",
+      "evidence_used": [
+        "W01: NOMIS NM_2002_1 England mid-year population estimates 2016-2025, one pinned stratum per band, published total reconciled against the sum of the disjoint parts",
+        "W02: MHSDS MHS01 England series (DS077)"
+      ],
+      "quantities": {
+        "window": [
+          "2017/18",
+          "2018/19",
+          "2019/20",
+          "2020/21",
+          "2021/22",
+          "2022/23",
+          "2023/24"
+        ],
+        "population_years": [
+          "2017",
+          "2023"
+        ],
+        "population_first": 55619548.0,
+        "population_last": 57990791.0,
+        "population_ratio": 1.042633266275375,
+        "raw_count_ratio_england_published": 1.5110232371866814,
+        "rate_ratio_england_published": 1.4492375085868376,
+        "raw_count_ratio_continuous_cohort": 1.4110979603447216,
+        "rate_ratio_continuous_cohort": 1.353398175549896,
+        "share_of_log_growth_from_denominator": 0.10114052434462859,
+        "share_of_log_growth_from_rate": 0.8988594756553714,
+        "population_by_year": {
+          "2016": 55289034.0,
+          "2017": 55619548.0,
+          "2018": 55924528.0,
+          "2019": 56230056.0,
+          "2020": 56325961.0,
+          "2021": 56554891.0,
+          "2022": 57189701.0,
+          "2023": 57990791.0,
+          "2024": 58607170.0,
+          "2025": 58834812.0
+        }
+      },
+      "limits": [
+        "SUPPORTS here attaches ONLY to the literal claim that the denominator contributes. It is 10.1% of the growth. Nine parts in ten of the rise are not population, so this must not be read as ascertainment explaining the trend - it is closer to the opposite.",
+        "All-ages denominator against an all-ages numerator. The age-specific version is AS06 and returns a similarly small magnitude.",
+        "ONS mid-year estimates are as at 30 June and are matched to the financial year that contains them; no interpolation is performed.",
+        "The registry's falsifier wording ('standardised rates remain unchanged') is ambiguous between 'unchanged from raw' and 'flat over time'. It is read here as the former, the only reading on which it falsifies rather than confirms the statement. An adjudicator should fix the wording."
+      ],
+      "what_would_settle_it": "Nothing further for this series - the decomposition is exact arithmetic. The open question is whether it holds for a gender-service series, whose relevant denominator is an age-and-sex band rather than the whole population.",
+      "released": false
+    },
+    {
+      "proposition_id": "AS12",
+      "model_family": "ASCERTAINMENT_SERVICE",
+      "domain": "Follow-up attrition",
+      "statement": "Observed persistence/detransition rates are biased by differential follow-up.",
+      "prediction": "IPW/MNAR sensitivity materially changes estimates.",
+      "falsifier": "Results stable under plausible missingness models.",
+      "finding_direction": "INCONCLUSIVE",
+      "falsifier_status": "NOT_TESTED",
+      "claim_tier": "DESCRIPTIVE_EVIDENCE_ONLY",
+      "headline": "Persistence and detransition rates require follow-up of individuals. No workstream in hand carries a cohort, so there is no estimate for a missingness model to move.",
+      "basis": "AS12 predicts that inverse-probability weighting or an MNAR sensitivity analysis materially changes an estimate. Every input to that sentence - the cohort, the follow-up, the attrition pattern - is individual-level, and aggregate published statistics supply none of them.",
+      "evidence_used": [
+        "W01, W02, W09 and W10 are aggregate collections throughout"
+      ],
+      "quantities": {
+        "missing_measures": [
+          "a longitudinal cohort with follow-up status per person",
+          "an attrition or missingness indicator"
+        ]
+      },
+      "limits": [
+        "feasibility marks this OPEN_TESTABLE on required-workstream availability, but no required workstream carries the predictor the prediction names"
+      ],
+      "what_would_settle_it": "Individual-level linked records under a TRE, which the feasibility census classifies as NEEDS_INDIVIDUAL_LEVEL for this proposition's neighbours and arguably should for this one.",
+      "released": false
+    },
+    {
+      "proposition_id": "TH04",
+      "model_family": "MULTIFACTORIAL_DEVELOPMENTAL_INSTITUTIONAL",
+      "domain": "Policy embedding",
+      "statement": "Policy adoption precedes and predicts downstream institutional implementation.",
+      "prediction": "Process tracing and event timing support policy\u2192infrastructure\u2192practice sequence.",
+      "falsifier": "Practice precedes policy or non-adopters show same changes.",
+      "finding_direction": "INCONCLUSIVE",
+      "falsifier_status": "INCONCLUSIVE",
+      "claim_tier": "DESCRIPTIVE_EVIDENCE_ONLY",
+      "headline": "Annual W09 document counts cross-correlate best at lag -2 (r=0.80), which is the practice layer leading the policy layer - but 72% of the policy peak in 2024 comes from one source's API, so the series measures archival depth as much as policy activity.",
+      "basis": "TH04 predicts a policy to infrastructure to practice sequence, and its falsifier is 'practice precedes policy'. The ordering statistic points at the falsifier, but the input is a count of documents that six heterogeneous websites still serve, harvested through four different routes with different archival depth. A recency-weighted publication count is not policy adoption, and a finding either way would be an artefact of the harvest.",
+      "evidence_used": [
+        "W09: data/w09_clinical_guidance.json, 152 dated documents, 121 distinct anchor dates, six publishers",
+        "W10: legislation.gov.uk enactment years via LegislationConnector"
+      ],
+      "quantities": {
+        "years": [
+          2010,
+          2011,
+          2012,
+          2013,
+          2014,
+          2015,
+          2016,
+          2017,
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023,
+          2024,
+          2025
+        ],
+        "policy_layer_sources": [
+          "GOV.UK",
+          "NHS England",
+          "NICE"
+        ],
+        "practice_layer_sources": [
+          "British Psychological Society",
+          "Royal College of Paediatrics and Child Health",
+          "Royal College of Psychiatrists"
+        ],
+        "policy_counts": {
+          "2010": 2,
+          "2011": 2,
+          "2012": 3,
+          "2013": 10,
+          "2014": 5,
+          "2015": 2,
+          "2016": 3,
+          "2017": 2,
+          "2018": 4,
+          "2019": 6,
+          "2020": 4,
+          "2021": 2,
+          "2022": 8,
+          "2023": 3,
+          "2024": 25,
+          "2025": 8
+        },
+        "practice_counts": {
+          "2010": 0,
+          "2011": 1,
+          "2012": 1,
+          "2013": 0,
+          "2014": 2,
+          "2015": 2,
+          "2016": 4,
+          "2017": 2,
+          "2018": 7,
+          "2019": 2,
+          "2020": 7,
+          "2021": 3,
+          "2022": 15,
+          "2023": 2,
+          "2024": 5,
+          "2025": 0
+        },
+        "cross_correlation_by_lag": {
+          "-4": {
+            "r": 0.7296619433397896,
+            "n": 12.0
+          },
+          "-3": {
+            "r": 0.022420989878008037,
+            "n": 13.0
+          },
+          "-2": {
+            "r": 0.804101911615833,
+            "n": 14.0
+          },
+          "-1": {
+            "r": -0.1431201196548523,
+            "n": 15.0
+          },
+          "0": {
+            "r": 0.1972066179537286,
+            "n": 16.0
+          },
+          "1": {
+            "r": -0.31668061554485116,
+            "n": 15.0
+          },
+          "2": {
+            "r": 0.14988734508362012,
+            "n": 14.0
+          },
+          "3": {
+            "r": 0.04924811869033107,
+            "n": 13.0
+          },
+          "4": {
+            "r": 0.06444207738829057,
+            "n": 12.0
+          }
+        },
+        "best_lag": -2,
+        "best_lag_meaning": "positive = policy leads practice; negative = practice leads policy",
+        "policy_peak_year": 2024,
+        "policy_peak_source_mix": {
+          "NHS England": 18,
+          "GOV.UK": 7,
+          "Royal College of Psychiatrists": 3,
+          "Royal College of Paediatrics and Child Health": 2,
+          "British Psychological Society": 0,
+          "NICE": 0
+        },
+        "policy_peak_single_source_concentration": 0.72,
+        "legislation_enactment_years_available": [
+          "1990",
+          "1997",
+          "2001",
+          "2002",
+          "2003",
+          "2004",
+          "2005",
+          "2006",
+          "2007",
+          "2008",
+          "2009",
+          "2010",
+          "2011",
+          "2012",
+          "2013",
+          "2014",
+          "2015",
+          "2016",
+          "2017",
+          "2018",
+          "2019",
+          "2020",
+          "2021",
+          "2022",
+          "2023",
+          "2024",
+          "2025",
+          "2026"
+        ]
+      },
+      "limits": [
+        "Document COUNT is not adoption. One guideline can change practice nationally and a hundred blog posts can change nothing.",
+        "The harvest routes differ by source: a WordPress REST API returns recent posts far more completely than a sitemap scrape returns old ones, which manufactures an upward trend in the policy layer specifically.",
+        "Sixteen annual points, and the correlation is driven by two spikes.",
+        "Legislation dates resolve to 1 January of the enactment year and cannot order events within a year.",
+        "W05 (education) is a required workstream for TH04 and supplies nothing here; no education series was found that measures institutional implementation."
+      ],
+      "what_would_settle_it": "A dated register of implementation events - service specifications issued, commissioning policies adopted, clinics opened - rather than publications. None of W05, W09 or W10 carries one, so TH04 is not answerable from a publication corpus however many anchors it holds.",
+      "released": false
+    },
+    {
+      "proposition_id": "TH05",
+      "model_family": "MULTIFACTORIAL_DEVELOPMENTAL_INSTITUTIONAL",
+      "domain": "Network effects",
+      "statement": "Formal networks increase diffusion/standardisation of concepts or practices.",
+      "prediction": "Network centrality/exposure predicts adoption controlling for baseline similarity.",
+      "falsifier": "No diffusion beyond homophily/common shocks.",
+      "finding_direction": "INCONCLUSIVE",
+      "falsifier_status": "NOT_TESTED",
+      "claim_tier": "DESCRIPTIVE_EVIDENCE_ONLY",
+      "headline": "The institutional graph gives network structure, but there is no per-node adoption outcome and no baseline-similarity control, so centrality cannot be shown to predict anything.",
+      "basis": "TH05 predicts that network centrality or exposure predicts adoption CONTROLLING for baseline similarity. The graph exists (824 entities, 1,286 relations) and centrality is computable, but 'adoption' is recorded for no node and homophily cannot be controlled without node attributes - 647 of 824 nodes are domain UNKNOWN.",
+      "evidence_used": [
+        "W07: 7,071-record literature corpus in runtime/oslt.db",
+        "W09/W10: institutional graph as re-adjudicated in docs/COUPLING_READJUDICATION.md"
+      ],
+      "quantities": {
+        "missing_measures": [
+          "a dated per-entity adoption outcome",
+          "node attributes sufficient to control baseline similarity"
+        ]
+      },
+      "limits": [
+        "feasibility marks this OPEN_TESTABLE on required-workstream availability, but no required workstream carries the predictor the prediction names"
+      ],
+      "what_would_settle_it": "Coding, per institution, the date it adopted a named practice - which is human coding, and governance/claim_release.py records zero human-coded lanes.",
+      "released": false
+    },
+    {
+      "proposition_id": "TH07",
+      "model_family": "MULTIFACTORIAL_DEVELOPMENTAL_INSTITUTIONAL",
+      "domain": "Structural coupling",
+      "statement": "Separate institutions transmit mutually reinforcing content without central coordination.",
+      "prediction": "Graph/process-tracing finds repeated cross-domain transfer and feedback.",
+      "falsifier": "Content/timing is independent and no cross-system coupling is observed.",
+      "finding_direction": "WEAKENS",
+      "falsifier_status": "TRIGGERED",
+      "claim_tier": "DESCRIPTIVE_EVIDENCE_ONLY",
+      "headline": "On an 824-entity, 1,286-relation graph at STRONG_IDENTIFIER, assessed against 29 Parliament-fixed dates, no date returned MD15_COUPLING_SUPPORTED and ten returned MX09_ISOLATED_PROCESSES_BETTER. Not one connected component mixes more than one relation type.",
+      "basis": "TH07's falsifier is 'content/timing is independent and no cross-system coupling is observed'. That is what the re-adjudication found, on a graph quadrupled in size, without lowering the resolution tier, against dates fixed by Parliament rather than chosen.",
+      "evidence_used": [
+        "W07/W09/W10: institutional ontology graph from runtime/oslt.db (360Giving, UKRI GtR, Contracts Finder, GOV.UK publications, Parliament written evidence)",
+        "W10: LegislationConnector outcome dates, live from legislation.gov.uk",
+        "docs/COUPLING_READJUDICATION.md"
+      ],
+      "quantities": {
+        "source": "data/coupling_readjudication.json, docs/COUPLING_READJUDICATION.md",
+        "entities": null,
+        "relations": null,
+        "resolution_tier": "STRONG_IDENTIFIER (not lowered)",
+        "outcome_dates_assessed": 28,
+        "dates_reaching_a_substantive_verdict": 10,
+        "dates_returning_MX09_ISOLATED_PROCESSES_BETTER": 10,
+        "dates_returning_MD15_COUPLING_SUPPORTED": 0,
+        "qualifying_connected_components_at_most_permissive_date": 0,
+        "components_mixing_more_than_one_relation_type": 0
+      },
+      "limits": [
+        "This is an absence claim about THIS graph, at THIS tier, over FIVE registers. 434 of 824 entities carry no strong identifier and cannot be merged at all, so a genuine shared body appearing under two spellings is invisible.",
+        "647 of 824 entities are domain UNKNOWN and can never widen cross-system spread, so more than three quarters of the graph is inert for the test.",
+        "Company filings, board memberships, personnel overlap, sub-awards and correspondence are absent. Coupling running through any of those channels is not measured here.",
+        "Enactment dates resolve to 1 January of the enactment year; day-level precision would be invented.",
+        "W11 (media) is a required workstream for TH07 and contributes nothing to this verdict - the graph carries no media entities."
+      ],
+      "what_would_settle_it": "Registers carrying strong identifiers for the 52.7% of entities that have none - Companies House officer appointments in particular - which would let a bridge appear if one exists. Lowering the tier is barred: every historical positive here evaporated once name-only merges were disallowed.",
+      "released": false
+    },
+    {
+      "proposition_id": "TH08",
+      "model_family": "MULTIFACTORIAL_DEVELOPMENTAL_INSTITUTIONAL",
+      "domain": "Cultural displacement",
+      "statement": "Changes in institutional religious authority are one contextual predictor among broader cultural transformations.",
+      "prediction": "Macro longitudinal/cross-jurisdiction models show independent contextual moderation.",
+      "falsifier": "Effect disappears under confounding/measurement controls.",
+      "finding_direction": "INCONCLUSIVE",
+      "falsifier_status": "NOT_TESTED",
+      "claim_tier": "DESCRIPTIVE_EVIDENCE_ONLY",
+      "headline": "Census 2021 gives a religion cross-tab at one instant. TH08 requires macro longitudinal or cross-jurisdiction models, and neither dimension exists in any workstream in hand.",
+      "basis": "TH08 predicts independent contextual moderation in longitudinal or cross-jurisdiction models. The only religion-linked measure available is Census 2021 RM173, a single cross-section of a question the Office for Statistics Regulation subsequently de-accredited. A cross-section cannot carry a moderation claim, and one jurisdiction cannot carry a cross-jurisdiction one.",
+      "evidence_used": [
+        "W01: Census 2021 RM173 gender identity by religion (cross-section)",
+        "W05/W10/W11: no repeated religiosity or cross-jurisdiction series harvested"
+      ],
+      "quantities": {
+        "missing_measures": [
+          "a repeated measure of institutional religious authority over time",
+          "a second jurisdiction measured on the same instrument"
+        ]
+      },
+      "limits": [
+        "feasibility marks this OPEN_TESTABLE on required-workstream availability, but no required workstream carries the predictor the prediction names"
+      ],
+      "what_would_settle_it": "Repeated cross-national attitude series - successive waves of a comparable social survey - plus a pre-registered specification, since a contextual-moderation claim tested after seeing the data is not a test.",
+      "released": false
+    }
+  ]
+}
