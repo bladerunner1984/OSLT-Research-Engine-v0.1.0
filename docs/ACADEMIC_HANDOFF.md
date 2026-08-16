@@ -131,7 +131,24 @@ advisory network share no organisation, across four registers, surviving identif
 resolution against Companies House and the Charity Commission. `MX09` (isolated, non-coupled
 processes) is favoured over `MD15` (structural coupling).
 
-**Re-adjudicated 2026-08-16 on the full 1,286-relation, 824-entity graph, and it stands.**
+**Superseded the same day — read this whole block before citing anything.** The finding was
+re-adjudicated on the full 1,286-relation graph and stood; personnel edges were then added
+deliberately to give it its best chance of failing, and at one date it failed. See
+`MX09_FALSIFICATION_RUN.md`. The 2018–2023 dates still return MX09; 2024 returns
+`MD15_COUPLING_SUPPORTED` on `assess_coupling`'s full conditions.
+
+**But the flip rests on one edge.** Exactly one entity sits on both a contract and a
+personnel edge, exactly one carries the POLICY label — and that label is a Contracts Finder
+*buyer-role artefact*, not a policy body — joined by a single relation dated eleven days
+before the outcome date. Deleting that one edge returns 2024 to MX09. What the run found is
+one procurement contract meeting one boardroom, not a coupled system. The honest summary is
+that **the earlier absence claim was too strong and the current positive is too fragile to
+carry weight**; the decisive test — a bridge between the funding and advisory networks — was
+never reachable, because `ADVISES` and `ISSUES_GUIDANCE_TO` organisations carry no Companies
+House number.
+
+The re-adjudication on the pre-personnel graph is recorded below and remains valid for what
+it covered.
 The test was re-run at `STRONG_IDENTIFIER` against 29 enactment dates taken live from
 legislation.gov.uk, so no date was chosen by the analyst. Ten dates from 2018 onward return
 `MX09_ISOLATED_PROCESSES_BETTER`; the earlier dates return insufficient-relations or
