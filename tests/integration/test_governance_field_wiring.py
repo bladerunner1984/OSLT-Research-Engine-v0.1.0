@@ -237,3 +237,40 @@ def test_orientation_coding_is_populated_for_the_denominator(evidence) -> None:
         "no admitted record carries an orientation code; the publication-rate "
         f"denominator is a single degenerate bucket: {dict(tally)}"
     )
+
+
+def test_counterevidence_lanes_were_actually_searched(store: SQLiteStore) -> None:
+    """A zero in a counterevidence lane must be a searched zero.
+
+    Before the counterevidence harvester was wired to the corpus path, the store held 0
+    CONTRADICT records and no `LaneSearchRecord` at all, so that zero was indistinguishable
+    from nobody having looked - the single most damaging flaw available to a project whose
+    stated method is to test competing explanations. This asserts the distinction exists in
+    the persisted data: every mandatory lane has a row, and no row claims to be a zero
+    without having completed its search.
+    """
+
+    with store.connect() as connection:
+        tables = {
+            row[0] for row in connection.execute("SELECT name FROM sqlite_master WHERE type='table'")
+        }
+        if "lane_search_records" not in tables:
+            pytest.skip("no counterevidence sweep has been run against this store")
+        rows = connection.execute(
+            "SELECT lane, status, searched, genuine_zero, records_returned, mandatory "
+            "FROM lane_search_records"
+        ).fetchall()
+    if not rows:
+        pytest.skip("no lane search records in the store")
+
+    mandatory = {row[0] for row in rows if row[5]}
+    assert mandatory == {"CONTRADICT", "RIVAL", "NULL"}, (
+        f"a mandatory counterevidence lane was never searched: {mandatory}"
+    )
+    # A row may report a zero only if its search completed. An HTTP failure is a gap.
+    dishonest = [
+        row for row in rows if row[3] and (row[1] != "SEARCHED_COMPLETE" or row[4] != 0)
+    ]
+    assert not dishonest, f"rows claiming a zero they did not establish: {dishonest}"
+    unsearched = [row[0] for row in rows if row[5] and not row[2]]
+    assert not unsearched, f"mandatory lanes left unsearched in the store: {unsearched}"

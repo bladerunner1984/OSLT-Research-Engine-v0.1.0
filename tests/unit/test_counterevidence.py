@@ -5,11 +5,19 @@ import pytest
 from oslt_research.connectors.base import HarvestQuery, RawRecord, SourceConnector
 from oslt_research.domain.enums import EvidenceLane
 from oslt_research.evidence.provenance import sha256_text
+from oslt_research.persistence.sqlite import SQLiteStore
 from oslt_research.pipelines.counterevidence import (
     LANE_QUERY_TERMS,
     MANDATORY_LANES,
+    STATUS_NOT_ATTEMPTED,
+    STATUS_SEARCHED_COMPLETE,
+    STATUS_SEARCHED_PARTIAL,
+    STATUS_UNSEARCHED_ERROR,
     CounterevidenceHarvester,
     LaneSearchRecord,
+    MandatoryLaneGapError,
+    load_lane_searches,
+    save_lane_searches,
 )
 
 
@@ -147,3 +155,147 @@ def test_lane_record_with_errors_but_results_still_counts_as_searched():
         errors=["Stub:RuntimeError"],
     )
     assert record.searched is True
+
+
+# ------------------------------------------------ searched-zero vs unsearched (the point)
+
+
+def test_status_distinguishes_never_attempted_from_searched():
+    assert LaneSearchRecord(lane=EvidenceLane.CONTRADICT).status == STATUS_NOT_ATTEMPTED
+
+
+async def test_a_lane_that_returned_nothing_records_a_genuine_zero():
+    """The distinction the whole class exists for.
+
+    A zero that was searched for is a statement about the literature. A zero that was
+    never searched for is a statement about us, and the corpus must not confuse them.
+    """
+
+    report = await CounterevidenceHarvester().harvest(
+        base_concept="topic", connectors=[StubConnector(records=0)]
+    )
+    record = report.lane_searches[EvidenceLane.CONTRADICT]
+    assert record.status == STATUS_SEARCHED_COMPLETE
+    assert record.genuine_zero is True
+    assert EvidenceLane.CONTRADICT in report.genuine_zero_lanes()
+
+
+async def test_a_lane_whose_every_query_failed_is_unsearched_not_zero():
+    report = await CounterevidenceHarvester().harvest(
+        base_concept="topic", connectors=[StubConnector(fail=True)]
+    )
+    record = report.lane_searches[EvidenceLane.CONTRADICT]
+    assert record.status == STATUS_UNSEARCHED_ERROR
+    assert record.records_returned == 0
+    # An HTTP failure must never be reportable as "we looked and found nothing".
+    assert record.genuine_zero is False
+    assert report.genuine_zero_lanes() == []
+
+
+async def test_a_partial_sweep_returning_nothing_is_not_a_citable_zero():
+    report = await CounterevidenceHarvester().harvest(
+        base_concept="topic",
+        connectors=[StubConnector(fail=True), StubConnector(records=0)],
+    )
+    record = report.lane_searches[EvidenceLane.CONTRADICT]
+    assert record.status == STATUS_SEARCHED_PARTIAL
+    assert record.searched is True
+    assert record.genuine_zero is False
+
+
+# -------------------------------------------------------------- mandatory lane enforcement
+
+
+async def test_enforcement_raises_when_a_mandatory_lane_was_not_searched():
+    report = await CounterevidenceHarvester().harvest(
+        base_concept="topic", connectors=[StubConnector(fail=True)]
+    )
+    with pytest.raises(MandatoryLaneGapError):
+        report.enforce_mandatory_lanes()
+
+
+async def test_enforcement_passes_after_a_clean_run():
+    report = await CounterevidenceHarvester().harvest(
+        base_concept="topic", connectors=[StubConnector(records=0)]
+    )
+    report.enforce_mandatory_lanes()
+
+
+async def test_a_lane_omitted_from_the_sweep_is_reported_not_attempted():
+    report = await CounterevidenceHarvester(lanes=[EvidenceLane.NULL]).harvest(
+        base_concept="topic", connectors=[StubConnector()]
+    )
+    assert report.mandatory_lane_status()["CONTRADICT"] == STATUS_NOT_ATTEMPTED
+    assert not report.mandatory_lanes_satisfied()
+
+
+# ------------------------------------------------------------------------ query symmetry
+
+
+def test_support_and_contradict_searches_are_symmetric():
+    """An asymmetric pair manufactures its own result.
+
+    If SUPPORT were searched with more or richer phrasings than CONTRADICT, the shortfall
+    of counterevidence would be an artefact of the query design, not of the literature.
+    """
+
+    support = LANE_QUERY_TERMS[EvidenceLane.SUPPORT]
+    contradict = LANE_QUERY_TERMS[EvidenceLane.CONTRADICT]
+    assert len(support) == len(contradict)
+    assert [len(term.split()) for term in support] == [
+        len(term.split()) for term in contradict
+    ]
+
+
+async def test_every_lane_query_shares_one_unmodified_base_concept():
+    connector = StubConnector()
+    await CounterevidenceHarvester().harvest(
+        base_concept="subject matter stem", connectors=[connector]
+    )
+    assert all(query.startswith("subject matter stem ") for query in connector.queries)
+
+
+# --------------------------------------------------------------------------- persistence
+
+
+async def test_lane_searches_persist_and_read_back(tmp_path):
+    store = SQLiteStore(tmp_path / "t.db")
+    report = await CounterevidenceHarvester().harvest(
+        base_concept="topic", connectors=[StubConnector(records=0)], store=store
+    )
+    ids = save_lane_searches(store, run_id="CE-TEST", report=report)
+    assert len(ids) == len(report.lane_searches)
+    rows = load_lane_searches(store, run_id="CE-TEST")
+    by_lane = {row["lane"]: row for row in rows}
+    assert by_lane["CONTRADICT"]["status"] == STATUS_SEARCHED_COMPLETE
+    assert by_lane["CONTRADICT"]["genuine_zero"] is True
+    assert by_lane["CONTRADICT"]["queries_run"]
+
+
+async def test_an_unsearched_lane_is_persisted_as_a_row_not_an_absence(tmp_path):
+    """A failed lane must leave a row saying so.
+
+    Persisting only the lanes that worked would put the corpus back exactly where it
+    started: an absence with no way to tell whether anyone looked.
+    """
+
+    store = SQLiteStore(tmp_path / "t.db")
+    report = await CounterevidenceHarvester().harvest(
+        base_concept="topic", connectors=[StubConnector(fail=True)], store=store
+    )
+    save_lane_searches(store, run_id="CE-TEST", report=report)
+    rows = {row["lane"]: row for row in load_lane_searches(store, run_id="CE-TEST")}
+    assert rows["CONTRADICT"]["status"] == STATUS_UNSEARCHED_ERROR
+    assert rows["CONTRADICT"]["searched"] is False
+    assert rows["CONTRADICT"]["genuine_zero"] is False
+    assert rows["CONTRADICT"]["errors"]
+
+
+async def test_rerunning_a_lane_search_updates_rather_than_duplicates(tmp_path):
+    store = SQLiteStore(tmp_path / "t.db")
+    for _ in range(2):
+        report = await CounterevidenceHarvester(lanes=[EvidenceLane.NULL]).harvest(
+            base_concept="topic", connectors=[StubConnector()], store=store
+        )
+        save_lane_searches(store, run_id="CE-TEST", report=report)
+    assert len(load_lane_searches(store, run_id="CE-TEST")) == 1

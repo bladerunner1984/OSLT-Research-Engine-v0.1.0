@@ -14,12 +14,18 @@ from rich.table import Table
 from oslt_research.connectors.base import HarvestQuery
 from oslt_research.connectors.clinicaltrials import ClinicalTrialsConnector
 from oslt_research.connectors.crossref import CrossrefConnector
+from oslt_research.connectors.europepmc import EuropePmcConnector
 from oslt_research.connectors.openalex import OpenAlexConnector
 from oslt_research.connectors.pubmed import PubMedConnector
 from oslt_research.governance.preflight import run_preflight
 from oslt_research.governance.sample_size import attainable_envelope
 from oslt_research.persistence.sqlite import SQLiteStore
 from oslt_research.pipelines.harvest import execute_harvest
+from oslt_research.pipelines.kernel_harvest import (
+    build_proposition_queries,
+    harvest_counterevidence_for_kernels,
+    harvest_for_kernels,
+)
 from oslt_research.pipelines.pilot1 import run_pilot_one
 from oslt_research.pipelines.registries import registry_summary
 from oslt_research.pipelines.synthesis import MasterSynthesisKernel
@@ -43,8 +49,10 @@ def _connector(name: str):
         return PubMedConnector(api_key=os.getenv("OSLT_NCBI_API_KEY"))
     if lowered in {"clinicaltrials", "clinicaltrials.gov", "ctgov"}:
         return ClinicalTrialsConnector()
+    if lowered in {"europepmc", "epmc"}:
+        return EuropePmcConnector(email=os.getenv("OSLT_EUROPEPMC_EMAIL"))
     raise typer.BadParameter(
-        "source must be openalex, crossref, pubmed or clinicaltrials"
+        "source must be openalex, crossref, pubmed, clinicaltrials or europepmc"
     )
 
 
@@ -138,6 +146,86 @@ def pilot_one_command(
         f"Pilot complete: run={run_id}, evidence={len(result.evidence)}, "
         f"kernel_results={len(result.kernel_results)}, manifest={result.corpus_manifest_path}"
     )
+
+
+@app.command("kernel-harvest")
+def kernel_harvest_command(
+    sources: Annotated[str, typer.Option()] = "europepmc",
+    proposition: Annotated[list[str] | None, typer.Option(help="Limit to these ids")] = None,
+    max_records: Annotated[int, typer.Option(min=1, max=1000)] = 100,
+    output: Annotated[Path | None, typer.Option()] = None,
+) -> None:
+    """Harvest the corpus path: one search per registry proposition.
+
+    This is the documented main corpus path and it had no production caller before this
+    command existed, which is why no `KernelHarvestReport` had ever been produced for the
+    live corpus.
+    """
+
+    queries = build_proposition_queries(repository_root() / "registries")
+    if proposition:
+        wanted = set(proposition)
+        queries = [item for item in queries if item.proposition_id in wanted]
+    if not queries:
+        raise typer.BadParameter("no propositions matched")
+    connectors = [_connector(name.strip()) for name in sources.split(",") if name.strip()]
+    report = asyncio.run(
+        harvest_for_kernels(
+            queries=queries,
+            connectors=connectors,
+            store=SQLiteStore(database_path()),
+            max_records_per_proposition=max_records,
+        )
+    )
+    summary = report.summary()
+    if output:
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.write_text(json.dumps(summary, indent=2, default=str), encoding="utf-8")
+    console.print_json(data=summary)
+
+
+@app.command("counterevidence")
+def counterevidence_command(
+    sources: Annotated[str, typer.Option()] = "europepmc",
+    proposition: Annotated[list[str] | None, typer.Option(help="Limit to these ids")] = None,
+    max_records: Annotated[int, typer.Option(min=1, max=1000)] = 25,
+    delay: Annotated[float, typer.Option(help="Seconds between requests")] = 1.0,
+    output: Annotated[Path | None, typer.Option()] = None,
+    run_id: Annotated[str | None, typer.Option()] = None,
+) -> None:
+    """Run the lane-targeted counterevidence sweep and persist the search records.
+
+    Exits non-zero if any proposition is missing a mandatory lane. A sweep with an
+    unsearched CONTRADICT lane must be visibly incomplete, because the alternative is a
+    zero that cannot be told apart from nobody having looked.
+    """
+
+    queries = build_proposition_queries(repository_root() / "registries")
+    if proposition:
+        wanted = set(proposition)
+        queries = [item for item in queries if item.proposition_id in wanted]
+    if not queries:
+        raise typer.BadParameter("no propositions matched")
+    connectors = [_connector(name.strip()) for name in sources.split(",") if name.strip()]
+    resolved_run = run_id or f"CE-{datetime.now(timezone.utc).strftime('%Y%m%d%H%M%S')}"
+    report = asyncio.run(
+        harvest_counterevidence_for_kernels(
+            queries=queries,
+            connectors=connectors,
+            store=SQLiteStore(database_path()),
+            run_id=resolved_run,
+            max_records_per_query=max_records,
+            request_delay_seconds=delay,
+        )
+    )
+    summary = report.summary()
+    if output:
+        output.parent.mkdir(parents=True, exist_ok=True)
+        output.write_text(json.dumps(summary, indent=2, default=str), encoding="utf-8")
+    console.print_json(data=summary)
+    if not report.complete:
+        console.print("[red]Mandatory counterevidence lanes were not searched.[/red]")
+        raise typer.Exit(1)
 
 
 @app.command("synthesise")

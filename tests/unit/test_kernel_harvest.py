@@ -7,8 +7,15 @@ import pytest
 
 from oslt_research.connectors.base import HarvestQuery, RawRecord, SourceConnector
 from oslt_research.evidence.provenance import sha256_text
+from oslt_research.persistence.sqlite import SQLiteStore
+from oslt_research.pipelines.counterevidence import (
+    LANE_QUERY_TERMS,
+    MANDATORY_LANES,
+    load_lane_searches,
+)
 from oslt_research.pipelines.kernel_harvest import (
     build_proposition_queries,
+    harvest_counterevidence_for_kernels,
     harvest_for_kernels,
 )
 
@@ -150,3 +157,84 @@ async def test_summary_names_propositions_that_found_nothing(tmp_path):
         queries=build_proposition_queries(root), connectors=[Stub(records=0)]
     )
     assert report.summary()["propositions_with_no_results"] == ["P1"]
+
+
+# ------------------------------------------------- counterevidence on the corpus path
+
+
+async def test_counterevidence_sweep_persists_a_search_record_for_every_lane(tmp_path):
+    store = SQLiteStore(tmp_path / "t.db")
+    queries = [item for item in build_proposition_queries(REGISTRIES)][:1]
+    report = await harvest_counterevidence_for_kernels(
+        queries=queries,
+        connectors=[Stub(records=0)],
+        store=store,
+        run_id="CE-TEST",
+        request_delay_seconds=0.0,
+    )
+    rows = load_lane_searches(store, run_id="CE-TEST")
+    assert {row["lane"] for row in rows} == {lane.value for lane in LANE_QUERY_TERMS}
+    assert report.complete
+    # Every mandatory lane searched and empty: a result, and recorded as one.
+    mandatory = {row["lane"]: row for row in rows if row["mandatory"]}
+    assert set(mandatory) == {lane.value for lane in MANDATORY_LANES}
+    assert all(row["genuine_zero"] for row in mandatory.values())
+
+
+async def test_counterevidence_sweep_names_the_propositions_it_could_not_cover(tmp_path):
+    store = SQLiteStore(tmp_path / "t.db")
+    queries = [item for item in build_proposition_queries(REGISTRIES)][:1]
+    report = await harvest_counterevidence_for_kernels(
+        queries=queries,
+        connectors=[Stub(fail=True)],
+        store=store,
+        run_id="CE-TEST",
+        request_delay_seconds=0.0,
+    )
+    assert not report.complete
+    gaps = report.incomplete_propositions[queries[0].proposition_id]
+    assert set(gaps) == {lane.value for lane in MANDATORY_LANES}
+    # The gap is persisted, not merely returned in memory.
+    rows = {row["lane"]: row for row in load_lane_searches(store, run_id="CE-TEST")}
+    assert rows["CONTRADICT"]["status"] == "UNSEARCHED_ERROR"
+
+
+async def test_counterevidence_concept_comes_from_domain_and_outcome_not_the_statement():
+    """CRITICAL: searching the statement retrieves papers that agree with it.
+
+    The base concept must be the registry's neutral subject-matter description. If any
+    distinctive word of the proposition's own claim leaked into the query, the sweep
+    would be retrieving agreement and calling it a search for disagreement.
+    """
+
+    rows = {
+        row["proposition_id"]: row
+        for row in csv.DictReader(
+            (REGISTRIES / "hypotheses.csv").open(encoding="utf-8-sig")
+        )
+    }
+    connector = Stub(records=0)
+    queries = [item for item in build_proposition_queries(REGISTRIES) if item.proposition_id]
+    target = queries[0]
+    await harvest_counterevidence_for_kernels(
+        queries=[target],
+        connectors=[connector],
+        run_id="CE-TEST",
+        request_delay_seconds=0.0,
+    )
+    statement = rows[target.proposition_id]["statement"].casefold()
+    stem_words = set(target.concept.split())
+    registry_words = set(
+        f"{rows[target.proposition_id]['domain']} "
+        f"{rows[target.proposition_id]['primary_outcome_construct']}".casefold().split()
+    )
+    # Every word of the stem traces back to domain/outcome, never to the claim alone.
+    leaked = [
+        word
+        for word in stem_words
+        if word in statement and not any(word in item for item in registry_words)
+    ]
+    assert not leaked, f"statement text leaked into the search stem: {leaked}"
+    assert connector.concepts and all(
+        concept.startswith(target.concept + " ") for concept in connector.concepts
+    )

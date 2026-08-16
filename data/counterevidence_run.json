@@ -1,0 +1,856 @@
+{
+  "run_id": "CE-20260816013116",
+  "generated_at": "2026-08-16T01:35:48.209143+00:00",
+  "sources": [
+    "EuropePMC"
+  ],
+  "mandatory_lanes": [
+    "CONTRADICT",
+    "RIVAL",
+    "NULL"
+  ],
+  "planned_queries": {
+    "MD11": {
+      "base_concept": "academic selection onset identity referral pathway outcome",
+      "derived_from": {
+        "domain": "Academic selection",
+        "outcome": "onset/identity/referral/pathway/outcome"
+      },
+      "lane_queries": {
+        "SUPPORT": [
+          "academic selection onset identity referral pathway outcome consistent findings",
+          "academic selection onset identity referral pathway outcome confirming evidence",
+          "academic selection onset identity referral pathway outcome consistent with previous"
+        ],
+        "NULL": [
+          "academic selection onset identity referral pathway outcome no significant association",
+          "academic selection onset identity referral pathway outcome null findings",
+          "academic selection onset identity referral pathway outcome no difference between groups"
+        ],
+        "CONTRADICT": [
+          "academic selection onset identity referral pathway outcome contradictory findings",
+          "academic selection onset identity referral pathway outcome conflicting evidence",
+          "academic selection onset identity referral pathway outcome inconsistent with previous"
+        ],
+        "RIVAL": [
+          "academic selection onset identity referral pathway outcome alternative explanation",
+          "academic selection onset identity referral pathway outcome competing hypothesis",
+          "academic selection onset identity referral pathway outcome ascertainment artefact",
+          "academic selection onset identity referral pathway outcome reverse causation"
+        ],
+        "REPLICATION": [
+          "academic selection onset identity referral pathway outcome replication study",
+          "academic selection onset identity referral pathway outcome failure to replicate",
+          "academic selection onset identity referral pathway outcome independent replication"
+        ],
+        "BIAS_CRITIQUE": [
+          "academic selection onset identity referral pathway outcome risk of bias",
+          "academic selection onset identity referral pathway outcome methodological critique",
+          "academic selection onset identity referral pathway outcome systematic review limitations"
+        ],
+        "CORRECTION_RETRACTION": [
+          "academic selection onset identity referral pathway outcome retracted",
+          "academic selection onset identity referral pathway outcome expression of concern",
+          "academic selection onset identity referral pathway outcome correction to"
+        ]
+      }
+    },
+    "MX08": {
+      "base_concept": "null social effect model-specific outcome",
+      "derived_from": {
+        "domain": "Null social effect",
+        "outcome": "model-specific outcome"
+      },
+      "lane_queries": {
+        "SUPPORT": [
+          "null social effect model-specific outcome consistent findings",
+          "null social effect model-specific outcome confirming evidence",
+          "null social effect model-specific outcome consistent with previous"
+        ],
+        "NULL": [
+          "null social effect model-specific outcome no significant association",
+          "null social effect model-specific outcome null findings",
+          "null social effect model-specific outcome no difference between groups"
+        ],
+        "CONTRADICT": [
+          "null social effect model-specific outcome contradictory findings",
+          "null social effect model-specific outcome conflicting evidence",
+          "null social effect model-specific outcome inconsistent with previous"
+        ],
+        "RIVAL": [
+          "null social effect model-specific outcome alternative explanation",
+          "null social effect model-specific outcome competing hypothesis",
+          "null social effect model-specific outcome ascertainment artefact",
+          "null social effect model-specific outcome reverse causation"
+        ],
+        "REPLICATION": [
+          "null social effect model-specific outcome replication study",
+          "null social effect model-specific outcome failure to replicate",
+          "null social effect model-specific outcome independent replication"
+        ],
+        "BIAS_CRITIQUE": [
+          "null social effect model-specific outcome risk of bias",
+          "null social effect model-specific outcome methodological critique",
+          "null social effect model-specific outcome systematic review limitations"
+        ],
+        "CORRECTION_RETRACTION": [
+          "null social effect model-specific outcome retracted",
+          "null social effect model-specific outcome expression of concern",
+          "null social effect model-specific outcome correction to"
+        ]
+      }
+    },
+    "MX09": {
+      "base_concept": "null institutional effect model-specific outcome",
+      "derived_from": {
+        "domain": "Null institutional effect",
+        "outcome": "model-specific outcome"
+      },
+      "lane_queries": {
+        "SUPPORT": [
+          "null institutional effect model-specific outcome consistent findings",
+          "null institutional effect model-specific outcome confirming evidence",
+          "null institutional effect model-specific outcome consistent with previous"
+        ],
+        "NULL": [
+          "null institutional effect model-specific outcome no significant association",
+          "null institutional effect model-specific outcome null findings",
+          "null institutional effect model-specific outcome no difference between groups"
+        ],
+        "CONTRADICT": [
+          "null institutional effect model-specific outcome contradictory findings",
+          "null institutional effect model-specific outcome conflicting evidence",
+          "null institutional effect model-specific outcome inconsistent with previous"
+        ],
+        "RIVAL": [
+          "null institutional effect model-specific outcome alternative explanation",
+          "null institutional effect model-specific outcome competing hypothesis",
+          "null institutional effect model-specific outcome ascertainment artefact",
+          "null institutional effect model-specific outcome reverse causation"
+        ],
+        "REPLICATION": [
+          "null institutional effect model-specific outcome replication study",
+          "null institutional effect model-specific outcome failure to replicate",
+          "null institutional effect model-specific outcome independent replication"
+        ],
+        "BIAS_CRITIQUE": [
+          "null institutional effect model-specific outcome risk of bias",
+          "null institutional effect model-specific outcome methodological critique",
+          "null institutional effect model-specific outcome systematic review limitations"
+        ],
+        "CORRECTION_RETRACTION": [
+          "null institutional effect model-specific outcome retracted",
+          "null institutional effect model-specific outcome expression of concern",
+          "null institutional effect model-specific outcome correction to"
+        ]
+      }
+    },
+    "MX11": {
+      "base_concept": "common-cause alternative model-specific outcome",
+      "derived_from": {
+        "domain": "Common-cause alternative",
+        "outcome": "model-specific outcome"
+      },
+      "lane_queries": {
+        "SUPPORT": [
+          "common-cause alternative model-specific outcome consistent findings",
+          "common-cause alternative model-specific outcome confirming evidence",
+          "common-cause alternative model-specific outcome consistent with previous"
+        ],
+        "NULL": [
+          "common-cause alternative model-specific outcome no significant association",
+          "common-cause alternative model-specific outcome null findings",
+          "common-cause alternative model-specific outcome no difference between groups"
+        ],
+        "CONTRADICT": [
+          "common-cause alternative model-specific outcome contradictory findings",
+          "common-cause alternative model-specific outcome conflicting evidence",
+          "common-cause alternative model-specific outcome inconsistent with previous"
+        ],
+        "RIVAL": [
+          "common-cause alternative model-specific outcome alternative explanation",
+          "common-cause alternative model-specific outcome competing hypothesis",
+          "common-cause alternative model-specific outcome ascertainment artefact",
+          "common-cause alternative model-specific outcome reverse causation"
+        ],
+        "REPLICATION": [
+          "common-cause alternative model-specific outcome replication study",
+          "common-cause alternative model-specific outcome failure to replicate",
+          "common-cause alternative model-specific outcome independent replication"
+        ],
+        "BIAS_CRITIQUE": [
+          "common-cause alternative model-specific outcome risk of bias",
+          "common-cause alternative model-specific outcome methodological critique",
+          "common-cause alternative model-specific outcome systematic review limitations"
+        ],
+        "CORRECTION_RETRACTION": [
+          "common-cause alternative model-specific outcome retracted",
+          "common-cause alternative model-specific outcome expression of concern",
+          "common-cause alternative model-specific outcome correction to"
+        ]
+      }
+    },
+    "MX14": {
+      "base_concept": "academic direction bias model-specific outcome",
+      "derived_from": {
+        "domain": "No academic direction bias",
+        "outcome": "model-specific outcome"
+      },
+      "lane_queries": {
+        "SUPPORT": [
+          "academic direction bias model-specific outcome consistent findings",
+          "academic direction bias model-specific outcome confirming evidence",
+          "academic direction bias model-specific outcome consistent with previous"
+        ],
+        "NULL": [
+          "academic direction bias model-specific outcome no significant association",
+          "academic direction bias model-specific outcome null findings",
+          "academic direction bias model-specific outcome no difference between groups"
+        ],
+        "CONTRADICT": [
+          "academic direction bias model-specific outcome contradictory findings",
+          "academic direction bias model-specific outcome conflicting evidence",
+          "academic direction bias model-specific outcome inconsistent with previous"
+        ],
+        "RIVAL": [
+          "academic direction bias model-specific outcome alternative explanation",
+          "academic direction bias model-specific outcome competing hypothesis",
+          "academic direction bias model-specific outcome ascertainment artefact",
+          "academic direction bias model-specific outcome reverse causation"
+        ],
+        "REPLICATION": [
+          "academic direction bias model-specific outcome replication study",
+          "academic direction bias model-specific outcome failure to replicate",
+          "academic direction bias model-specific outcome independent replication"
+        ],
+        "BIAS_CRITIQUE": [
+          "academic direction bias model-specific outcome risk of bias",
+          "academic direction bias model-specific outcome methodological critique",
+          "academic direction bias model-specific outcome systematic review limitations"
+        ],
+        "CORRECTION_RETRACTION": [
+          "academic direction bias model-specific outcome retracted",
+          "academic direction bias model-specific outcome expression of concern",
+          "academic direction bias model-specific outcome correction to"
+        ]
+      }
+    }
+  },
+  "summary": {
+    "run_id": "CE-20260816013116",
+    "propositions": 5,
+    "mandatory_lanes": [
+      "CONTRADICT",
+      "RIVAL",
+      "NULL"
+    ],
+    "complete": true,
+    "incomplete_propositions": {},
+    "lane_totals": {
+      "SUPPORT": {
+        "returned": 375,
+        "lane_confirmed": 0,
+        "searched_complete": 5,
+        "searched_partial": 0,
+        "unsearched": 0,
+        "genuine_zero": 0
+      },
+      "NULL": {
+        "returned": 375,
+        "lane_confirmed": 60,
+        "searched_complete": 5,
+        "searched_partial": 0,
+        "unsearched": 0,
+        "genuine_zero": 0
+      },
+      "CONTRADICT": {
+        "returned": 375,
+        "lane_confirmed": 0,
+        "searched_complete": 5,
+        "searched_partial": 0,
+        "unsearched": 0,
+        "genuine_zero": 0
+      },
+      "RIVAL": {
+        "returned": 500,
+        "lane_confirmed": 3,
+        "searched_complete": 5,
+        "searched_partial": 0,
+        "unsearched": 0,
+        "genuine_zero": 0
+      },
+      "REPLICATION": {
+        "returned": 375,
+        "lane_confirmed": 106,
+        "searched_complete": 5,
+        "searched_partial": 0,
+        "unsearched": 0,
+        "genuine_zero": 0
+      },
+      "BIAS_CRITIQUE": {
+        "returned": 375,
+        "lane_confirmed": 87,
+        "searched_complete": 5,
+        "searched_partial": 0,
+        "unsearched": 0,
+        "genuine_zero": 0
+      },
+      "CORRECTION_RETRACTION": {
+        "returned": 375,
+        "lane_confirmed": 5,
+        "searched_complete": 5,
+        "searched_partial": 0,
+        "unsearched": 0,
+        "genuine_zero": 0
+      }
+    },
+    "persisted_search_records": 35,
+    "per_proposition": {
+      "MD11": {
+        "base_concept": "academic selection onset identity referral pathway outcome",
+        "proposition_ids": [
+          "MD11"
+        ],
+        "total_records": 195,
+        "mandatory_lanes_satisfied": true,
+        "missing_mandatory_lanes": [],
+        "mandatory_lane_status": {
+          "CONTRADICT": "SEARCHED_COMPLETE",
+          "RIVAL": "SEARCHED_COMPLETE",
+          "NULL": "SEARCHED_COMPLETE"
+        },
+        "genuine_zero_lanes": [],
+        "per_lane": {
+          "SUPPORT": {
+            "queries": [
+              "academic selection onset identity referral pathway outcome consistent findings",
+              "academic selection onset identity referral pathway outcome confirming evidence",
+              "academic selection onset identity referral pathway outcome consistent with previous"
+            ],
+            "returned": 75,
+            "lane_confirmed": 0,
+            "searched": true,
+            "status": "SEARCHED_COMPLETE",
+            "genuine_zero": false,
+            "errors": []
+          },
+          "NULL": {
+            "queries": [
+              "academic selection onset identity referral pathway outcome no significant association",
+              "academic selection onset identity referral pathway outcome null findings",
+              "academic selection onset identity referral pathway outcome no difference between groups"
+            ],
+            "returned": 75,
+            "lane_confirmed": 4,
+            "searched": true,
+            "status": "SEARCHED_COMPLETE",
+            "genuine_zero": false,
+            "errors": []
+          },
+          "CONTRADICT": {
+            "queries": [
+              "academic selection onset identity referral pathway outcome contradictory findings",
+              "academic selection onset identity referral pathway outcome conflicting evidence",
+              "academic selection onset identity referral pathway outcome inconsistent with previous"
+            ],
+            "returned": 75,
+            "lane_confirmed": 0,
+            "searched": true,
+            "status": "SEARCHED_COMPLETE",
+            "genuine_zero": false,
+            "errors": []
+          },
+          "RIVAL": {
+            "queries": [
+              "academic selection onset identity referral pathway outcome alternative explanation",
+              "academic selection onset identity referral pathway outcome competing hypothesis",
+              "academic selection onset identity referral pathway outcome ascertainment artefact",
+              "academic selection onset identity referral pathway outcome reverse causation"
+            ],
+            "returned": 100,
+            "lane_confirmed": 0,
+            "searched": true,
+            "status": "SEARCHED_COMPLETE",
+            "genuine_zero": false,
+            "errors": []
+          },
+          "REPLICATION": {
+            "queries": [
+              "academic selection onset identity referral pathway outcome replication study",
+              "academic selection onset identity referral pathway outcome failure to replicate",
+              "academic selection onset identity referral pathway outcome independent replication"
+            ],
+            "returned": 75,
+            "lane_confirmed": 2,
+            "searched": true,
+            "status": "SEARCHED_COMPLETE",
+            "genuine_zero": false,
+            "errors": []
+          },
+          "BIAS_CRITIQUE": {
+            "queries": [
+              "academic selection onset identity referral pathway outcome risk of bias",
+              "academic selection onset identity referral pathway outcome methodological critique",
+              "academic selection onset identity referral pathway outcome systematic review limitations"
+            ],
+            "returned": 75,
+            "lane_confirmed": 5,
+            "searched": true,
+            "status": "SEARCHED_COMPLETE",
+            "genuine_zero": false,
+            "errors": []
+          },
+          "CORRECTION_RETRACTION": {
+            "queries": [
+              "academic selection onset identity referral pathway outcome retracted",
+              "academic selection onset identity referral pathway outcome expression of concern",
+              "academic selection onset identity referral pathway outcome correction to"
+            ],
+            "returned": 75,
+            "lane_confirmed": 1,
+            "searched": true,
+            "status": "SEARCHED_COMPLETE",
+            "genuine_zero": false,
+            "errors": []
+          }
+        }
+      },
+      "MX08": {
+        "base_concept": "null social effect model-specific outcome",
+        "proposition_ids": [
+          "MX08"
+        ],
+        "total_records": 285,
+        "mandatory_lanes_satisfied": true,
+        "missing_mandatory_lanes": [],
+        "mandatory_lane_status": {
+          "CONTRADICT": "SEARCHED_COMPLETE",
+          "RIVAL": "SEARCHED_COMPLETE",
+          "NULL": "SEARCHED_COMPLETE"
+        },
+        "genuine_zero_lanes": [],
+        "per_lane": {
+          "SUPPORT": {
+            "queries": [
+              "null social effect model-specific outcome consistent findings",
+              "null social effect model-specific outcome confirming evidence",
+              "null social effect model-specific outcome consistent with previous"
+            ],
+            "returned": 75,
+            "lane_confirmed": 0,
+            "searched": true,
+            "status": "SEARCHED_COMPLETE",
+            "genuine_zero": false,
+            "errors": []
+          },
+          "NULL": {
+            "queries": [
+              "null social effect model-specific outcome no significant association",
+              "null social effect model-specific outcome null findings",
+              "null social effect model-specific outcome no difference between groups"
+            ],
+            "returned": 75,
+            "lane_confirmed": 16,
+            "searched": true,
+            "status": "SEARCHED_COMPLETE",
+            "genuine_zero": false,
+            "errors": []
+          },
+          "CONTRADICT": {
+            "queries": [
+              "null social effect model-specific outcome contradictory findings",
+              "null social effect model-specific outcome conflicting evidence",
+              "null social effect model-specific outcome inconsistent with previous"
+            ],
+            "returned": 75,
+            "lane_confirmed": 0,
+            "searched": true,
+            "status": "SEARCHED_COMPLETE",
+            "genuine_zero": false,
+            "errors": []
+          },
+          "RIVAL": {
+            "queries": [
+              "null social effect model-specific outcome alternative explanation",
+              "null social effect model-specific outcome competing hypothesis",
+              "null social effect model-specific outcome ascertainment artefact",
+              "null social effect model-specific outcome reverse causation"
+            ],
+            "returned": 100,
+            "lane_confirmed": 0,
+            "searched": true,
+            "status": "SEARCHED_COMPLETE",
+            "genuine_zero": false,
+            "errors": []
+          },
+          "REPLICATION": {
+            "queries": [
+              "null social effect model-specific outcome replication study",
+              "null social effect model-specific outcome failure to replicate",
+              "null social effect model-specific outcome independent replication"
+            ],
+            "returned": 75,
+            "lane_confirmed": 27,
+            "searched": true,
+            "status": "SEARCHED_COMPLETE",
+            "genuine_zero": false,
+            "errors": []
+          },
+          "BIAS_CRITIQUE": {
+            "queries": [
+              "null social effect model-specific outcome risk of bias",
+              "null social effect model-specific outcome methodological critique",
+              "null social effect model-specific outcome systematic review limitations"
+            ],
+            "returned": 75,
+            "lane_confirmed": 16,
+            "searched": true,
+            "status": "SEARCHED_COMPLETE",
+            "genuine_zero": false,
+            "errors": []
+          },
+          "CORRECTION_RETRACTION": {
+            "queries": [
+              "null social effect model-specific outcome retracted",
+              "null social effect model-specific outcome expression of concern",
+              "null social effect model-specific outcome correction to"
+            ],
+            "returned": 75,
+            "lane_confirmed": 1,
+            "searched": true,
+            "status": "SEARCHED_COMPLETE",
+            "genuine_zero": false,
+            "errors": []
+          }
+        }
+      },
+      "MX09": {
+        "base_concept": "null institutional effect model-specific outcome",
+        "proposition_ids": [
+          "MX09"
+        ],
+        "total_records": 299,
+        "mandatory_lanes_satisfied": true,
+        "missing_mandatory_lanes": [],
+        "mandatory_lane_status": {
+          "CONTRADICT": "SEARCHED_COMPLETE",
+          "RIVAL": "SEARCHED_COMPLETE",
+          "NULL": "SEARCHED_COMPLETE"
+        },
+        "genuine_zero_lanes": [],
+        "per_lane": {
+          "SUPPORT": {
+            "queries": [
+              "null institutional effect model-specific outcome consistent findings",
+              "null institutional effect model-specific outcome confirming evidence",
+              "null institutional effect model-specific outcome consistent with previous"
+            ],
+            "returned": 75,
+            "lane_confirmed": 0,
+            "searched": true,
+            "status": "SEARCHED_COMPLETE",
+            "genuine_zero": false,
+            "errors": []
+          },
+          "NULL": {
+            "queries": [
+              "null institutional effect model-specific outcome no significant association",
+              "null institutional effect model-specific outcome null findings",
+              "null institutional effect model-specific outcome no difference between groups"
+            ],
+            "returned": 75,
+            "lane_confirmed": 19,
+            "searched": true,
+            "status": "SEARCHED_COMPLETE",
+            "genuine_zero": false,
+            "errors": []
+          },
+          "CONTRADICT": {
+            "queries": [
+              "null institutional effect model-specific outcome contradictory findings",
+              "null institutional effect model-specific outcome conflicting evidence",
+              "null institutional effect model-specific outcome inconsistent with previous"
+            ],
+            "returned": 75,
+            "lane_confirmed": 0,
+            "searched": true,
+            "status": "SEARCHED_COMPLETE",
+            "genuine_zero": false,
+            "errors": []
+          },
+          "RIVAL": {
+            "queries": [
+              "null institutional effect model-specific outcome alternative explanation",
+              "null institutional effect model-specific outcome competing hypothesis",
+              "null institutional effect model-specific outcome ascertainment artefact",
+              "null institutional effect model-specific outcome reverse causation"
+            ],
+            "returned": 100,
+            "lane_confirmed": 0,
+            "searched": true,
+            "status": "SEARCHED_COMPLETE",
+            "genuine_zero": false,
+            "errors": []
+          },
+          "REPLICATION": {
+            "queries": [
+              "null institutional effect model-specific outcome replication study",
+              "null institutional effect model-specific outcome failure to replicate",
+              "null institutional effect model-specific outcome independent replication"
+            ],
+            "returned": 75,
+            "lane_confirmed": 35,
+            "searched": true,
+            "status": "SEARCHED_COMPLETE",
+            "genuine_zero": false,
+            "errors": []
+          },
+          "BIAS_CRITIQUE": {
+            "queries": [
+              "null institutional effect model-specific outcome risk of bias",
+              "null institutional effect model-specific outcome methodological critique",
+              "null institutional effect model-specific outcome systematic review limitations"
+            ],
+            "returned": 75,
+            "lane_confirmed": 21,
+            "searched": true,
+            "status": "SEARCHED_COMPLETE",
+            "genuine_zero": false,
+            "errors": []
+          },
+          "CORRECTION_RETRACTION": {
+            "queries": [
+              "null institutional effect model-specific outcome retracted",
+              "null institutional effect model-specific outcome expression of concern",
+              "null institutional effect model-specific outcome correction to"
+            ],
+            "returned": 75,
+            "lane_confirmed": 0,
+            "searched": true,
+            "status": "SEARCHED_COMPLETE",
+            "genuine_zero": false,
+            "errors": []
+          }
+        }
+      },
+      "MX11": {
+        "base_concept": "common-cause alternative model-specific outcome",
+        "proposition_ids": [
+          "MX11"
+        ],
+        "total_records": 351,
+        "mandatory_lanes_satisfied": true,
+        "missing_mandatory_lanes": [],
+        "mandatory_lane_status": {
+          "CONTRADICT": "SEARCHED_COMPLETE",
+          "RIVAL": "SEARCHED_COMPLETE",
+          "NULL": "SEARCHED_COMPLETE"
+        },
+        "genuine_zero_lanes": [],
+        "per_lane": {
+          "SUPPORT": {
+            "queries": [
+              "common-cause alternative model-specific outcome consistent findings",
+              "common-cause alternative model-specific outcome confirming evidence",
+              "common-cause alternative model-specific outcome consistent with previous"
+            ],
+            "returned": 75,
+            "lane_confirmed": 0,
+            "searched": true,
+            "status": "SEARCHED_COMPLETE",
+            "genuine_zero": false,
+            "errors": []
+          },
+          "NULL": {
+            "queries": [
+              "common-cause alternative model-specific outcome no significant association",
+              "common-cause alternative model-specific outcome null findings",
+              "common-cause alternative model-specific outcome no difference between groups"
+            ],
+            "returned": 75,
+            "lane_confirmed": 10,
+            "searched": true,
+            "status": "SEARCHED_COMPLETE",
+            "genuine_zero": false,
+            "errors": []
+          },
+          "CONTRADICT": {
+            "queries": [
+              "common-cause alternative model-specific outcome contradictory findings",
+              "common-cause alternative model-specific outcome conflicting evidence",
+              "common-cause alternative model-specific outcome inconsistent with previous"
+            ],
+            "returned": 75,
+            "lane_confirmed": 0,
+            "searched": true,
+            "status": "SEARCHED_COMPLETE",
+            "genuine_zero": false,
+            "errors": []
+          },
+          "RIVAL": {
+            "queries": [
+              "common-cause alternative model-specific outcome alternative explanation",
+              "common-cause alternative model-specific outcome competing hypothesis",
+              "common-cause alternative model-specific outcome ascertainment artefact",
+              "common-cause alternative model-specific outcome reverse causation"
+            ],
+            "returned": 100,
+            "lane_confirmed": 0,
+            "searched": true,
+            "status": "SEARCHED_COMPLETE",
+            "genuine_zero": false,
+            "errors": []
+          },
+          "REPLICATION": {
+            "queries": [
+              "common-cause alternative model-specific outcome replication study",
+              "common-cause alternative model-specific outcome failure to replicate",
+              "common-cause alternative model-specific outcome independent replication"
+            ],
+            "returned": 75,
+            "lane_confirmed": 21,
+            "searched": true,
+            "status": "SEARCHED_COMPLETE",
+            "genuine_zero": false,
+            "errors": []
+          },
+          "BIAS_CRITIQUE": {
+            "queries": [
+              "common-cause alternative model-specific outcome risk of bias",
+              "common-cause alternative model-specific outcome methodological critique",
+              "common-cause alternative model-specific outcome systematic review limitations"
+            ],
+            "returned": 75,
+            "lane_confirmed": 25,
+            "searched": true,
+            "status": "SEARCHED_COMPLETE",
+            "genuine_zero": false,
+            "errors": []
+          },
+          "CORRECTION_RETRACTION": {
+            "queries": [
+              "common-cause alternative model-specific outcome retracted",
+              "common-cause alternative model-specific outcome expression of concern",
+              "common-cause alternative model-specific outcome correction to"
+            ],
+            "returned": 75,
+            "lane_confirmed": 2,
+            "searched": true,
+            "status": "SEARCHED_COMPLETE",
+            "genuine_zero": false,
+            "errors": []
+          }
+        }
+      },
+      "MX14": {
+        "base_concept": "academic direction bias model-specific outcome",
+        "proposition_ids": [
+          "MX14"
+        ],
+        "total_records": 308,
+        "mandatory_lanes_satisfied": true,
+        "missing_mandatory_lanes": [],
+        "mandatory_lane_status": {
+          "CONTRADICT": "SEARCHED_COMPLETE",
+          "RIVAL": "SEARCHED_COMPLETE",
+          "NULL": "SEARCHED_COMPLETE"
+        },
+        "genuine_zero_lanes": [],
+        "per_lane": {
+          "SUPPORT": {
+            "queries": [
+              "academic direction bias model-specific outcome consistent findings",
+              "academic direction bias model-specific outcome confirming evidence",
+              "academic direction bias model-specific outcome consistent with previous"
+            ],
+            "returned": 75,
+            "lane_confirmed": 0,
+            "searched": true,
+            "status": "SEARCHED_COMPLETE",
+            "genuine_zero": false,
+            "errors": []
+          },
+          "NULL": {
+            "queries": [
+              "academic direction bias model-specific outcome no significant association",
+              "academic direction bias model-specific outcome null findings",
+              "academic direction bias model-specific outcome no difference between groups"
+            ],
+            "returned": 75,
+            "lane_confirmed": 11,
+            "searched": true,
+            "status": "SEARCHED_COMPLETE",
+            "genuine_zero": false,
+            "errors": []
+          },
+          "CONTRADICT": {
+            "queries": [
+              "academic direction bias model-specific outcome contradictory findings",
+              "academic direction bias model-specific outcome conflicting evidence",
+              "academic direction bias model-specific outcome inconsistent with previous"
+            ],
+            "returned": 75,
+            "lane_confirmed": 0,
+            "searched": true,
+            "status": "SEARCHED_COMPLETE",
+            "genuine_zero": false,
+            "errors": []
+          },
+          "RIVAL": {
+            "queries": [
+              "academic direction bias model-specific outcome alternative explanation",
+              "academic direction bias model-specific outcome competing hypothesis",
+              "academic direction bias model-specific outcome ascertainment artefact",
+              "academic direction bias model-specific outcome reverse causation"
+            ],
+            "returned": 100,
+            "lane_confirmed": 3,
+            "searched": true,
+            "status": "SEARCHED_COMPLETE",
+            "genuine_zero": false,
+            "errors": []
+          },
+          "REPLICATION": {
+            "queries": [
+              "academic direction bias model-specific outcome replication study",
+              "academic direction bias model-specific outcome failure to replicate",
+              "academic direction bias model-specific outcome independent replication"
+            ],
+            "returned": 75,
+            "lane_confirmed": 21,
+            "searched": true,
+            "status": "SEARCHED_COMPLETE",
+            "genuine_zero": false,
+            "errors": []
+          },
+          "BIAS_CRITIQUE": {
+            "queries": [
+              "academic direction bias model-specific outcome risk of bias",
+              "academic direction bias model-specific outcome methodological critique",
+              "academic direction bias model-specific outcome systematic review limitations"
+            ],
+            "returned": 75,
+            "lane_confirmed": 20,
+            "searched": true,
+            "status": "SEARCHED_COMPLETE",
+            "genuine_zero": false,
+            "errors": []
+          },
+          "CORRECTION_RETRACTION": {
+            "queries": [
+              "academic direction bias model-specific outcome retracted",
+              "academic direction bias model-specific outcome expression of concern",
+              "academic direction bias model-specific outcome correction to"
+            ],
+            "returned": 75,
+            "lane_confirmed": 1,
+            "searched": true,
+            "status": "SEARCHED_COMPLETE",
+            "genuine_zero": false,
+            "errors": []
+          }
+        }
+      }
+    }
+  }
+}
