@@ -50,6 +50,10 @@ class EntityRole(StrEnum):
     ACADEMIC_BODY = "ACADEMIC_BODY"
     PUBLISHER = "PUBLISHER"
     GOVERNMENT_DEPARTMENT = "GOVERNMENT_DEPARTMENT"
+    #: A human being holding an office or controlling interest. Distinguished from
+    #: OTHER so that a personnel node is never mistaken for an unclassified organisation.
+    #: Being a person is not by itself evidence of anything; the tie is.
+    NATURAL_PERSON = "NATURAL_PERSON"
     OTHER = "OTHER"
 
 
@@ -64,11 +68,36 @@ class RelationType(StrEnum):
     ADOPTS_POLICY_FROM = "ADOPTS_POLICY_FROM"
     AFFILIATED_WITH = "AFFILIATED_WITH"
     COORDINATES_WITH = "COORDINATES_WITH"
+    #: A named person holds a directorship/secretaryship at an organisation
+    #: (Companies House officer appointment). Distinct from AFFILIATED_WITH, which
+    #: carries no statement about office.
+    HOLDS_OFFICE_AT = "HOLDS_OFFICE_AT"
+    #: A person or body exercises significant control over an organisation
+    #: (Companies House PSC register).
+    CONTROLS = "CONTROLS"
 
 
 #: Identifier namespaces strong enough to merge two records into one entity.
+#:
+#: `ch_officer_id` and `ch_psc_id` are register-issued identifiers minted by Companies
+#: House, not names. Admitting them lets one human being appearing at two companies
+#: become one node -- which WIDENS what can count as a bridge and therefore makes the
+#: MX09 disposition EASIER to overturn, not harder. It admits no name-based merge:
+#: `strong_identifiers()` reads identifier namespaces only, and two people with
+#: identical names but different officer ids remain two entities at this tier.
+#: The two namespaces are mutually non-interchangeable: an officer id never equals a
+#: PSC id, so a director is never silently fused with a PSC record.
 STRONG_IDENTIFIER_NAMESPACES = frozenset(
-    {"companies_house", "charity_number", "ror", "grid", "oc_id", "lei"}
+    {
+        "companies_house",
+        "charity_number",
+        "ror",
+        "grid",
+        "oc_id",
+        "lei",
+        "ch_officer_id",
+        "ch_psc_id",
+    }
 )
 
 

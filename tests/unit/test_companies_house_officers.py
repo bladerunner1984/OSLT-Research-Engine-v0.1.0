@@ -14,7 +14,7 @@ import httpx
 from oslt_research.connectors.companies_house_officers import (
     DEPENDENCY_FAMILY,
     OFFICER_ID_NAMESPACE,
-    PERSONNEL_RELATION_TYPE,
+    OFFICER_RELATION_TYPE,
     PSC_ID_NAMESPACE,
     CompaniesHouseOfficersConnector,
     missing_ontology_members,
@@ -419,7 +419,7 @@ def test_officer_appointments_reverse_index_produces_one_person_many_orgs():
     fragment = routed({"/appointments": payload}).harvest_officer_appointments("OFFICER-1")
     assert fragment.officer_records_joined == 2
     assert fragment.shared_officers() == {"CHO-OFFICER-1": ["CH-01844327", "CH-08038055"]}
-    assert all(r.relation_type is PERSONNEL_RELATION_TYPE for r in fragment.relations)
+    assert all(r.relation_type is OFFICER_RELATION_TYPE for r in fragment.relations)
 
 
 def test_appointment_without_a_company_number_is_unjoinable():
@@ -444,20 +444,21 @@ def test_appointments_failure_is_unavailable_not_empty():
 # ---------------------------------------------------------------- ontology + wiring
 
 
-def test_edges_use_an_existing_relation_type_and_flag_the_substitution():
+def test_officer_edges_use_the_real_relation_type_with_no_substitution_note():
     page = officer_page([officer_item(name="A", officer_id="ID-ONE")])
     relation = routed({"/officers": page}).harvest_company(
         "00000001", include_psc=False
     ).relations[0]
-    assert relation.relation_type is RelationType.AFFILIATED_WITH
+    assert relation.relation_type is RelationType.HOLDS_OFFICE_AT
     assert relation.metadata["tie_semantics"] == "PERSONNEL_APPOINTMENT_OFFICER"
-    assert "no personnel member" in relation.metadata["relation_type_is_a_substitute"]
+    assert "relation_type_is_a_substitute" not in relation.metadata
 
 
 def test_missing_ontology_members_are_declared_not_invented():
-    members = missing_ontology_members()
-    assert any("HOLDS_OFFICE_AT" in item for item in members)
-    assert any("NATURAL_PERSON" in item for item in members)
+    # Every member this connector needed has been added to the ontology, so the
+    # declaration is now empty. It remains a live check: if a future connector change
+    # needs a member that does not exist, it must be declared here, not invented.
+    assert missing_ontology_members() == ()
 
 
 def test_everything_shares_one_dependency_family():
@@ -503,3 +504,107 @@ def test_summary_reports_the_join_counts_a_bounds_statement_needs():
     assert summary["officer_records_seen"] == 2
     assert summary["officer_records_joined_on_strong_identifier"] == 1
     assert summary["officer_records_unjoinable"] == 1
+
+
+# ------------------------------------------------- identifier tier: no name merges
+#
+# `ch_officer_id` / `ch_psc_id` were added to STRONG_IDENTIFIER_NAMESPACES. That widens
+# what can count as a bridge, which makes the MX09 disposition EASIER to overturn. It
+# must NOT open a name-based merge: the whole disposition rests on the fact that every
+# historical MD15 positive here died once name-only joins were disallowed.
+
+
+def _person_entity(entity_id: str, name: str, officer_id: str):
+    from oslt_research.domain.enums import AccessClass, SourceStatus
+    from oslt_research.domain.models import ProvenanceRecord
+    from oslt_research.ontology.entities import (
+        EntityRole,
+        InstitutionalEntity,
+        SystemDomain,
+    )
+
+    return InstitutionalEntity(
+        entity_id=entity_id,
+        canonical_name=name,
+        roles=[EntityRole.NATURAL_PERSON],
+        system_domain=SystemDomain.UNKNOWN,
+        jurisdiction="UK",
+        identifiers={OFFICER_ID_NAMESPACE: officer_id},
+        provenance=ProvenanceRecord(
+            source_id="DS_COMPANIES_HOUSE_OFFICERS",
+            source_uri="https://api.company-information.service.gov.uk/",
+            retrieval_query=entity_id,
+            field_or_document_locator=entity_id,
+            checksum_sha256="0" * 64,
+            access_class=AccessClass.OPEN,
+            licence_or_approval="OGL_v3_COMPANIES_HOUSE",
+            transformation_ids=["CH_APPOINTMENT_TO_INSTITUTIONAL_RELATION_V1"],
+            codebook_or_schema_ref="companies-house:public-data-api:officers+psc",
+        ),
+        source_status=SourceStatus.VERIFIED,
+        dependency_family=DEPENDENCY_FAMILY,
+    )
+
+
+def test_identical_names_with_different_officer_ids_never_merge_at_strong_identifier():
+    from oslt_research.ontology.graph import InstitutionalOntologyGraph, ResolutionTier
+
+    graph = InstitutionalOntologyGraph()
+    graph.add_entity(_person_entity("CHO-ID-ONE", "JOHN ANDREW SMITH", "ID-ONE"))
+    graph.add_entity(_person_entity("CHO-ID-TWO", "JOHN ANDREW SMITH", "ID-TWO"))
+
+    merged = graph.resolve_duplicates(minimum_tier=ResolutionTier.STRONG_IDENTIFIER)
+    assert merged == {}
+    canonical, tally = graph._canonical_map(ResolutionTier.STRONG_IDENTIFIER)
+    assert canonical["CHO-ID-ONE"] != canonical["CHO-ID-TWO"]
+    assert tally == {}
+
+
+def test_same_officer_id_collapses_even_when_names_differ():
+    from oslt_research.ontology.graph import InstitutionalOntologyGraph, ResolutionTier
+
+    graph = InstitutionalOntologyGraph()
+    # Companies House prints the same person's name differently across filings.
+    graph.add_entity(_person_entity("CHO-ID-ONE", "JOHN A SMITH", "ID-ONE"))
+    graph.add_entity(_person_entity("CHO-ID-ONE-ALT", "SMITH, John Andrew", "ID-ONE"))
+
+    merged = graph.resolve_duplicates(minimum_tier=ResolutionTier.STRONG_IDENTIFIER)
+    assert list(merged.values()) == [["CHO-ID-ONE", "CHO-ID-ONE-ALT"]]
+    canonical, tally = graph._canonical_map(ResolutionTier.STRONG_IDENTIFIER)
+    assert canonical["CHO-ID-ONE"] == canonical["CHO-ID-ONE-ALT"]
+    assert tally == {ResolutionTier.STRONG_IDENTIFIER.value: 1}
+
+
+def test_officer_id_and_psc_id_are_not_interchangeable():
+    """A director and a PSC with the same raw id string are still two namespaces."""
+    from oslt_research.ontology.graph import InstitutionalOntologyGraph, ResolutionTier
+
+    officer = _person_entity("CHO-SHARED", "A PERSON", "SHARED")
+    psc = _person_entity("CHP-SHARED", "A PERSON", "SHARED")
+    psc = psc.model_copy(update={"identifiers": {PSC_ID_NAMESPACE: "SHARED"}})
+
+    graph = InstitutionalOntologyGraph()
+    graph.add_entity(officer)
+    graph.add_entity(psc)
+    assert graph.resolve_duplicates(minimum_tier=ResolutionTier.STRONG_IDENTIFIER) == {}
+
+
+def test_inverted_interval_is_emitted_undated_and_refused_not_dropped():
+    """A PSC can cease before the company files the notification. Observed live.
+
+    The edge must survive into the fragment (so it is counted and visible) while being
+    refused admission, rather than being dropped or given an invented start date.
+    """
+    page = officer_page(
+        [officer_item(name="A", officer_id="ID-ONE",
+                      appointed_on="2020-05-01", resigned_on="2019-01-01")]
+    )
+    fragment = routed({"/officers": page}).harvest_company("00000001", include_psc=False)
+    relation = fragment.relations[0]
+    assert relation.valid_from is None and relation.valid_to is None
+    assert relation.admitted is False
+    assert "RELATION_UNDATED" in relation.admission_failures
+    inverted = relation.metadata["interval_inverted_at_source"]
+    assert inverted["source_valid_from"] == "2020-05-01"
+    assert inverted["source_valid_to"] == "2019-01-01"
+    assert relation.metadata["current"] is False

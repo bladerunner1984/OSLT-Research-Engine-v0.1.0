@@ -49,28 +49,22 @@ from .companies_house import DEFAULT_MIN_INTERVAL_SECONDS, CompaniesHouseResolve
 #: the Companies House register, so they can never corroborate each other.
 DEPENDENCY_FAMILY = "register:companies-house-officers-psc"
 
-#: The ontology's `RelationType` has no personnel member (see MISSING_ONTOLOGY_MEMBERS).
-#: AFFILIATED_WITH is the closest existing member and is used unchanged; the precise
-#: semantics travel in relation metadata under `tie_semantics` so that a later reader
-#: cannot mistake an appointment for a generic affiliation.
-PERSONNEL_RELATION_TYPE = RelationType.AFFILIATED_WITH
+#: Real relation types, added to the ontology for this purpose. An officer appointment
+#: is HOLDS_OFFICE_AT; significant control is CONTROLS. The precise semantics still
+#: travel in relation metadata under `tie_semantics`.
+OFFICER_RELATION_TYPE = RelationType.HOLDS_OFFICE_AT
+CONTROL_RELATION_TYPE = RelationType.CONTROLS
 
-#: Identifier namespaces minted here. NOTE both are ABSENT from
-#: `STRONG_IDENTIFIER_NAMESPACES` in `ontology/entities.py`, which this module does not
-#: edit. Consequence: `assess_coupling(..., minimum_resolution_tier=STRONG_IDENTIFIER)`
-#: will NOT merge two person records on these. This connector therefore does its own
-#: joining, and makes it survive by deriving `entity_id` from the identifier, so equal
-#: officer ids collapse to one entity id regardless of the resolver's opinion.
+#: Identifier namespaces minted here. Both are now members of
+#: `STRONG_IDENTIFIER_NAMESPACES`, so `assess_coupling(..., STRONG_IDENTIFIER)` will
+#: merge two person records that share one. `entity_id` is still derived from the
+#: identifier, so equal ids collapse regardless of the resolver's opinion.
 OFFICER_ID_NAMESPACE = "ch_officer_id"
 PSC_ID_NAMESPACE = "ch_psc_id"
 
-#: Reported by `missing_ontology_members()` rather than invented locally.
-MISSING_ONTOLOGY_MEMBERS = (
-    "RelationType.HOLDS_OFFICE_AT (personnel appointment; AFFILIATED_WITH used instead)",
-    "RelationType.CONTROLS (PSC significant control; AFFILIATED_WITH used instead)",
-    "EntityRole.NATURAL_PERSON (a human officer; EntityRole.OTHER used instead)",
-    f"STRONG_IDENTIFIER_NAMESPACES lacks {OFFICER_ID_NAMESPACE!r} and {PSC_ID_NAMESPACE!r}",
-)
+#: Reported by `missing_ontology_members()` rather than invented locally. Now empty:
+#: every member this connector needed was added to `ontology/entities.py`.
+MISSING_ONTOLOGY_MEMBERS: tuple[str, ...] = ()
 
 #: Field meanings, established against the live API rather than assumed. Any date-looking
 #: field in this project has been wrong six times; these are the four that matter.
@@ -433,7 +427,7 @@ class CompaniesHouseOfficersConnector:
             InstitutionalEntity(
                 entity_id=f"{prefix}-{identifier}",
                 canonical_name=name.strip() or identifier,
-                roles=[EntityRole.OTHER],
+                roles=[EntityRole.NATURAL_PERSON],
                 system_domain=SystemDomain.UNKNOWN,
                 jurisdiction="UK",
                 identifiers={namespace: identifier},
@@ -458,6 +452,7 @@ class CompaniesHouseOfficersConnector:
         valid_to: date | None,
         officer_role: str,
         tie_semantics: str,
+        relation_type: RelationType,
         locator: str,
         provenance: ProvenanceRecord,
         extra: dict[str, Any] | None = None,
@@ -469,17 +464,39 @@ class CompaniesHouseOfficersConnector:
             # the date is missing, and it must not drop the edge.
             "current": valid_to is None,
             "date_field_semantics": DATE_FIELD_SEMANTICS,
-            "relation_type_is_a_substitute": (
-                "RelationType has no personnel member; AFFILIATED_WITH stands in"
-            ),
         }
         metadata.update(extra or {})
+
+        # Observed live: a PSC record can carry `ceased_on` EARLIER than `notified_on`,
+        # because notified_on is the date the company filed, not the date control began -
+        # a body can cease to be a PSC before the filing catches up. The same shape
+        # appears on a few officer records. Neither date is wrong; the INTERVAL is
+        # unusable, and choosing one of them as the start would invent a fact.
+        #
+        # So the edge is emitted UNDATED, with both source dates preserved in metadata.
+        # `assess_relation_admission` then refuses it with RELATION_UNDATED. This is the
+        # same treatment an appointment with no `appointed_on` already receives: the tie
+        # stays visible in the fragment and countable in the coverage report, but it can
+        # never contribute to a temporal-precedence claim. It is NOT silently dropped.
+        if valid_from is not None and valid_to is not None and valid_to < valid_from:
+            metadata["interval_inverted_at_source"] = {
+                "source_valid_from": valid_from.isoformat(),
+                "source_valid_to": valid_to.isoformat(),
+                "treatment": (
+                    "emitted undated; fails admission with RELATION_UNDATED rather than "
+                    "picking a start date the register does not assert"
+                ),
+            }
+            valid_from = None
+            valid_to = None
+            metadata["current"] = False
+
         return admit_relation(
             InstitutionalRelation(
                 relation_id=f"CHAPP-{sha256_text(locator)[:16]}",
                 source_entity_id=person_id,
                 target_entity_id=organisation_id,
-                relation_type=PERSONNEL_RELATION_TYPE,
+                relation_type=relation_type,
                 valid_from=valid_from,
                 valid_to=valid_to,
                 provenance=provenance,
@@ -557,6 +574,7 @@ class CompaniesHouseOfficersConnector:
                         valid_to=parse_ch_date(item.get("resigned_on")),
                         officer_role=role,
                         tie_semantics="PERSONNEL_APPOINTMENT_OFFICER",
+                        relation_type=OFFICER_RELATION_TYPE,
                         locator=locator,
                         provenance=provenance,
                     )
@@ -632,6 +650,7 @@ class CompaniesHouseOfficersConnector:
                             valid_to=parse_ch_date(item.get("ceased_on")),
                             officer_role="person-with-significant-control",
                             tie_semantics="SIGNIFICANT_CONTROL",
+                            relation_type=CONTROL_RELATION_TYPE,
                             locator=locator,
                             provenance=provenance,
                             extra={
@@ -722,6 +741,7 @@ class CompaniesHouseOfficersConnector:
                     valid_to=parse_ch_date(item.get("resigned_on")),
                     officer_role=role,
                     tie_semantics="PERSONNEL_APPOINTMENT_OFFICER",
+                    relation_type=OFFICER_RELATION_TYPE,
                     locator=locator,
                     provenance=provenance,
                     extra={"company_status": str(appointed_to.get("company_status") or "")},
