@@ -352,6 +352,15 @@ Stated flatly, because a sceptical reader should not have to infer it.
   reporting the absence of a difference it was never in a position to observe. What *did*
   change is the power envelope — minimum detectable OR at 80% power fell from 1.86 (361
   records) to **1.16** (6,428). The sample is no longer the constraint. The coding is.
+
+  **Confirmed by measurement, 2026-08-16** (`WIRING_AUDIT.md`): `orientation` is absent from
+  **0 of 6,434** records — no code path anywhere assigns it. All 6,428 admitted records
+  therefore fall into a single `NOT_ASSESSABLE` bucket, and because that bucket happens to
+  contain 5 registration records it clears the `len(group) < 5` guard, so
+  `denominator_available` returns `True`. **The guard intended to prevent exactly this did not
+  fire.** The two verdicts are a comparison of one group with itself, and the corpus was
+  promoted from `DESCRIPTIVE_EVIDENCE_ONLY`/`OBSERVATION` to `ASSOCIATION_ONLY`/`ASSOCIATION`
+  on that basis. Treat the promotion as invalid too, not merely the verdicts.
 - **The 15 August corpus is permanently exploratory**, because it predates the preregistration
   freeze. Enforced by `FREEZE_POSTDATES_DATA_RETRIEVAL`, not by convention.
 - **No independent statistical, clinical, ethical or publication peer review.**
