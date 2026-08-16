@@ -50,9 +50,11 @@ That is the arithmetic signature of a **lowered referral threshold**: more peopl
 a smaller share of them having the thing referred for. Cases found did rise — real disease
 was detected — but far more slowly than referrals.
 
-This is not a claim about cancer policy, and it is not in dispute; it is the intended and
-documented effect of successive NICE guideline revisions and awareness campaigns. It is
-recorded here because of what it implies for **method**.
+This document makes no claim about what caused it. Successive NICE guideline revisions and
+awareness campaigns over the same period are widely described in the clinical literature as
+having been intended to lower the referral threshold, and a reader may find that a natural
+reading — but this analysis calibrated no mechanism and cannot adjudicate it. What is
+recorded here is the arithmetic, and what the arithmetic implies for **method**.
 
 ## Why it matters to this project
 
@@ -73,11 +75,16 @@ baseline, not merely that it rose.
 
 This bears on the ballot between model families:
 
-- **ASCERTAINMENT_SERVICE** predicts referral growth accompanied by falling yield or
-  threshold-consistent shifts, and predicts it should appear across domains. The baseline
-  is consistent with that mechanism operating in the English referral system generally.
-- **INTRINSIC_RECOGNITION** requires the domain of interest to diverge from the general
-  trend by a margin the baseline cannot supply.
+- **ASCERTAINMENT_SERVICE** is specified such that referral growth with falling yield, and
+  appearing across domains, would be consistent with it. The baseline does not discriminate:
+  compatibility is not support, and this family has not been run against a target series.
+- **INTRINSIC_RECOGNITION** is specified such that it would require the domain of interest
+  to diverge from the general trend. The baseline cannot supply that margin either way.
+
+Neither statement above is a result. Both describe what the model families are *specified*
+to entail, not what the data shows — the distinction matters because a reader skimming for
+conclusions will otherwise take the first bullet as support for a family this document has
+not tested.
 
 **Neither is tested here, and nothing above is a result about gender services.** Per the
 engine's own rule in `compare_mechanisms`, compatibility is not support, and no mechanism has
@@ -195,7 +202,7 @@ mistaken for a control.
 
 Two further comparators worth adding before the comparison is run: **92622 and 92623**,
 paediatric diabetes and epilepsy admissions by 0–9 and 10–18 over twelve years, which no
-social-transmission account predicts should move at all, and **91871**, school SEMH needs
+social-transmission account is specified to affect at all, and **91871**, school SEMH needs
 across ten academic years, the longest adolescent series available.
 
 ---

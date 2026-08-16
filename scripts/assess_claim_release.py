@@ -91,15 +91,17 @@ HEADLINE_CLAIMS: tuple[tuple[str, str, str], ...] = (
     (
         "REFERRAL-BASELINE-NICE",
         "docs/REFERRAL_BASELINE.md",
-        "This is not a claim about cancer policy, and it is not in dispute; it is the "
-        "intended and documented effect of successive NICE guideline revisions and "
-        "awareness campaigns.",
+        "This document makes no claim about what caused it. Successive NICE guideline "
+        "revisions and awareness campaigns over the same period are widely described in "
+        "the clinical literature as having been intended to lower the referral threshold, "
+        "but this analysis calibrated no mechanism and cannot adjudicate it.",
     ),
     (
         "REFERRAL-BASELINE-BALLOT",
         "docs/REFERRAL_BASELINE.md",
-        "ASCERTAINMENT_SERVICE predicts referral growth accompanied by falling yield or "
-        "threshold-consistent shifts, and predicts it should appear across domains.",
+        "ASCERTAINMENT_SERVICE is specified such that referral growth with falling yield, "
+        "appearing across domains, would be consistent with it. The baseline does not "
+        "discriminate: compatibility is not support.",
     ),
     (
         "REFERRAL-BASELINE-COMPARATOR",
