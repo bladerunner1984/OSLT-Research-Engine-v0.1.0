@@ -278,3 +278,73 @@ def test_counterevidence_lanes_were_actually_searched(store: SQLiteStore) -> Non
     assert not dishonest, f"rows claiming a zero they did not establish: {dishonest}"
     unsearched = [row[0] for row in rows if row[5] and not row[2]]
     assert not unsearched, f"mandatory lanes left unsearched in the store: {unsearched}"
+
+
+# ----------------------------------------------- feasibility census + claim release
+
+
+def test_a_feasibility_census_is_persisted_and_still_reproduces(store: SQLiteStore) -> None:
+    """The census must be re-derivable from the registry it recorded a digest of.
+
+    Before this wiring the census existed only as four numbers quoted in a handoff
+    document. Numbers in prose cannot drift-check themselves; a stored census bound to a
+    registry digest can, and this is the check that does it.
+    """
+
+    from oslt_research.governance.feasibility import assess_feasibility, registry_digest
+    from oslt_research.settings import repository_root
+
+    census_id = store.latest_feasibility_census_id()
+    if census_id is None:
+        pytest.skip("no feasibility census persisted")
+    stored = store.get_feasibility_census(census_id)
+    registries = repository_root() / "registries"
+
+    assert stored["registry_digest"] == registry_digest(registries), (
+        "the registry has changed since the stored census; re-run "
+        "scripts/run_feasibility_census.py --apply rather than quoting the stored counts"
+    )
+    recomputed = assess_feasibility(registries)
+    assert stored["summary"]["by_reachability"] == recomputed.counts()
+    assert len(stored["results"]) == len(recomputed.results)
+
+
+def test_persisted_census_is_not_uniform_at_one_reachability(store: SQLiteStore) -> None:
+    """A census that classified everything identically would be the audit's own failure
+    signature - a governance column with exactly one distinct value."""
+
+    census_id = store.latest_feasibility_census_id()
+    if census_id is None:
+        pytest.skip("no feasibility census persisted")
+    counts = store.get_feasibility_census(census_id)["summary"]["by_reachability"]
+    assert len(counts) > 1, f"every proposition landed in one bucket: {counts}"
+
+
+def test_claim_release_has_actually_run_and_recorded_its_refusals(store: SQLiteStore) -> None:
+    """Refusals must be in the store, not only in a report file.
+
+    `claim_release` had never executed at all. The thing that proves it now runs is not a
+    released claim - none should exist yet - but a persisted refusal naming the gate that
+    stopped it.
+    """
+
+    assessments = store.list_claim_assessments()
+    if not assessments:
+        pytest.skip("no claim release assessments persisted")
+    refusals = [item for item in assessments if not item["released"]]
+    assert refusals, "every claim released: check the gate is not being bypassed"
+    assert all(item["failures"] for item in refusals), (
+        "a refusal with no recorded failure reason is unauditable"
+    )
+
+
+def test_no_claim_is_released_without_a_declared_tier(store: SQLiteStore) -> None:
+    """Fail-closed guard. An undeclared tier must never reach a released state, whatever
+    else about the claim is satisfied."""
+
+    released_without_tier = [
+        item["claim_ref"]
+        for item in store.list_claim_assessments()
+        if item["released"] and not item["declared_tier"]
+    ]
+    assert not released_without_tier, released_without_tier

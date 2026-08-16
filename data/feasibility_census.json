@@ -1,0 +1,1305 @@
+{
+  "assessed_at": "2026-08-16T02:37:25.352945+00:00",
+  "ballot": {
+    "asymmetry_changed": false,
+    "families_quoted_with_zero_still_zero": [
+      "INTRINSIC_RECOGNITION",
+      "MIXTURE_HETEROGENEITY",
+      "NULL_OR_ALTERNATIVE"
+    ],
+    "quoted_testable_by_family": {
+      "ASCERTAINMENT_SERVICE": 12
+    },
+    "testable_by_family_now": {
+      "ASCERTAINMENT_SERVICE": 12,
+      "MULTIFACTORIAL_DEVELOPMENTAL_INSTITUTIONAL": 4
+    }
+  },
+  "census_id": "FC-20260816023725",
+  "connector_inventory": {
+    "declared_source_ids": {
+      "education_data": "UNREGISTERED:DFE-EES",
+      "fingertips": "UNREGISTERED:OHID-FINGERTIPS",
+      "hansard": "DS031",
+      "isrctn": "DS038",
+      "legislation": "DS032",
+      "media_discourse": "DS028",
+      "nhs_statistics": "UNREGISTERED:NHS-ENGLAND-OPEN",
+      "nomis": "UNREGISTERED:NOMIS",
+      "ons_datasets": "DS014",
+      "ons_population": "DS014",
+      "retractions": "DS043",
+      "ror": "DS059"
+    },
+    "modules_declaring_no_source_id": [
+      "charity_commission",
+      "clinicaltrials",
+      "companies_house",
+      "companies_house_officers",
+      "contracts_finder",
+      "crossref",
+      "europepmc",
+      "find_a_tender",
+      "govuk_guidance",
+      "ocds",
+      "openaire",
+      "openalex",
+      "parliament_evidence",
+      "pubmed",
+      "threesixty_giving",
+      "ukri_gtr"
+    ],
+    "note": "Connector inventory is recorded for drift detection only. Reachability is read from registries/workstreams.csv access tokens and is not a function of which connectors exist."
+  },
+  "design_requirements": [
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "prospective cohort with recruited participants",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "research ethics committee favourable opinion",
+        "informed consent process and participant information sheet",
+        "data protection impact assessment and lawful basis",
+        "sponsor and indemnity"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "INTRINSIC_RECOGNITION",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "IR01",
+      "reachability": "NEEDS_PRIMARY_COLLECTION"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "prospective cohort with recruited participants",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "research ethics committee favourable opinion",
+        "informed consent process and participant information sheet",
+        "data protection impact assessment and lawful basis",
+        "sponsor and indemnity"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "INTRINSIC_RECOGNITION",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "IR02",
+      "reachability": "NEEDS_PRIMARY_COLLECTION"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "prospective cohort with recruited participants",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "research ethics committee favourable opinion",
+        "informed consent process and participant information sheet",
+        "data protection impact assessment and lawful basis",
+        "sponsor and indemnity"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "INTRINSIC_RECOGNITION",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "IR03",
+      "reachability": "NEEDS_PRIMARY_COLLECTION"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "prospective cohort with recruited participants",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "research ethics committee favourable opinion",
+        "informed consent process and participant information sheet",
+        "data protection impact assessment and lawful basis",
+        "sponsor and indemnity"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "INTRINSIC_RECOGNITION",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "IR04",
+      "reachability": "NEEDS_PRIMARY_COLLECTION"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "prospective cohort with recruited participants",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "research ethics committee favourable opinion",
+        "informed consent process and participant information sheet",
+        "data protection impact assessment and lawful basis",
+        "sponsor and indemnity"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "INTRINSIC_RECOGNITION",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "IR05",
+      "reachability": "NEEDS_PRIMARY_COLLECTION"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "prospective cohort with recruited participants",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "research ethics committee favourable opinion",
+        "informed consent process and participant information sheet",
+        "data protection impact assessment and lawful basis",
+        "sponsor and indemnity"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "INTRINSIC_RECOGNITION",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "IR06",
+      "reachability": "NEEDS_PRIMARY_COLLECTION"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "prospective cohort with recruited participants",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "research ethics committee favourable opinion",
+        "informed consent process and participant information sheet",
+        "data protection impact assessment and lawful basis",
+        "sponsor and indemnity"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "INTRINSIC_RECOGNITION",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "IR07",
+      "reachability": "NEEDS_PRIMARY_COLLECTION"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "prospective cohort with recruited participants",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "research ethics committee favourable opinion",
+        "informed consent process and participant information sheet",
+        "data protection impact assessment and lawful basis",
+        "sponsor and indemnity"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "INTRINSIC_RECOGNITION",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "IR08",
+      "reachability": "NEEDS_PRIMARY_COLLECTION"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "prospective cohort with recruited participants",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "research ethics committee favourable opinion",
+        "informed consent process and participant information sheet",
+        "data protection impact assessment and lawful basis",
+        "sponsor and indemnity"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "MULTIFACTORIAL_DEVELOPMENTAL_INSTITUTIONAL",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "MD01",
+      "reachability": "NEEDS_PRIMARY_COLLECTION"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "prospective cohort with recruited participants",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "research ethics committee favourable opinion",
+        "informed consent process and participant information sheet",
+        "data protection impact assessment and lawful basis",
+        "sponsor and indemnity"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "MULTIFACTORIAL_DEVELOPMENTAL_INSTITUTIONAL",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "MD02",
+      "reachability": "NEEDS_PRIMARY_COLLECTION"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "prospective cohort with recruited participants",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "research ethics committee favourable opinion",
+        "informed consent process and participant information sheet",
+        "data protection impact assessment and lawful basis",
+        "sponsor and indemnity"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "MULTIFACTORIAL_DEVELOPMENTAL_INSTITUTIONAL",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "MD03",
+      "reachability": "NEEDS_PRIMARY_COLLECTION"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "prospective cohort with recruited participants",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "research ethics committee favourable opinion",
+        "informed consent process and participant information sheet",
+        "data protection impact assessment and lawful basis",
+        "sponsor and indemnity"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "MULTIFACTORIAL_DEVELOPMENTAL_INSTITUTIONAL",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "MD04",
+      "reachability": "NEEDS_PRIMARY_COLLECTION"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "prospective cohort with recruited participants",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "research ethics committee favourable opinion",
+        "informed consent process and participant information sheet",
+        "data protection impact assessment and lawful basis",
+        "sponsor and indemnity"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "MULTIFACTORIAL_DEVELOPMENTAL_INSTITUTIONAL",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "MD05",
+      "reachability": "NEEDS_PRIMARY_COLLECTION"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "record-linkage cohort from existing individual-level administrative data",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "data access agreement with the custodian",
+        "approved analysis specification and disclosure control",
+        "secure environment (TRE/SDE) accreditation"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "MULTIFACTORIAL_DEVELOPMENTAL_INSTITUTIONAL",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "MD06",
+      "reachability": "NEEDS_INDIVIDUAL_LEVEL"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "prospective cohort with recruited participants",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "research ethics committee favourable opinion",
+        "informed consent process and participant information sheet",
+        "data protection impact assessment and lawful basis",
+        "sponsor and indemnity"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "MULTIFACTORIAL_DEVELOPMENTAL_INSTITUTIONAL",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "MD07",
+      "reachability": "NEEDS_PRIMARY_COLLECTION"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "prospective cohort with recruited participants",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "research ethics committee favourable opinion",
+        "informed consent process and participant information sheet",
+        "data protection impact assessment and lawful basis",
+        "sponsor and indemnity"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "MULTIFACTORIAL_DEVELOPMENTAL_INSTITUTIONAL",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "MD08",
+      "reachability": "NEEDS_PRIMARY_COLLECTION"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "prospective cohort with recruited participants",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "research ethics committee favourable opinion",
+        "informed consent process and participant information sheet",
+        "data protection impact assessment and lawful basis",
+        "sponsor and indemnity"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "MULTIFACTORIAL_DEVELOPMENTAL_INSTITUTIONAL",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "MD09",
+      "reachability": "NEEDS_PRIMARY_COLLECTION"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "record-linkage cohort from existing individual-level administrative data",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "data access agreement with the custodian",
+        "approved analysis specification and disclosure control",
+        "secure environment (TRE/SDE) accreditation"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "MULTIFACTORIAL_DEVELOPMENTAL_INSTITUTIONAL",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "MD10",
+      "reachability": "NEEDS_INDIVIDUAL_LEVEL"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "record-linkage cohort from existing individual-level administrative data",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "data access agreement with the custodian",
+        "approved analysis specification and disclosure control",
+        "secure environment (TRE/SDE) accreditation"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "MULTIFACTORIAL_DEVELOPMENTAL_INSTITUTIONAL",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "MD11",
+      "reachability": "NEEDS_INDIVIDUAL_LEVEL"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "record-linkage cohort from existing individual-level administrative data",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "data access agreement with the custodian",
+        "approved analysis specification and disclosure control",
+        "secure environment (TRE/SDE) accreditation"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "MULTIFACTORIAL_DEVELOPMENTAL_INSTITUTIONAL",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "MD12",
+      "reachability": "NEEDS_INDIVIDUAL_LEVEL"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "record-linkage cohort from existing individual-level administrative data",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "data access agreement with the custodian",
+        "approved analysis specification and disclosure control",
+        "secure environment (TRE/SDE) accreditation"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "MULTIFACTORIAL_DEVELOPMENTAL_INSTITUTIONAL",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "MD13",
+      "reachability": "NEEDS_INDIVIDUAL_LEVEL"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "record-linkage cohort from existing individual-level administrative data",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "data access agreement with the custodian",
+        "approved analysis specification and disclosure control",
+        "secure environment (TRE/SDE) accreditation"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "MULTIFACTORIAL_DEVELOPMENTAL_INSTITUTIONAL",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "MD14",
+      "reachability": "NEEDS_INDIVIDUAL_LEVEL"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "record-linkage cohort from existing individual-level administrative data",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "data access agreement with the custodian",
+        "approved analysis specification and disclosure control",
+        "secure environment (TRE/SDE) accreditation"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "MULTIFACTORIAL_DEVELOPMENTAL_INSTITUTIONAL",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "MD15",
+      "reachability": "NEEDS_INDIVIDUAL_LEVEL"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "prospective cohort with recruited participants",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "research ethics committee favourable opinion",
+        "informed consent process and participant information sheet",
+        "data protection impact assessment and lawful basis",
+        "sponsor and indemnity"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "MULTIFACTORIAL_DEVELOPMENTAL_INSTITUTIONAL",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "MD16",
+      "reachability": "NEEDS_PRIMARY_COLLECTION"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "prospective cohort with recruited participants",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "research ethics committee favourable opinion",
+        "informed consent process and participant information sheet",
+        "data protection impact assessment and lawful basis",
+        "sponsor and indemnity"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "MULTIFACTORIAL_DEVELOPMENTAL_INSTITUTIONAL",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "MD17",
+      "reachability": "NEEDS_PRIMARY_COLLECTION"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "prospective cohort with recruited participants",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "research ethics committee favourable opinion",
+        "informed consent process and participant information sheet",
+        "data protection impact assessment and lawful basis",
+        "sponsor and indemnity"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "MULTIFACTORIAL_DEVELOPMENTAL_INSTITUTIONAL",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "MD18",
+      "reachability": "NEEDS_PRIMARY_COLLECTION"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "prospective cohort with recruited participants",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "research ethics committee favourable opinion",
+        "informed consent process and participant information sheet",
+        "data protection impact assessment and lawful basis",
+        "sponsor and indemnity"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "MULTIFACTORIAL_DEVELOPMENTAL_INSTITUTIONAL",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "MD19",
+      "reachability": "NEEDS_PRIMARY_COLLECTION"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "prospective cohort with recruited participants",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "research ethics committee favourable opinion",
+        "informed consent process and participant information sheet",
+        "data protection impact assessment and lawful basis",
+        "sponsor and indemnity"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "MULTIFACTORIAL_DEVELOPMENTAL_INSTITUTIONAL",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "MD20",
+      "reachability": "NEEDS_PRIMARY_COLLECTION"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "analysis within a secure environment or under licence",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "licence or data sharing agreement",
+        "approved analysis specification",
+        "disclosure-checked outputs only"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "MIXTURE_HETEROGENEITY",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "MX01",
+      "reachability": "NEEDS_RESTRICTED_ACCESS"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "analysis within a secure environment or under licence",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "licence or data sharing agreement",
+        "approved analysis specification",
+        "disclosure-checked outputs only"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "MIXTURE_HETEROGENEITY",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "MX02",
+      "reachability": "NEEDS_RESTRICTED_ACCESS"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "analysis within a secure environment or under licence",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "licence or data sharing agreement",
+        "approved analysis specification",
+        "disclosure-checked outputs only"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "MIXTURE_HETEROGENEITY",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "MX03",
+      "reachability": "NEEDS_RESTRICTED_ACCESS"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "analysis within a secure environment or under licence",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "licence or data sharing agreement",
+        "approved analysis specification",
+        "disclosure-checked outputs only"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "MIXTURE_HETEROGENEITY",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "MX04",
+      "reachability": "NEEDS_RESTRICTED_ACCESS"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "analysis within a secure environment or under licence",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "licence or data sharing agreement",
+        "approved analysis specification",
+        "disclosure-checked outputs only"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "MIXTURE_HETEROGENEITY",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "MX05",
+      "reachability": "NEEDS_RESTRICTED_ACCESS"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "analysis within a secure environment or under licence",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "licence or data sharing agreement",
+        "approved analysis specification",
+        "disclosure-checked outputs only"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "MIXTURE_HETEROGENEITY",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "MX06",
+      "reachability": "NEEDS_RESTRICTED_ACCESS"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "analysis within a secure environment or under licence",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "licence or data sharing agreement",
+        "approved analysis specification",
+        "disclosure-checked outputs only"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "MIXTURE_HETEROGENEITY",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "MX07",
+      "reachability": "NEEDS_RESTRICTED_ACCESS"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "analysis within a secure environment or under licence",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "licence or data sharing agreement",
+        "approved analysis specification",
+        "disclosure-checked outputs only"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "NULL_OR_ALTERNATIVE",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "MX08",
+      "reachability": "NEEDS_RESTRICTED_ACCESS"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "analysis within a secure environment or under licence",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "licence or data sharing agreement",
+        "approved analysis specification",
+        "disclosure-checked outputs only"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "NULL_OR_ALTERNATIVE",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "MX09",
+      "reachability": "NEEDS_RESTRICTED_ACCESS"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "analysis within a secure environment or under licence",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "licence or data sharing agreement",
+        "approved analysis specification",
+        "disclosure-checked outputs only"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "MIXTURE_HETEROGENEITY",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "MX10",
+      "reachability": "NEEDS_RESTRICTED_ACCESS"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "analysis within a secure environment or under licence",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "licence or data sharing agreement",
+        "approved analysis specification",
+        "disclosure-checked outputs only"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "MIXTURE_HETEROGENEITY",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "MX11",
+      "reachability": "NEEDS_RESTRICTED_ACCESS"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "analysis within a secure environment or under licence",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "licence or data sharing agreement",
+        "approved analysis specification",
+        "disclosure-checked outputs only"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "MIXTURE_HETEROGENEITY",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "MX12",
+      "reachability": "NEEDS_RESTRICTED_ACCESS"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "analysis within a secure environment or under licence",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "licence or data sharing agreement",
+        "approved analysis specification",
+        "disclosure-checked outputs only"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "MIXTURE_HETEROGENEITY",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "MX13",
+      "reachability": "NEEDS_RESTRICTED_ACCESS"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "analysis within a secure environment or under licence",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "licence or data sharing agreement",
+        "approved analysis specification",
+        "disclosure-checked outputs only"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "NULL_OR_ALTERNATIVE",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "MX14",
+      "reachability": "NEEDS_RESTRICTED_ACCESS"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "analysis within a secure environment or under licence",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "licence or data sharing agreement",
+        "approved analysis specification",
+        "disclosure-checked outputs only"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "NULL_OR_ALTERNATIVE",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "MX15",
+      "reachability": "NEEDS_RESTRICTED_ACCESS"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "analysis within a secure environment or under licence",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "licence or data sharing agreement",
+        "approved analysis specification",
+        "disclosure-checked outputs only"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "MIXTURE_HETEROGENEITY",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "MX16",
+      "reachability": "NEEDS_RESTRICTED_ACCESS"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "prospective cohort with recruited participants",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "research ethics committee favourable opinion",
+        "informed consent process and participant information sheet",
+        "data protection impact assessment and lawful basis",
+        "sponsor and indemnity"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "MULTIFACTORIAL_DEVELOPMENTAL_INSTITUTIONAL",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "TH01",
+      "reachability": "NEEDS_PRIMARY_COLLECTION"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "prospective cohort with recruited participants",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "research ethics committee favourable opinion",
+        "informed consent process and participant information sheet",
+        "data protection impact assessment and lawful basis",
+        "sponsor and indemnity"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "MULTIFACTORIAL_DEVELOPMENTAL_INSTITUTIONAL",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "TH02",
+      "reachability": "NEEDS_PRIMARY_COLLECTION"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "prospective cohort with recruited participants",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "research ethics committee favourable opinion",
+        "informed consent process and participant information sheet",
+        "data protection impact assessment and lawful basis",
+        "sponsor and indemnity"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "MULTIFACTORIAL_DEVELOPMENTAL_INSTITUTIONAL",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "TH03",
+      "reachability": "NEEDS_PRIMARY_COLLECTION"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "prospective cohort with recruited participants",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "research ethics committee favourable opinion",
+        "informed consent process and participant information sheet",
+        "data protection impact assessment and lawful basis",
+        "sponsor and indemnity"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "MULTIFACTORIAL_DEVELOPMENTAL_INSTITUTIONAL",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "TH06",
+      "reachability": "NEEDS_PRIMARY_COLLECTION"
+    }
+  ],
+  "drift_against_handoff": {
+    "NEEDS_INDIVIDUAL_LEVEL": {
+      "changed": false,
+      "now": 7,
+      "quoted": 7
+    },
+    "NEEDS_PRIMARY_COLLECTION": {
+      "changed": false,
+      "now": 25,
+      "quoted": 25
+    },
+    "NEEDS_RESTRICTED_ACCESS": {
+      "changed": false,
+      "now": 16,
+      "quoted": 16
+    },
+    "OPEN_TESTABLE": {
+      "changed": false,
+      "now": 16,
+      "quoted": 16
+    }
+  },
+  "registry_digest": {
+    "hypotheses.csv": "eb1de4893fddc34169587f25e0a800aca19e19fd7c0cb00204ecc3af3dc62154",
+    "workstreams.csv": "38f4b03950f8d9eb68705baa29aa7bc18b6910eec75fd6b72c32c863a6b308e6"
+  },
+  "run_id": "FEAS-20260816023725",
+  "summary": {
+    "by_reachability": {
+      "NEEDS_INDIVIDUAL_LEVEL": 7,
+      "NEEDS_PRIMARY_COLLECTION": 25,
+      "NEEDS_RESTRICTED_ACCESS": 16,
+      "OPEN_TESTABLE": 16
+    },
+    "coverage_asymmetry": [
+      "MODEL_FAMILIES_WITH_NO_OPEN_TESTABLE_PROPOSITION:INTRINSIC_RECOGNITION,MIXTURE_HETEROGENEITY,NULL_OR_ALTERNATIVE",
+      "OPEN_TESTABLE_SET_DOMINATED_BY:ASCERTAINMENT_SERVICE:12/16",
+      "COMPARATIVE_SUPPORT_OVER_AN_UNEQUAL_BALLOT_MEASURES_DATA_ACCESS_NOT_EXPLANATION"
+    ],
+    "propositions": 64,
+    "testable_by_model_family": {
+      "ASCERTAINMENT_SERVICE": 12,
+      "MULTIFACTORIAL_DEVELOPMENTAL_INSTITUTIONAL": 4
+    },
+    "testable_from_open_sources": 16,
+    "testable_ids": [
+      "AS01",
+      "AS02",
+      "AS03",
+      "AS04",
+      "AS05",
+      "AS06",
+      "AS07",
+      "AS08",
+      "AS09",
+      "AS10",
+      "AS11",
+      "AS12",
+      "TH04",
+      "TH05",
+      "TH07",
+      "TH08"
+    ]
+  },
+  "workstream_source_coverage": {
+    "W01": {
+      "connector_status_unknown": [
+        "DS013",
+        "DS015"
+      ],
+      "declared_source_ids": [
+        "DS013",
+        "DS014",
+        "DS015"
+      ],
+      "with_connector": [
+        "DS014"
+      ],
+      "with_records_in_store": []
+    },
+    "W02": {
+      "connector_status_unknown": [
+        "DS001",
+        "DS002",
+        "DS003",
+        "DS004",
+        "DS047",
+        "DS061",
+        "DS062"
+      ],
+      "declared_source_ids": [
+        "DS001",
+        "DS002",
+        "DS003",
+        "DS004",
+        "DS047",
+        "DS061",
+        "DS062"
+      ],
+      "with_connector": [],
+      "with_records_in_store": []
+    },
+    "W03": {
+      "connector_status_unknown": [
+        "DS003",
+        "DS004",
+        "DS005"
+      ],
+      "declared_source_ids": [
+        "DS003",
+        "DS004",
+        "DS005"
+      ],
+      "with_connector": [],
+      "with_records_in_store": []
+    },
+    "W04": {
+      "connector_status_unknown": [
+        "DS007",
+        "DS008",
+        "DS009",
+        "DS018",
+        "DS019",
+        "DS020",
+        "DS021"
+      ],
+      "declared_source_ids": [
+        "DS007",
+        "DS008",
+        "DS009",
+        "DS018",
+        "DS019",
+        "DS020",
+        "DS021"
+      ],
+      "with_connector": [],
+      "with_records_in_store": []
+    },
+    "W05": {
+      "connector_status_unknown": [
+        "DS016",
+        "DS054",
+        "DS055",
+        "DS056",
+        "DS057"
+      ],
+      "declared_source_ids": [
+        "DS016",
+        "DS054",
+        "DS055",
+        "DS056",
+        "DS057"
+      ],
+      "with_connector": [],
+      "with_records_in_store": []
+    },
+    "W06": {
+      "connector_status_unknown": [
+        "DS022",
+        "DS023",
+        "DS024",
+        "DS025",
+        "DS026",
+        "DS027"
+      ],
+      "declared_source_ids": [
+        "DS022",
+        "DS023",
+        "DS024",
+        "DS025",
+        "DS026",
+        "DS027"
+      ],
+      "with_connector": [],
+      "with_records_in_store": []
+    },
+    "W07": {
+      "connector_status_unknown": [
+        "DS033",
+        "DS034",
+        "DS035",
+        "DS036",
+        "DS037",
+        "DS039",
+        "DS040",
+        "DS041",
+        "DS042",
+        "DS044"
+      ],
+      "declared_source_ids": [
+        "DS033",
+        "DS034",
+        "DS035",
+        "DS036",
+        "DS037",
+        "DS038",
+        "DS039",
+        "DS040",
+        "DS041",
+        "DS042",
+        "DS043",
+        "DS044",
+        "DS059"
+      ],
+      "with_connector": [
+        "DS038",
+        "DS043",
+        "DS059"
+      ],
+      "with_records_in_store": [
+        "DS033",
+        "DS034",
+        "DS035",
+        "DS036",
+        "DS037"
+      ]
+    },
+    "W08": {
+      "connector_status_unknown": [
+        "DS049",
+        "DS050",
+        "DS051",
+        "DS052",
+        "DS060"
+      ],
+      "declared_source_ids": [
+        "DS049",
+        "DS050",
+        "DS051",
+        "DS052",
+        "DS060"
+      ],
+      "with_connector": [],
+      "with_records_in_store": []
+    },
+    "W09": {
+      "connector_status_unknown": [
+        "DS045",
+        "DS046",
+        "DS048",
+        "DS058",
+        "DS063"
+      ],
+      "declared_source_ids": [
+        "DS045",
+        "DS046",
+        "DS048",
+        "DS058",
+        "DS063"
+      ],
+      "with_connector": [],
+      "with_records_in_store": []
+    },
+    "W10": {
+      "connector_status_unknown": [
+        "DS029",
+        "DS030",
+        "DS057"
+      ],
+      "declared_source_ids": [
+        "DS029",
+        "DS030",
+        "DS031",
+        "DS032",
+        "DS057"
+      ],
+      "with_connector": [
+        "DS031",
+        "DS032"
+      ],
+      "with_records_in_store": []
+    },
+    "W11": {
+      "connector_status_unknown": [
+        "DS052",
+        "DS053",
+        "DS060"
+      ],
+      "declared_source_ids": [
+        "DS028",
+        "DS052",
+        "DS053",
+        "DS060"
+      ],
+      "with_connector": [
+        "DS028"
+      ],
+      "with_records_in_store": []
+    },
+    "W12": {
+      "connector_status_unknown": [
+        "DS062",
+        "DS064"
+      ],
+      "declared_source_ids": [
+        "DS062",
+        "DS064"
+      ],
+      "with_connector": [],
+      "with_records_in_store": []
+    },
+    "W13": {
+      "connector_status_unknown": [
+        "DS065"
+      ],
+      "declared_source_ids": [
+        "DS065"
+      ],
+      "with_connector": [],
+      "with_records_in_store": []
+    }
+  }
+}

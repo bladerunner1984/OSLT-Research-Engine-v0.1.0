@@ -17,6 +17,26 @@ from oslt_research.governance.authority import (
 from oslt_research.ontology.entities import InstitutionalEntity, InstitutionalRelation
 
 
+def _dataclass_payload(item: object) -> dict[str, object]:
+    """Serialise a frozen governance dataclass, keeping enum members as their values.
+
+    Governance dataclasses carry StrEnum fields; ``asdict`` leaves them as enum members,
+    which json refuses. Converting here rather than at every call site means a new field
+    cannot be persisted as a repr string by accident.
+    """
+
+    from dataclasses import asdict, is_dataclass
+    from enum import Enum
+
+    if not is_dataclass(item):
+        raise TypeError(f"NOT_A_DATACLASS: {type(item)!r}")
+    payload = asdict(item)  # type: ignore[arg-type]
+    return {
+        key: (value.value if isinstance(value, Enum) else value)
+        for key, value in payload.items()
+    }
+
+
 class MissingRunManifestError(RuntimeError):
     """Raised when a result is persisted for a run that has no sealed manifest.
 
@@ -448,3 +468,274 @@ class SQLiteStore:
                 (synthesis_id,),
             ).fetchone()
         return SynthesisOutcome.model_validate_json(row["payload_json"]) if row else None
+
+    # ------------------------------------------------- feasibility census + design cost
+
+    _FEASIBILITY_DDL = """
+        CREATE TABLE IF NOT EXISTS feasibility_censuses (
+            census_id TEXT PRIMARY KEY,
+            run_id TEXT NOT NULL,
+            assessed_at TEXT NOT NULL,
+            registry_digest_json TEXT NOT NULL,
+            payload_json TEXT NOT NULL
+        );
+
+        CREATE TABLE IF NOT EXISTS proposition_feasibility (
+            census_id TEXT NOT NULL,
+            proposition_id TEXT NOT NULL,
+            model_family TEXT NOT NULL,
+            reachability TEXT NOT NULL,
+            payload_json TEXT NOT NULL,
+            PRIMARY KEY (census_id, proposition_id)
+        );
+
+        CREATE INDEX IF NOT EXISTS idx_feasibility_reachability
+            ON proposition_feasibility(reachability);
+
+        CREATE TABLE IF NOT EXISTS design_requirements (
+            census_id TEXT NOT NULL,
+            proposition_id TEXT NOT NULL,
+            reachability TEXT NOT NULL,
+            claim_tier TEXT NOT NULL,
+            epistemic_status TEXT NOT NULL,
+            payload_json TEXT NOT NULL,
+            PRIMARY KEY (census_id, proposition_id)
+        );
+    """
+
+    def save_feasibility_census(
+        self,
+        *,
+        census_id: str,
+        run_id: str,
+        assessed_at: str,
+        registry_digest: dict[str, str],
+        summary: dict[str, object],
+        results: Iterable[object],
+        requirements: Iterable[object] = (),
+    ) -> None:
+        """Persist a census, its per-proposition rows and any priced designs.
+
+        Requires a sealed run manifest, exactly as `save_kernel_result` does. The census is
+        quoted as a governance fact - "16 of 64 propositions are testable" gates what the
+        project attempts - and a governance fact whose code version and registry version are
+        unrecorded cannot be re-derived when it is later disputed. The registry digest is
+        stored too, so a disagreement can be attributed to an input change rather than argued
+        about.
+        """
+
+        self.require_run_manifest(run_id)
+        if not registry_digest:
+            raise ValueError(
+                "REGISTRY_DIGEST_REQUIRED: a census with unrecorded inputs is not reproducible"
+            )
+
+        with self.transaction() as connection:
+            connection.executescript(self._FEASIBILITY_DDL)
+            connection.execute(
+                """
+                INSERT INTO feasibility_censuses(
+                    census_id, run_id, assessed_at, registry_digest_json, payload_json
+                ) VALUES (?, ?, ?, ?, ?)
+                ON CONFLICT(census_id) DO UPDATE SET
+                    run_id=excluded.run_id,
+                    assessed_at=excluded.assessed_at,
+                    registry_digest_json=excluded.registry_digest_json,
+                    payload_json=excluded.payload_json
+                """,
+                (
+                    census_id,
+                    run_id,
+                    assessed_at,
+                    json.dumps(registry_digest, sort_keys=True),
+                    json.dumps(summary, sort_keys=True, default=str),
+                ),
+            )
+            for item in results:
+                connection.execute(
+                    """
+                    INSERT INTO proposition_feasibility(
+                        census_id, proposition_id, model_family, reachability, payload_json
+                    ) VALUES (?, ?, ?, ?, ?)
+                    ON CONFLICT(census_id, proposition_id) DO UPDATE SET
+                        model_family=excluded.model_family,
+                        reachability=excluded.reachability,
+                        payload_json=excluded.payload_json
+                    """,
+                    (
+                        census_id,
+                        item.proposition_id,
+                        item.model_family,
+                        item.reachability.value,
+                        json.dumps(_dataclass_payload(item), sort_keys=True, default=str),
+                    ),
+                )
+            for requirement in requirements:
+                connection.execute(
+                    """
+                    INSERT INTO design_requirements(
+                        census_id, proposition_id, reachability, claim_tier,
+                        epistemic_status, payload_json
+                    ) VALUES (?, ?, ?, ?, ?, ?)
+                    ON CONFLICT(census_id, proposition_id) DO UPDATE SET
+                        reachability=excluded.reachability,
+                        claim_tier=excluded.claim_tier,
+                        epistemic_status=excluded.epistemic_status,
+                        payload_json=excluded.payload_json
+                    """,
+                    (
+                        census_id,
+                        requirement.proposition_id,
+                        requirement.reachability.value,
+                        requirement.claim_tier.value,
+                        requirement.epistemic_status.value,
+                        json.dumps(_dataclass_payload(requirement), sort_keys=True, default=str),
+                    ),
+                )
+
+    def get_feasibility_census(self, census_id: str) -> dict[str, object] | None:
+        with closing(self.connect()) as connection:
+            connection.executescript(self._FEASIBILITY_DDL)
+            row = connection.execute(
+                """
+                SELECT census_id, run_id, assessed_at, registry_digest_json, payload_json
+                FROM feasibility_censuses WHERE census_id = ?
+                """,
+                (census_id,),
+            ).fetchone()
+            if row is None:
+                return None
+            rows = connection.execute(
+                """
+                SELECT payload_json FROM proposition_feasibility
+                WHERE census_id = ? ORDER BY proposition_id
+                """,
+                (census_id,),
+            ).fetchall()
+        return {
+            "census_id": row["census_id"],
+            "run_id": row["run_id"],
+            "assessed_at": row["assessed_at"],
+            "registry_digest": json.loads(row["registry_digest_json"]),
+            "summary": json.loads(row["payload_json"]),
+            "results": [json.loads(item["payload_json"]) for item in rows],
+        }
+
+    def latest_feasibility_census_id(self) -> str | None:
+        with closing(self.connect()) as connection:
+            connection.executescript(self._FEASIBILITY_DDL)
+            row = connection.execute(
+                "SELECT census_id FROM feasibility_censuses ORDER BY assessed_at DESC LIMIT 1"
+            ).fetchone()
+        return row["census_id"] if row else None
+
+    # ------------------------------------------------------------------ claim release
+
+    _CLAIM_RELEASE_DDL = """
+        CREATE TABLE IF NOT EXISTS claim_release_assessments (
+            claim_ref TEXT NOT NULL,
+            run_id TEXT NOT NULL,
+            source_document TEXT NOT NULL,
+            declared_tier TEXT,
+            tier_source TEXT NOT NULL,
+            released INTEGER NOT NULL,
+            wording_acceptable INTEGER,
+            assessed_at TEXT NOT NULL,
+            payload_json TEXT NOT NULL,
+            PRIMARY KEY (claim_ref, run_id)
+        );
+
+        CREATE INDEX IF NOT EXISTS idx_claim_release_released
+            ON claim_release_assessments(released);
+
+        CREATE TABLE IF NOT EXISTS released_claims (
+            claim_id TEXT PRIMARY KEY,
+            run_id TEXT NOT NULL,
+            proposition_id TEXT NOT NULL,
+            claim_tier TEXT NOT NULL,
+            release_manifest_hash TEXT NOT NULL,
+            payload_json TEXT NOT NULL
+        );
+    """
+
+    def save_claim_assessment(self, assessment: object, *, run_id: str, assessed_at: str) -> None:
+        """Persist one release decision - refusals included, especially refusals.
+
+        Storing only successes would turn the release table into a list of things that
+        passed, with no record that anything was ever refused or why. The refusals are the
+        audit trail; a claim released later has to be visibly a change from a recorded
+        refusal, rather than an absence that quietly became a presence.
+
+        `declared_tier` is stored as SQL NULL when the source document declared none. NULL
+        here means "the document never said", which is not the same as any tier value, and
+        the schema keeps it not the same.
+        """
+
+        self.require_run_manifest(run_id)
+        record = assessment.as_record()
+        wording_acceptable = record["wording_acceptable"]
+        with self.transaction() as connection:
+            connection.executescript(self._CLAIM_RELEASE_DDL)
+            connection.execute(
+                """
+                INSERT INTO claim_release_assessments(
+                    claim_ref, run_id, source_document, declared_tier, tier_source,
+                    released, wording_acceptable, assessed_at, payload_json
+                ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ON CONFLICT(claim_ref, run_id) DO UPDATE SET
+                    source_document=excluded.source_document,
+                    declared_tier=excluded.declared_tier,
+                    tier_source=excluded.tier_source,
+                    released=excluded.released,
+                    wording_acceptable=excluded.wording_acceptable,
+                    assessed_at=excluded.assessed_at,
+                    payload_json=excluded.payload_json
+                """,
+                (
+                    assessment.claim_ref,
+                    run_id,
+                    assessment.source_document,
+                    record["declared_tier"],
+                    assessment.tier_source,
+                    int(assessment.released),
+                    None if wording_acceptable is None else int(bool(wording_acceptable)),
+                    assessed_at,
+                    json.dumps(record, sort_keys=True, default=str),
+                ),
+            )
+            if assessment.claim is not None:
+                claim = assessment.claim
+                connection.execute(
+                    """
+                    INSERT INTO released_claims(
+                        claim_id, run_id, proposition_id, claim_tier,
+                        release_manifest_hash, payload_json
+                    ) VALUES (?, ?, ?, ?, ?, ?)
+                    ON CONFLICT(claim_id) DO UPDATE SET
+                        run_id=excluded.run_id,
+                        proposition_id=excluded.proposition_id,
+                        claim_tier=excluded.claim_tier,
+                        release_manifest_hash=excluded.release_manifest_hash,
+                        payload_json=excluded.payload_json
+                    """,
+                    (
+                        claim.claim_id,
+                        run_id,
+                        claim.proposition_id,
+                        claim.claim_tier.value,
+                        claim.release_manifest_hash,
+                        claim.model_dump_json(),
+                    ),
+                )
+
+    def list_claim_assessments(self, run_id: str | None = None) -> list[dict[str, object]]:
+        query = "SELECT payload_json FROM claim_release_assessments"
+        params: tuple[object, ...] = ()
+        if run_id is not None:
+            query += " WHERE run_id = ?"
+            params = (run_id,)
+        query += " ORDER BY claim_ref"
+        with closing(self.connect()) as connection:
+            connection.executescript(self._CLAIM_RELEASE_DDL)
+            rows = connection.execute(query, params).fetchall()
+        return [json.loads(row["payload_json"]) for row in rows]

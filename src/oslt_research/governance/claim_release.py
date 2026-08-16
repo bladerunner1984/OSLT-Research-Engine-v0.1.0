@@ -213,3 +213,161 @@ def assess_release(
         release_manifest_hash=canonical_json_hash(manifest),
     )
     return ReleaseDecision(released=True, claim=claim)
+
+
+# ----------------------------------------------------------------- documented claims
+#
+# `assess_release` takes a KernelResult, because the release standard is written for
+# results the engine produced. Most of what this project has actually asserted in public
+# lives in markdown, produced by a script, with no KernelResult behind it at all. Those
+# assertions are the ones at risk of overclaiming, so they need to reach the same gate.
+#
+# The rule below is the whole point: a documented claim with no persisted result behind it
+# is REFUSED, not waved through with a synthesised result. Manufacturing a KernelResult to
+# satisfy the gate would defeat the gate.
+
+
+class ClaimTierNotDeclaredError(ValueError):
+    """Raised when a claim is submitted without a tier and the caller wanted a tier back.
+
+    There is no sensible default tier. Every candidate is wrong in a different direction:
+    the lowest tier passes prose that should have been challenged at the tier the author
+    actually meant, and the highest tier fails everything and trains the reader to ignore
+    it. So an undeclared tier is a refusal, and the refusal names itself.
+    """
+
+
+@dataclass(frozen=True)
+class ClaimSubmission:
+    """One assertion this project has made in prose, with where its tier came from.
+
+    `declared_tier` is `None` when the source document states no tier. That is recorded and
+    refused rather than filled in, because the gap is the finding: a document making
+    substantive claims without declaring what tier it is claiming at has not been through
+    this control, and no scan of its wording can tell you whether it passed.
+    """
+
+    claim_ref: str
+    source_document: str
+    wording: str
+    declared_tier: ClaimTier | None
+    tier_source: str
+    result_id: str | None = None
+    lanes_searched: frozenset[EvidenceLane] = frozenset()
+
+
+@dataclass(frozen=True)
+class DocumentedClaimAssessment:
+    claim_ref: str
+    source_document: str
+    declared_tier: ClaimTier | None
+    tier_source: str
+    released: bool
+    failures: list[str] = field(default_factory=list)
+    wording_check: WordingCheck | None = None
+    advisory_tier: ClaimTier | None = None
+    advisory_prohibited_hits: list[str] = field(default_factory=list)
+    claim: ReleasedClaim | None = None
+
+    def as_record(self) -> dict[str, object]:
+        return {
+            "claim_ref": self.claim_ref,
+            "source_document": self.source_document,
+            "declared_tier": self.declared_tier.value if self.declared_tier else None,
+            "tier_source": self.tier_source,
+            "released": self.released,
+            "failures": list(self.failures),
+            "wording_acceptable": (
+                self.wording_check.acceptable if self.wording_check else None
+            ),
+            "prohibited_hits": (
+                list(self.wording_check.prohibited_hits) if self.wording_check else []
+            ),
+            "advisory_tier": self.advisory_tier.value if self.advisory_tier else None,
+            "advisory_prohibited_hits": list(self.advisory_prohibited_hits),
+            "claim_id": self.claim.claim_id if self.claim else None,
+        }
+
+
+def assess_documented_claim(
+    submission: ClaimSubmission,
+    *,
+    result: KernelResult | None = None,
+    evidence: list[EvidenceObject] | None = None,
+    human_review: HumanReviewRecord | AIMethodologicalReview | str | None = None,
+    advisory_tier: ClaimTier | None = None,
+) -> DocumentedClaimAssessment:
+    """Put a documented assertion through the release gate, refusing on every gap.
+
+    Three distinct outcomes, kept distinct on purpose:
+
+    * **tier undeclared** - refused with ``CLAIM_TIER_NOT_DECLARED``. A wording scan may
+      still be run at ``advisory_tier`` and is reported separately, clearly marked as
+      advisory, so it can never be mistaken for a verdict the claim actually cleared.
+    * **tier declared, no persisted result** - the wording check is a real verdict at the
+      declared tier, and release is refused with ``NO_PERSISTED_RESULT_FOR_CLAIM``.
+    * **tier declared and a result exists** - the full nine-gate ``assess_release`` runs.
+    """
+
+    failures: list[str] = []
+    wording_check: WordingCheck | None = None
+    advisory_hits: list[str] = []
+
+    if submission.declared_tier is None:
+        failures.append("CLAIM_TIER_NOT_DECLARED")
+        if advisory_tier is not None:
+            advisory_hits = check_wording(submission.wording, advisory_tier).prohibited_hits
+        return DocumentedClaimAssessment(
+            claim_ref=submission.claim_ref,
+            source_document=submission.source_document,
+            declared_tier=None,
+            tier_source=submission.tier_source,
+            released=False,
+            failures=failures,
+            advisory_tier=advisory_tier,
+            advisory_prohibited_hits=advisory_hits,
+        )
+
+    wording_check = check_wording(submission.wording, submission.declared_tier)
+    if not wording_check.acceptable:
+        failures.append(f"WORDING_EXCEEDS_CLAIM_TIER:{','.join(wording_check.prohibited_hits)}")
+
+    if result is None:
+        failures.append("NO_PERSISTED_RESULT_FOR_CLAIM")
+        return DocumentedClaimAssessment(
+            claim_ref=submission.claim_ref,
+            source_document=submission.source_document,
+            declared_tier=submission.declared_tier,
+            tier_source=submission.tier_source,
+            released=False,
+            failures=failures,
+            wording_check=wording_check,
+        )
+
+    if result.claim_tier is not submission.declared_tier:
+        failures.append(
+            f"DECLARED_TIER_DISAGREES_WITH_RESULT:{submission.declared_tier.value}"
+            f"!={result.claim_tier.value}"
+        )
+
+    decision = assess_release(
+        result=result,
+        evidence=evidence or [],
+        wording=submission.wording,
+        human_review=human_review,
+        counterevidence_lanes_searched=set(submission.lanes_searched),
+    )
+    for failure in decision.failures:
+        if failure not in failures:
+            failures.append(failure)
+
+    return DocumentedClaimAssessment(
+        claim_ref=submission.claim_ref,
+        source_document=submission.source_document,
+        declared_tier=submission.declared_tier,
+        tier_source=submission.tier_source,
+        released=decision.released and not failures,
+        failures=failures,
+        wording_check=wording_check,
+        claim=decision.claim if decision.released and not failures else None,
+    )

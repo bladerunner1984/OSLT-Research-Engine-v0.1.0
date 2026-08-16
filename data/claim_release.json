@@ -1,0 +1,216 @@
+{
+  "assessed_at": "2026-08-16T02:33:28.936117+00:00",
+  "assessments": [
+    {
+      "advisory_prohibited_hits": [],
+      "advisory_tier": null,
+      "claim_id": null,
+      "claim_ref": "DOC:docs/REFERRAL_BASELINE.md",
+      "declared_tier": "DESCRIPTIVE_EVIDENCE_ONLY",
+      "failures": [
+        "WORDING_EXCEEDS_CLAIM_TIER:because of,predicts,effect of",
+        "NO_PERSISTED_RESULT_FOR_CLAIM"
+      ],
+      "prohibited_hits": [
+        "because of",
+        "predicts",
+        "effect of"
+      ],
+      "released": false,
+      "source_document": "docs/REFERRAL_BASELINE.md",
+      "tier_source": "declared in the document header: \"**Status:** descriptive, no mechanism calibrated.\"",
+      "wording_acceptable": false
+    },
+    {
+      "advisory_prohibited_hits": [],
+      "advisory_tier": null,
+      "claim_id": null,
+      "claim_ref": "DOC:docs/CENSUS_2021_GENDER_IDENTITY.md",
+      "declared_tier": null,
+      "failures": [
+        "CLAIM_TIER_NOT_DECLARED"
+      ],
+      "prohibited_hits": [],
+      "released": false,
+      "source_document": "docs/CENSUS_2021_GENDER_IDENTITY.md",
+      "tier_source": "no tier stated anywhere in the document",
+      "wording_acceptable": null
+    },
+    {
+      "advisory_prohibited_hits": [],
+      "advisory_tier": null,
+      "claim_id": null,
+      "claim_ref": "DOC:docs/MX09_FALSIFICATION_RUN.md",
+      "declared_tier": null,
+      "failures": [
+        "CLAIM_TIER_NOT_DECLARED"
+      ],
+      "prohibited_hits": [],
+      "released": false,
+      "source_document": "docs/MX09_FALSIFICATION_RUN.md",
+      "tier_source": "no tier stated for the document itself; it quotes MD15 as capped at LIMITED_CAUSAL_EVIDENCE by the registry, which is a cap on a proposition, not a declaration of the tier this write-up claims at",
+      "wording_acceptable": null
+    },
+    {
+      "advisory_prohibited_hits": [],
+      "advisory_tier": null,
+      "claim_id": null,
+      "claim_ref": "DOC:docs/COUNTEREVIDENCE_RUN.md",
+      "declared_tier": null,
+      "failures": [
+        "CLAIM_TIER_NOT_DECLARED"
+      ],
+      "prohibited_hits": [],
+      "released": false,
+      "source_document": "docs/COUNTEREVIDENCE_RUN.md",
+      "tier_source": "no tier stated anywhere in the document",
+      "wording_acceptable": null
+    },
+    {
+      "advisory_prohibited_hits": [],
+      "advisory_tier": null,
+      "claim_id": null,
+      "claim_ref": "REFERRAL-BASELINE-HEADLINE",
+      "declared_tier": "DESCRIPTIVE_EVIDENCE_ONLY",
+      "failures": [
+        "NO_PERSISTED_RESULT_FOR_CLAIM"
+      ],
+      "prohibited_hits": [],
+      "released": false,
+      "source_document": "docs/REFERRAL_BASELINE.md",
+      "tier_source": "declared in the document header: \"**Status:** descriptive, no mechanism calibrated.\"",
+      "wording_acceptable": true
+    },
+    {
+      "advisory_prohibited_hits": [],
+      "advisory_tier": null,
+      "claim_id": null,
+      "claim_ref": "REFERRAL-BASELINE-THRESHOLD",
+      "declared_tier": "DESCRIPTIVE_EVIDENCE_ONLY",
+      "failures": [
+        "NO_PERSISTED_RESULT_FOR_CLAIM"
+      ],
+      "prohibited_hits": [],
+      "released": false,
+      "source_document": "docs/REFERRAL_BASELINE.md",
+      "tier_source": "declared in the document header: \"**Status:** descriptive, no mechanism calibrated.\"",
+      "wording_acceptable": true
+    },
+    {
+      "advisory_prohibited_hits": [],
+      "advisory_tier": null,
+      "claim_id": null,
+      "claim_ref": "REFERRAL-BASELINE-NICE",
+      "declared_tier": "DESCRIPTIVE_EVIDENCE_ONLY",
+      "failures": [
+        "WORDING_EXCEEDS_CLAIM_TIER:effect of",
+        "NO_PERSISTED_RESULT_FOR_CLAIM"
+      ],
+      "prohibited_hits": [
+        "effect of"
+      ],
+      "released": false,
+      "source_document": "docs/REFERRAL_BASELINE.md",
+      "tier_source": "declared in the document header: \"**Status:** descriptive, no mechanism calibrated.\"",
+      "wording_acceptable": false
+    },
+    {
+      "advisory_prohibited_hits": [],
+      "advisory_tier": null,
+      "claim_id": null,
+      "claim_ref": "REFERRAL-BASELINE-BALLOT",
+      "declared_tier": "DESCRIPTIVE_EVIDENCE_ONLY",
+      "failures": [
+        "WORDING_EXCEEDS_CLAIM_TIER:predicts",
+        "NO_PERSISTED_RESULT_FOR_CLAIM"
+      ],
+      "prohibited_hits": [
+        "predicts"
+      ],
+      "released": false,
+      "source_document": "docs/REFERRAL_BASELINE.md",
+      "tier_source": "declared in the document header: \"**Status:** descriptive, no mechanism calibrated.\"",
+      "wording_acceptable": false
+    },
+    {
+      "advisory_prohibited_hits": [],
+      "advisory_tier": null,
+      "claim_id": null,
+      "claim_ref": "REFERRAL-BASELINE-COMPARATOR",
+      "declared_tier": "DESCRIPTIVE_EVIDENCE_ONLY",
+      "failures": [
+        "NO_PERSISTED_RESULT_FOR_CLAIM"
+      ],
+      "prohibited_hits": [],
+      "released": false,
+      "source_document": "docs/REFERRAL_BASELINE.md",
+      "tier_source": "declared in the document header: \"**Status:** descriptive, no mechanism calibrated.\"",
+      "wording_acceptable": true
+    },
+    {
+      "advisory_prohibited_hits": [],
+      "advisory_tier": null,
+      "claim_id": null,
+      "claim_ref": "RESULT:KR-P1-20260815123808-MD11",
+      "declared_tier": "ASSOCIATION_ONLY",
+      "failures": [
+        "UNADMITTED_EVIDENCE_PRESENT:1",
+        "HUMAN_REVIEW_RECORD_MISSING"
+      ],
+      "prohibited_hits": [],
+      "released": false,
+      "source_document": "docs/COUNTEREVIDENCE_RUN.md",
+      "tier_source": "KernelResult.claim_tier persisted on KR-P1-20260815123808-MD11",
+      "wording_acceptable": true
+    },
+    {
+      "advisory_prohibited_hits": [],
+      "advisory_tier": null,
+      "claim_id": null,
+      "claim_ref": "RESULT:KR-P1-20260815123808-MX14",
+      "declared_tier": "ASSOCIATION_ONLY",
+      "failures": [
+        "UNADMITTED_EVIDENCE_PRESENT:1",
+        "HUMAN_REVIEW_RECORD_MISSING"
+      ],
+      "prohibited_hits": [],
+      "released": false,
+      "source_document": "docs/COUNTEREVIDENCE_RUN.md",
+      "tier_source": "KernelResult.claim_tier persisted on KR-P1-20260815123808-MX14",
+      "wording_acceptable": true
+    }
+  ],
+  "prohibited_phrase_context": {
+    "DOC:docs/CENSUS_2021_GENDER_IDENTITY.md": {},
+    "DOC:docs/COUNTEREVIDENCE_RUN.md": {},
+    "DOC:docs/MX09_FALSIFICATION_RUN.md": {},
+    "DOC:docs/REFERRAL_BASELINE.md": {
+      "because of": [
+        "line 55: recorded here because of what it implies for **method**."
+      ],
+      "effect of": [
+        "line 54: documented effect of successive NICE guideline revisions and awareness campaigns. It is"
+      ],
+      "predicts": [
+        "line 76: - **ASCERTAINMENT_SERVICE** predicts referral growth accompanied by falling yield or",
+        "line 77: threshold-consistent shifts, and predicts it should appear across domains. The baseline",
+        "line 198: social-transmission account predicts should move at all, and **91871**, school SEMH needs"
+      ]
+    }
+  },
+  "refused": [
+    "DOC:docs/REFERRAL_BASELINE.md",
+    "DOC:docs/CENSUS_2021_GENDER_IDENTITY.md",
+    "DOC:docs/MX09_FALSIFICATION_RUN.md",
+    "DOC:docs/COUNTEREVIDENCE_RUN.md",
+    "REFERRAL-BASELINE-HEADLINE",
+    "REFERRAL-BASELINE-THRESHOLD",
+    "REFERRAL-BASELINE-NICE",
+    "REFERRAL-BASELINE-BALLOT",
+    "REFERRAL-BASELINE-COMPARATOR",
+    "RESULT:KR-P1-20260815123808-MD11",
+    "RESULT:KR-P1-20260815123808-MX14"
+  ],
+  "released": [],
+  "run_id": "REL-20260816023328"
+}

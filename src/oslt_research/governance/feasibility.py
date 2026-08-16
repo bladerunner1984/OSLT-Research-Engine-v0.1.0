@@ -202,3 +202,93 @@ def assess_feasibility(registry_root: str | Path) -> FeasibilityCensus:
         )
 
     return FeasibilityCensus(results=results)
+
+
+# --------------------------------------------------------------------------- provenance
+#
+# The census is a pure function of two registry CSVs. Nothing else feeds it - not the
+# store, not the connector inventory. That is easy to forget once the numbers are quoted
+# in prose, and forgetting it produces the opposite of the truth: "we added five
+# connectors, so more propositions must be testable now". They are not, because
+# reachability is read from `access_summary` tokens a human wrote in workstreams.csv.
+# The digest below is persisted with every census so that a later reader can tell whether
+# a difference in the numbers came from the registry changing or from the code changing.
+
+CENSUS_INPUT_FILES = ("workstreams.csv", "hypotheses.csv")
+
+
+def registry_digest(registry_root: str | Path) -> dict[str, str]:
+    """SHA-256 of each file the census actually reads.
+
+    Persisted alongside the counts so a re-run that disagrees can be attributed to an
+    input change rather than argued about.
+    """
+
+    from oslt_research.evidence.provenance import sha256_bytes
+
+    root = Path(registry_root)
+    return {name: sha256_bytes((root / name).read_bytes()) for name in CENSUS_INPUT_FILES}
+
+
+def connector_source_ids() -> tuple[dict[str, str], list[str]]:
+    """Live connector inventory: declared ``SOURCE_ID`` per module, and the undeclared rest.
+
+    Read from the package rather than a hand-maintained list. Returns two things because
+    there are two answers and they must not be merged: modules that declare which registry
+    source they serve, and modules that declare nothing. The second group is **UNKNOWN**,
+    not "serves no workstream" - treating it as absence would understate coverage exactly
+    where the evidence is missing, which is the wrong direction to be wrong in.
+    """
+
+    import importlib
+    import pkgutil
+
+    from oslt_research import connectors as connector_package
+
+    found: dict[str, str] = {}
+    undeclared: list[str] = []
+    for module_info in pkgutil.iter_modules(connector_package.__path__):
+        if module_info.name in {"base", "fixture"}:
+            continue
+        module = importlib.import_module(f"{connector_package.__name__}.{module_info.name}")
+        source_id = getattr(module, "SOURCE_ID", None)
+        if isinstance(source_id, str) and source_id:
+            found[module_info.name] = source_id
+        else:
+            undeclared.append(module_info.name)
+    return dict(sorted(found.items())), sorted(undeclared)
+
+
+def workstream_source_coverage(
+    registry_root: str | Path,
+    *,
+    connector_ids: set[str],
+    store_source_ids: set[str],
+) -> dict[str, dict[str, object]]:
+    """Overlay the live connector inventory onto each workstream's declared sources.
+
+    Deliberately kept *separate* from :func:`assess_feasibility` and deliberately not fed
+    back into `Reachability`. A workstream can declare an open route that no connector
+    implements; that is an engineering gap, not an access gap, and collapsing the two
+    would make the census answer a different question than the one it is quoted for.
+
+    ``connector_status_unknown`` means no connector *declares* that source id - not that
+    none serves it. Most connector modules declare no ``SOURCE_ID`` at all, and guessing
+    which workstream ``UNREGISTERED:NOMIS`` belongs to by name is exactly the
+    plausible-default failure this project keeps finding.
+    """
+
+    root = Path(registry_root)
+    rows = list(csv.DictReader((root / "workstreams.csv").open(encoding="utf-8-sig")))
+    registered = {value for value in connector_ids if not value.startswith("UNREGISTERED:")}
+
+    coverage: dict[str, dict[str, object]] = {}
+    for row in rows:
+        declared = set(_split(row.get("source_ids", "")))
+        coverage[row["workstream_id"]] = {
+            "declared_source_ids": sorted(declared),
+            "with_connector": sorted(declared & registered),
+            "with_records_in_store": sorted(declared & store_source_ids),
+            "connector_status_unknown": sorted(declared - registered),
+        }
+    return coverage
