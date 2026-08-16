@@ -228,3 +228,38 @@ assert that re-running the owning component over the store reproduces the stored
 The first catches "never invoked"; the second catches "invoked, then overwritten". Add a
 row to this file whenever a new governance field is introduced — that is cheaper than
 finding the fourth defect of this shape by accident.
+
+
+---
+
+## Standing operational note: batch-scoped resolution needs a corpus-wide pass
+
+Added 2026-08-16 after the counterevidence sweep grew the corpus 6,434 -> 7,071.
+
+`StudyFamilyResolver` runs **per batch** inside `execute_harvest`. That is correct for
+newly harvested records but cannot see duplicates that arrive in a *different* batch, from a
+different connector, or in a different run. Measured directly: the sweep's new records
+re-resolved with `changed: 0` for lane coding — the classifier is genuinely wired and ran on
+ingest — but `changed: 26` for study families, collapsing 19 additional families that no
+single batch could have detected.
+
+**So after any harvest that adds records, run:**
+
+```
+.venv/Scripts/python.exe scripts/backfill_study_families.py            # inspect
+.venv/Scripts/python.exe scripts/backfill_study_families.py --apply    # write
+```
+
+Both backfills are idempotent and re-running reports `changed: 0`, so this is safe to run
+routinely and cheap when there is nothing to do.
+
+**Why this is not simply "a bug to fix".** Resolving corpus-wide on every ingest would make
+harvest cost grow with corpus size, and would silently re-key families that a downstream
+result already cited. Keeping the batch pass fast and the corpus pass explicit is the right
+split — but it means *dependency-family counts are stale between passes*, and a corroboration
+count read in that window over-counts independence. That is the conservative direction, and
+it is why the pass is documented rather than assumed.
+
+The same logic applies to any future resolver that clusters across records rather than within
+one. The wiring audit's standing check catches a component that never ran; it does not catch
+one that ran on too small a scope.
