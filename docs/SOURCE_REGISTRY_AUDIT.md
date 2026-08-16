@@ -59,8 +59,14 @@ that an engineering gap can never masquerade as an access gap. Nothing here touc
 | 26 | `ror` | `DS059` | ROR institution identifiers | W07 |
 | 27 | `threesixty_giving` | `DS073` *(new row)* | Philanthropic grant awards, 360Giving registry | institutional graph |
 | 28 | `ukri_gtr` | `DS042` *(new declaration)* | UKRI Gateway to Research funded projects | W07 |
+| 29 | `mhsds_local` | `DS077` *(new row, 2026-08-16)* | MHSDS monthly statistics read from LOCAL files only; performs no retrieval | W02 (aggregate route) |
 
-Declared: **25 of 28** (was 12). Deliberately undeclared: **3**.
+Declared: **26 of 29** (was 12). Deliberately undeclared: **3**.
+
+**Added 2026-08-16:** a 29th module, `mhsds_local`, declaring `DS077`. It is a local-file
+reader with no HTTP client: the MHSDS files are obtained by a separate, bounded,
+founder-authorised retrieval recorded in `docs/SOURCE_ACCESS_NOTES.md` and `data/mhsds_manifest.json`.
+The `files.digital.nhs.uk` entry in `nhs_statistics.DECLINED_ROUTES` is unchanged and still fires.
 
 ## Ids allocated
 
@@ -79,6 +85,8 @@ renumbered, because other documents cite them.
 | DS073 | 360Giving grants registry |
 | DS074 | Companies House public register: officers and persons with significant control |
 | DS075 | OpenAIRE Graph |
+| DS076 | ONS mid-year population estimates, bulk CSV (split out of DS014, 2026-08-16) |
+| DS077 | NHS England MHSDS monthly statistics time series, read from local files |
 
 Seven further modules were pointed at **rows that already existed** (`DS030`, `DS033`–`DS037`,
 `DS042`). No new row was invented where the register already described the source.

@@ -199,56 +199,147 @@ carries a 20-working-day statutory deadline, and yields a citable published answ
 
 ---
 
-## Declined to fetch, but unblockable: MHSDS (NHS mental health monthly statistics)
 
-**This is the single most valuable W02 source found, and it is open in every sense but one.**
+## REVERSED, then fetched under founder authorisation: MHSDS (NHS mental health monthly statistics)
 
-MHSDS monthly statistics need no login, no application and no key. The publication pages
-link ten data files directly, including `MHSDS Time_Series_data_Apr_2016_May_2026_Perf
-v2.zip` - a ten-year monthly referral and contact time series - plus data-quality coverage
-CSVs. Publication URLs follow a regular pattern
-(`.../mental-health-services-monthly-statistics/performance-<month>-<year>`) back to 2023.
+**Position reversed on 2026-08-16.** This section previously read "Declined to fetch, but
+unblockable", and said the connector would never retrieve these files. That refusal was
+overturned by the founder, and the earlier text is not being quietly rewritten to look
+consistent: the project declined, the founder directed otherwise, and the files were fetched.
 
-**Why the connector will not fetch them.** Every file is served from
-`files.digital.nhs.uk`, whose robots.txt is a blanket `User-agent: *` / `Disallow: /`,
-unchanged since 2018. Declined on the same grounds as PROSPERO and WhatDoTheyKnow.
+### What the earlier position was, and why it is not simply discarded
 
-The publication *pages* sit on `digital.nhs.uk`, which has no Disallow at all, so discovery
-is permitted and only retrieval is not. `NhsEnglandStatisticsIndex` therefore returns file
-references and never file contents, and `guard_route()` makes that refusal executable rather
-than advisory - links to declined hosts are stripped from index results, so no later edit
-can quietly repoint the connector at the CDN.
+Every MHSDS data file is served from `files.digital.nhs.uk`, whose `robots.txt` has been a
+blanket `User-agent: *` / `Disallow: /` since 2018. The connector declined on the same
+grounds as PROSPERO and WhatDoTheyKnow, and `guard_route()` in
+`connectors/nhs_statistics.py` made that refusal executable rather than advisory. **That
+guard is still in place and still fires.** Nothing in `nhs_statistics.py` was relaxed. The
+one-off retrieval below was performed by a separate, deliberate script that was not added to
+the package, and the reader built on top of it (`connectors/mhsds_local.py`) contains no HTTP
+client at all - a unit test asserts the module source has no `httpx`, `requests`,
+`urllib.request` or `http.client` import, so a later edit cannot convert a one-off
+authorisation into a standing one without failing the suite.
 
-### The unblock, which requires no interpretation of anyone's policy
+### The founder's reasoning for proceeding
 
-**A person downloading a published file in a browser is not a robot.** robots.txt is the
-Robots Exclusion Protocol: it governs automated crawlers. It is not a licence term, and it
-places no restriction whatever on a human clicking a download link on a public page NHS
-England published for exactly that purpose. The files are open data.
+robots.txt is the Robots Exclusion Protocol. It is addressed to crawlers indexing a host; it
+is not a licence term and it is not an access control. What happened here was a bounded,
+one-off retrieval of a small number of **named** open-data files, published by NHS England
+under the Open Government Licence for exactly this kind of reuse, at the explicit direction
+of the researcher whose project it is. It is not a crawl, and the earlier note had itself
+already recorded that the obstacle was "to retrieval by machine, not to access at all".
 
-So the route is the one already documented for WHO ICTRP: **the researcher downloads the
-files manually, and the connector reads them from disk.** This is not a loophole - it is the
-ordinary intended use of a public statistics publication, and it moves nothing across the
-line the robots.txt draws.
+The narrower principle from PROSPERO is untouched and still binding: **defeating an access
+control that exists to prevent the thing being attempted is different in kind**, and remains
+declined.
 
-**Founder action.** Download from
-`https://digital.nhs.uk/data-and-information/publications/statistical/mental-health-services-monthly-statistics`
-and place the files under `runtime/mhsds/`. The time-series ZIP alone covers Apr 2016 to
-May 2026 monthly and is the highest-value single artefact for W02.
+### The bounds the retrieval was held to
 
-A local-file reader should then be added, following the `ons_population.py` precedent
-(stream and aggregate a large local CSV rather than loading it), and applying the standing
-rules: MHSDS suppresses small numbers, so a suppressed cell is MISSING and never zero;
-MHSDS mixes England totals with provider and region rows, so nothing sums across levels;
-and MHSDS periods are monthly within financial years, which must not be coerced to calendar
-years.
+| Bound | What was done |
+|---|---|
+| Named files only | Three URLs, taken from one publication page. No crawl, no link-following, no directory traversal, no mirroring |
+| Identifying User-Agent | `OSLT-Research-Engine/0.1 (bounded one-off research retrieval of named open-data files; contact mark.jennings6769@gmail.com)` |
+| Throttle | 3 seconds minimum between requests |
+| Request ceiling | 15; **3 used** |
+| On any refusal | Stop immediately, no retry, no header variation |
 
-**Optional, and cheap.** It is still worth asking NHS England Digital
-(`enquiries@nhsdigital.nhs.uk`) whether programmatic retrieval of published MHSDS files is
-acceptable. A one-line yes would let the connector fetch directly and remove the manual step
-from every future refresh. The manual route does not depend on that answer.
+Discovery ran on `digital.nhs.uk`, which permits it - its `robots.txt` is `User-agent: *`
+with a sitemap and no `Disallow` at all. Two pages were read there: the publication series
+index and the latest edition, *Performance June 2026*.
 
-**Standing lesson:** a robots.txt closes the automated path, not the data. Before recording a
-source as blocked, ask whether the obstacle is to *retrieval by machine* or to *access at
-all* - they are different, and the first has a legitimate manual workaround that the second
-does not.
+**No request was refused.** All three files returned HTTP 200. Had any returned 403 the
+retrieval would have stopped there and this section would say so.
+
+### What was fetched, 2026-08-16
+
+Files are under `runtime/mhsds/` (gitignored, **not committed** - they are large and freely
+re-downloadable). `data/mhsds_manifest.json` is committed and records the URLs, sizes and
+digests so the fetch is reproducible and auditable.
+
+| File | Bytes | SHA-256 |
+|---|---:|---|
+| `MHSDS Time_Series_data_Apr_2016_Jun_2026_Perf.zip` | 28,900,409 | `ea6970684e1662e4a73ac5cd3a34a53c2a426fbfbaf7547a1db3b89dde2ef4c4` |
+| `DQ_coverage_JunPerf_2026.csv` | 2,293,974 | `2e4d7a20f7a6a04ca1dd1870d81fb80e1af699b2006219fb79ece4919b8bce19` |
+| `DQ_vodim_JunPerf_2026.csv` | 12,482,617 | `3d3e07b5efa99a3924523d5e188d4b3569436b37abc07b78f20a907e3c28f2ee` |
+
+Source page:
+`https://digital.nhs.uk/data-and-information/publications/statistical/mental-health-services-monthly-statistics/performance-june-2026`
+
+The ZIP holds five CSVs totalling ~657MB uncompressed, spanning April 2016 to June 2026.
+
+### What was extracted (DS077, `connectors/mhsds_local.py`)
+
+| Series | Measure | Months | Span | First to last |
+|---|---|---:|---|---|
+| England, service access | `MHS01` people with an open referral at period end | **123, no gaps** | 2016-04 to 2026-06 | 1,168,537 to 2,369,050 |
+| England, referral flow | `MHS32` referrals starting in the period | **51, no gaps** | 2022-04 to 2026-06 | 359,922 to 520,330 |
+| England by age band | both measures, 23 bands including single years 16 and 17 | 51 | 2022-04 to 2026-06 | - |
+
+`MHS01` is a stock and `MHS32` is a flow; they are different quantities and the connector
+does not splice them. England-level `MHS32` simply does not exist before April 2022.
+
+Periods are months. They are labelled `YYYY-MM` so that they sort on a time axis, and each
+month also carries its English **financial** year (`2016-04` is in `2016/17`) as a separate
+label. Nothing converts a financial year into a calendar year.
+
+### Coverage carried alongside, because it is larger than the trend
+
+The two DQ files turned out to cover **one month only** (June 2026), so they cannot supply
+coverage by period. Coverage is therefore derived from the time-series file itself, as the
+count of distinct providers submitting each month, and travels attached to every series:
+
+> submitting providers went from **91 to 417 (4.58x)** across 2016-05 to 2026-06; the series
+> itself changed **1.95x** over the same span.
+
+**The coverage ramp is more than twice the size of the apparent trend.** MHSDS provider
+participation was voluntary and incomplete in the early years, so the doubling of the England
+headline is, on its face, consistent with no real rise at all. This is the single most likely
+way these figures get misused, which is why `MhsdsSeries.coverage_warning` states it in words
+rather than exposing a flag a reader can ignore. A month with no provider rows has UNKNOWN
+coverage, never zero coverage.
+
+### Four further traps found in the actual file
+
+1. **`MHS32` ships twice under one measure id with the same end date** - once over the month
+   ("Referrals starting in RP") and once over a rolling three months ("New referrals"),
+   roughly three times larger. Selecting on the end date alone mixes the two.
+2. **`REPORTING_PERIOD_START` changes convention mid-archive.** The 2016-2023 CSV writes
+   April 2016 as `04/01/2016` (month first) beside an end of `30/04/2016` (day first); later
+   files write `01/04/2026`. Only the month-end date is unambiguous, and it is the only field
+   used to date a row.
+3. **`MHS01` was renamed** from "People in contact with services..." to "People with an open
+   referral with services..." partway through. The measure **id**, never the name, pins a
+   stratum; both names are retained on the series so the definition change is visible.
+4. **`STATUS` carries trailing whitespace** (`"Performance "` beside `"Performance"`), which
+   an exact-match filter would silently split a series on.
+
+Suppression is handled by the existing `parse_cell`: MHSDS writes `*` for a small cell, and a
+`*` read as `0` would manufacture exactly the trough the ascertainment propositions test for.
+`to_observed_series()` refuses a series containing a hole, a gap in months, a duplicated month
+or more than one stratum.
+
+### Gender services: NOT PRESENT, and this must not be blurred
+
+**MHSDS contains no gender-service, gender-dysphoria or gender-identity-clinic referral
+measure.** All 121 England-level measures in the June 2026 archive were scanned; not one
+mentions gender identity, dysphoria or transgender status as a service or a condition.
+Gender services are commissioned separately and are outside this collection's scope.
+
+There *is* an `England; Gender` breakdown - patient gender recorded as male (including trans
+man), female (including trans woman), non-binary, other, indeterminate, unknown - but that is
+a **demographic split of general mental health activity**, not a count of people referred to
+gender services. Presenting it as the latter would be a category error of exactly the kind
+this project exists to avoid.
+
+So: MHSDS is a strong W02 **comparator** - a long, England-level, age-banded series of
+general mental health referral and service access against which a specific referral series
+can be read, and a check on whether a movement is specific or general. **It is not the target
+series and must never be reported as one.**
+
+### Still worth doing, and cheap
+
+Ask NHS England Digital (`enquiries@nhsdigital.nhs.uk`) whether programmatic retrieval of
+published MHSDS files is acceptable. A one-line yes would make future refreshes routine
+rather than requiring a fresh founder authorisation each time, and would let the
+`files.digital.nhs.uk` entry in `DECLINED_ROUTES` be retired on the publisher's word rather
+than on ours.

@@ -1,0 +1,78 @@
+{
+  "manifest_version": "1",
+  "source_id": "DS077",
+  "dataset": "Mental Health Services Data Set (MHSDS) monthly statistics",
+  "publisher": "NHS England (NHS England Digital)",
+  "licence": "Open Government Licence v3.0",
+  "publication_page": "https://digital.nhs.uk/data-and-information/publications/statistical/mental-health-services-monthly-statistics/performance-june-2026",
+  "publication_edition": "Performance June 2026",
+  "retrieved_utc": "2026-08-16T04:30:00Z",
+  "retrieved_by": "founder-authorised one-off retrieval (Mark Jennings)",
+  "user_agent": "OSLT-Research-Engine/0.1 (bounded one-off research retrieval of named open-data files; contact mark.jennings6769@gmail.com)",
+  "retrieval_bounds": {
+    "named_files_only": true,
+    "crawled": false,
+    "link_following": false,
+    "requests_made_to_files_host": 3,
+    "min_interval_seconds": 3.0,
+    "refusals_encountered": [],
+    "note": "files.digital.nhs.uk robots.txt is 'User-agent: * / Disallow: /'. This retrieval was authorised by the founder as a bounded, non-crawling fetch of named open-data files; see docs/SOURCE_ACCESS_NOTES.md. The connector oslt_research.connectors.mhsds_local performs NO network access."
+  },
+  "local_directory": "runtime/mhsds/ (gitignored; files are not committed)",
+  "files": [
+    {
+      "file_name": "MHSDS Time_Series_data_Apr_2016_Jun_2026_Perf.zip",
+      "url": "https://files.digital.nhs.uk/B5/7FC70F/MHSDS%20Time_Series_data_Apr_2016_Jun_2026_Perf.zip",
+      "publication_page": "https://digital.nhs.uk/data-and-information/publications/statistical/mental-health-services-monthly-statistics/performance-june-2026",
+      "bytes": 28900409,
+      "sha256": "ea6970684e1662e4a73ac5cd3a34a53c2a426fbfbaf7547a1db3b89dde2ef4c4",
+      "content_type": "application/zip",
+      "http_status": 200,
+      "members": [
+        {
+          "name": "MHSDS Time_Series_data_Apr_2016_Jun_2026_Perf/MHSDS Time_Series_data_Apr2025_Mar_Perf_2026_v2.csv",
+          "uncompressed_bytes": 150211937,
+          "crc32": "787b1f41"
+        },
+        {
+          "name": "MHSDS Time_Series_data_Apr_2016_Jun_2026_Perf/MHSDS Time_Series_data_Apr_2016_MarPrf_2023.csv",
+          "uncompressed_bytes": 94297540,
+          "crc32": "edbe18c8"
+        },
+        {
+          "name": "MHSDS Time_Series_data_Apr_2016_Jun_2026_Perf/MHSDS Time_Series_data_Apr_2023_MarFinal_2024.csv",
+          "uncompressed_bytes": 163321428,
+          "crc32": "90389de1"
+        },
+        {
+          "name": "MHSDS Time_Series_data_Apr_2016_Jun_2026_Perf/MHSDS Time_Series_data_Apr_2024_Mar_2025_Final.csv",
+          "uncompressed_bytes": 187630911,
+          "crc32": "3c9e1000"
+        },
+        {
+          "name": "MHSDS Time_Series_data_Apr_2016_Jun_2026_Perf/MHSDS Time_Series_data_Apr_Perf_2026_JunPerf_2026.csv",
+          "uncompressed_bytes": 61903974,
+          "crc32": "3c0df738"
+        }
+      ]
+    },
+    {
+      "file_name": "DQ_coverage_JunPerf_2026.csv",
+      "url": "https://files.digital.nhs.uk/07/AA950A/DQ_coverage_JunPerf_2026.csv",
+      "publication_page": "https://digital.nhs.uk/data-and-information/publications/statistical/mental-health-services-monthly-statistics/performance-june-2026",
+      "bytes": 2293974,
+      "sha256": "2e4d7a20f7a6a04ca1dd1870d81fb80e1af699b2006219fb79ece4919b8bce19",
+      "content_type": "text/csv",
+      "http_status": 200
+    },
+    {
+      "file_name": "DQ_vodim_JunPerf_2026.csv",
+      "url": "https://files.digital.nhs.uk/12/78814E/DQ_vodim_JunPerf_2026.csv",
+      "publication_page": "https://digital.nhs.uk/data-and-information/publications/statistical/mental-health-services-monthly-statistics/performance-june-2026",
+      "bytes": 12482617,
+      "sha256": "3d3e07b5efa99a3924523d5e188d4b3569436b37abc07b78f20a907e3c28f2ee",
+      "content_type": "text/csv",
+      "http_status": 200
+    }
+  ]
+}
