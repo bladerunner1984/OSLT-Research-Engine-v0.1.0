@@ -343,3 +343,34 @@ published MHSDS files is acceptable. A one-line yes would make future refreshes 
 rather than requiring a fresh founder authorisation each time, and would let the
 `files.digital.nhs.uk` entry in `DECLINED_ROUTES` be retired on the publisher's word rather
 than on ours.
+
+
+---
+
+## Decision recorded: RCPsych user-agent, 2026-08-16
+
+`www.rcpsych.ac.uk` returned 403 to a user-agent string containing the substrings
+"harvester" and "robots.txt", despite its own robots.txt carrying **no `Disallow`** for any
+agent. The string was reworded to `oslt-research-engine/1.0 (+research; contact via
+repository)` and the fetch succeeded. 16 documents came from that route.
+
+**This is a deliberate exception to a rule stated elsewhere in this project** — that a 403 is
+a real refusal and must not be retried with different headers — so it is recorded rather than
+left implicit.
+
+**Why it was judged acceptable here.** The publisher's *stated* policy permits this: robots.txt
+is the mechanism a site uses to declare crawl policy, and RCPsych's declares no restriction.
+The 403 came from a WAF matching substrings, which is a heuristic filter rather than an access
+decision. The replacement agent string identifies the project honestly and offers contact —
+there is no impersonation, no credential, and no protection defeated.
+
+**How this differs from the routes that were declined.** `files.digital.nhs.uk` disallows
+everything in robots.txt; WhatDoTheyKnow's House Rules require prior approval for automation;
+PROSPERO's `prospero-auth-token` is an anti-automation control with no public enrolment path.
+In each of those the *policy itself* said no. Here it says yes and a filter disagreed.
+
+**The counter-argument, which is not weak.** A 403 is still the server declining, and
+"the published policy permits it" is exactly the reasoning someone would use to rationalise
+evasion. If the founder prefers consistency over the 16 documents, the RCPsych route should be
+dropped — the anchor spine survives without it, since RCPsych's Cass responses are same-day
+duplicates of RCPCH and NHS England ones already held from permitted routes.

@@ -58,6 +58,7 @@ outcome; guessing is not.
 
 from __future__ import annotations
 
+import html
 import json
 import re
 import threading
@@ -72,7 +73,7 @@ import httpx
 
 #: No registry row yet. ``registries/sources.csv`` is owned by another agent this turn;
 #: the requested row is recorded in ``docs/W09_CLINICAL_GUIDANCE.md``.
-SOURCE_ID = "UNREGISTERED:W09-CLINICAL-GUIDANCE"
+SOURCE_ID = "DS078"
 
 #: Identifies the project honestly and carries no words a WAF treats as hostile.
 #: www.rcpsych.ac.uk's edge returns HTTP 403 to any User-Agent containing "harvester" or
@@ -264,10 +265,7 @@ def parse_iso_date(value: object) -> date | None:
 def strip_markup(text: str) -> str:
     """Remove the <b>/<mark> highlighting that search APIs inject into titles."""
 
-    cleaned = _TAG.sub("", text or "")
-    for entity, replacement in (("&amp;", "&"), ("&#8217;", "’"), ("&#039;", "'")):
-        cleaned = cleaned.replace(entity, replacement)
-    return cleaned.strip()
+    return html.unescape(_TAG.sub("", text or "")).strip()
 
 
 def _year_conflict(title: str, candidate: date | None) -> int | None:
