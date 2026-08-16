@@ -11,6 +11,7 @@ from oslt_research.governance.preflight import run_preflight
 from oslt_research.governance.sample_size import AttainableInferenceEnvelope, attainable_envelope
 from oslt_research.persistence.sqlite import SQLiteStore
 from oslt_research.pipelines.registries import registry_summary
+from oslt_research.persistence.sqlite import MissingRunManifestError
 from oslt_research.pipelines.synthesis import MasterSynthesisKernel
 from oslt_research.settings import database_path, repository_root
 
@@ -86,5 +87,12 @@ def synthesise(request: SynthesisRequest) -> SynthesisOutcome:
         )
     except ValueError as exc:
         raise HTTPException(status_code=422, detail=str(exc)) from exc
-    SQLiteStore(database_path()).save_synthesis(result)
+    try:
+        SQLiteStore(database_path()).save_synthesis(result)
+    except MissingRunManifestError as exc:
+        # 422, not 500. Persisting a synthesis for a run with no sealed manifest is a
+        # governance refusal - the caller asked for something the model forbids - not an
+        # internal fault. A 500 would read as a bug and invite a retry; this reads as the
+        # rule it is, and names the run so the caller can seal it.
+        raise HTTPException(status_code=422, detail=str(exc)) from exc
     return result

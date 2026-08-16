@@ -6,6 +6,15 @@ from typing import Any
 from oslt_research.domain.enums import AuthorityLevel
 
 
+#: Value recorded on a run manifest that was NOT bound to a frozen preregistration.
+#:
+#: A sentinel rather than ``None`` because an absent preregistration must be legible in the
+#: store as an assertion ("this run was not preregistered") rather than as a missing field,
+#: which reads identically to "nobody wired it up" - the exact ambiguity the wiring audit
+#: found everywhere else.
+NOT_PREREGISTERED = "NOT_PREREGISTERED"
+
+
 PROTECTED_TYPES = {
     "SCIENTIFIC_CONSTITUTION",
     "CONSENT_DECISION",
@@ -66,3 +75,9 @@ def apply_authority_patch(
         authority=patch.proposer_authority,
         value=patch.value,
     )
+
+
+def is_protected(object_type: str) -> bool:
+    """Whether a mutation to this object type needs human authorisation to pass the lattice."""
+
+    return object_type in PROTECTED_TYPES

@@ -5,6 +5,7 @@ from pathlib import Path
 import pytest
 
 from oslt_research.connectors.fixture import FixtureConnector
+from oslt_research.governance.authority import NOT_PREREGISTERED
 from oslt_research.pipelines.run_manifest import (
     CONFIG_FILES,
     build_run_manifest,
@@ -22,6 +23,7 @@ def manifest(**overrides):
         objective="a question",
         proposition_ids=["MD11", "MX14"],
         connectors=[FixtureConnector(records=[])],
+        preregistration_ref=NOT_PREREGISTERED,
         root=ROOT,
     )
     payload.update(overrides)
@@ -62,9 +64,27 @@ def test_corpus_hash_is_carried_through():
     assert record.data_or_corpus_hashes["corpus_manifest"] == "a" * 64
 
 
-def test_preregistration_reference_is_optional_but_preserved():
-    assert manifest().preregistration_ref is None
+def test_preregistration_reference_is_required_and_preserved():
+    """It used to default to None and no caller ever passed it, so it said nothing.
+
+    A manifest must state either the specification it was testing or, explicitly, that the
+    run was not preregistered. Silence about a governance field is the defect, not a state.
+    """
+
+    assert manifest().preregistration_ref == NOT_PREREGISTERED
     assert manifest(preregistration_ref="SPEC-1").preregistration_ref == "SPEC-1"
+
+    payload = dict(
+        run_id="RUN-1",
+        objective="a question",
+        proposition_ids=["MD11"],
+        connectors=[FixtureConnector(records=[])],
+        root=ROOT,
+    )
+    with pytest.raises(TypeError):
+        build_run_manifest(**payload)
+    with pytest.raises(ValueError):
+        build_run_manifest(**payload, preregistration_ref="")
 
 
 def test_missing_commit_is_marked_not_blanked(tmp_path):

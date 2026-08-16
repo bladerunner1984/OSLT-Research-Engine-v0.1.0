@@ -28,6 +28,7 @@ import pytest
 
 from oslt_research.evidence.lane_coding import LaneClassifier
 from oslt_research.evidence.provenance import assess_evidence_admission
+from oslt_research.governance.authority import NOT_PREREGISTERED
 from oslt_research.governance.human_review import synthesis_review_decision
 from oslt_research.ontology.admission import assess_entity_admission, assess_relation_admission
 from oslt_research.persistence.sqlite import SQLiteStore
@@ -125,6 +126,34 @@ def test_ontology_admission_gates_reproduce_the_stored_verdicts(store: SQLiteSto
         if assess_relation_admission(relation).admitted != relation.admitted
     ]
     assert not bad_entities and not bad_relations
+
+
+def test_persisted_manifests_state_a_preregistration_and_an_authority(
+    store: SQLiteStore,
+) -> None:
+    """Every sealed manifest must name its specification and the authority that sealed it.
+
+    `preregistration_ref` was a parameter no caller ever passed, and no persisted object
+    carried an authority level at all. Both are now required at the write, so a manifest in
+    the store that lacks either came from a path that bypassed the store's own gate.
+    """
+
+    with store.connect() as connection:
+        run_ids = [row[0] for row in connection.execute("SELECT run_id FROM run_manifests")]
+    if not run_ids:
+        pytest.skip("no run manifests in the store")
+    silent = []
+    unauthorised = []
+    for run_id in run_ids:
+        manifest = store.get_run(run_id)
+        if not manifest.preregistration_ref:
+            silent.append(run_id)
+        protected = manifest.preregistration_ref not in (None, NOT_PREREGISTERED)
+        object_type = "PREREGISTERED_SPECIFICATION" if protected else "RUN_MANIFEST"
+        if store.get_authority(run_id, object_type) is None:
+            unauthorised.append(run_id)
+    assert not silent, f"manifests saying nothing about preregistration: {silent}"
+    assert not unauthorised, f"manifests sealed with no recorded authority: {unauthorised}"
 
 
 # ------------------------------------------------------------------------ open defects

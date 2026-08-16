@@ -9,6 +9,7 @@ from typing import Iterable, Mapping
 from oslt_research.connectors.base import SourceConnector
 from oslt_research.domain.models import RunManifest
 from oslt_research.evidence.provenance import sha256_bytes
+from oslt_research.governance.authority import NOT_PREREGISTERED
 from oslt_research.settings import repository_root
 
 
@@ -74,7 +75,7 @@ def build_run_manifest(
     connectors: Iterable[SourceConnector],
     corpus_hashes: Mapping[str, str] | None = None,
     registry_hashes: Mapping[str, str] | None = None,
-    preregistration_ref: str | None = None,
+    preregistration_ref: str,
     model_gateway: str = "DISABLED",
     root: Path | None = None,
 ) -> RunManifest:
@@ -88,7 +89,17 @@ def build_run_manifest(
     A dirty working tree is recorded in the environment rather than raising, because the
     manifest exists to describe what happened, including when what happened was
     unreproducible.
+
+    ``preregistration_ref`` is a required keyword with no default. It previously defaulted to
+    ``None`` and no caller ever passed it, so every manifest would have claimed nothing about
+    the specification it was testing while looking complete. A run that is genuinely not
+    preregistered must say so with :data:`NOT_PREREGISTERED`; silence is not an option.
     """
+
+    if not preregistration_ref:
+        raise ValueError(
+            "PREREGISTRATION_REF_REQUIRED: pass a specification_id or NOT_PREREGISTERED"
+        )
 
     resolved = root or repository_root()
     configuration_hashes: dict[str, str] = {}

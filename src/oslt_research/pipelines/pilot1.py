@@ -11,6 +11,8 @@ from oslt_research.domain.models import EvidenceObject, KernelResult, RunManifes
 from oslt_research.evidence.journal import ResearchComputationJournal
 from oslt_research.evidence.provenance import canonical_json_hash
 from oslt_research.evidence.study_family import StudyFamilyResolver
+from oslt_research.domain.enums import AuthorityLevel
+from oslt_research.governance.authority import NOT_PREREGISTERED
 from oslt_research.kernels.academic_knowledge import AcademicKnowledgeProductionKernel
 from oslt_research.persistence.sqlite import SQLiteStore
 
@@ -36,7 +38,21 @@ async def run_pilot_one(
     store: SQLiteStore,
     output_root: str | Path,
     cohort_lexicon: Iterable[str] = (),
+    preregistration_ref: str = NOT_PREREGISTERED,
+    preregistration_authorised_by_human: bool = False,
 ) -> PilotOneOutput:
+    """Run the pilot-one vertical slice and seal a reproducibility manifest for it.
+
+    `preregistration_ref` defaults to the explicit NOT_PREREGISTERED sentinel rather than to
+    the id of the frozen specification. Defaulting it to a real id would let any ad hoc run
+    inherit a confirmatory claim it never earned - and the pilot corpus in fact predates the
+    freeze (rule EXC2), so NOT_PREREGISTERED is the true value for it, not a placeholder.
+
+    Binding a run to a frozen specification is a protected mutation, so passing a real ref
+    additionally requires `preregistration_authorised_by_human`; an A3 pipeline computation
+    cannot promote its own run to confirmatory.
+    """
+
     output_root = Path(output_root)
     output_root.mkdir(parents=True, exist_ok=True)
     journal = ResearchComputationJournal(output_root / "computation-journal.jsonl")
@@ -112,8 +128,13 @@ async def run_pilot_one(
         proposition_ids=query.proposition_ids,
         connectors=connector_list,
         corpus_hashes={"corpus_manifest": manifest["manifest_sha256"]},
+        preregistration_ref=preregistration_ref,
     )
-    store.save_run(run_manifest)
+    store.save_run(
+        run_manifest,
+        authority=AuthorityLevel.A3_VERIFIED_EVIDENCE_COMPUTATION,
+        explicit_human_authorisation=preregistration_authorised_by_human,
+    )
     journal.append("RUN_MANIFEST_SEALED", run_manifest.model_dump(mode="json"))
 
     kernel = AcademicKnowledgeProductionKernel()

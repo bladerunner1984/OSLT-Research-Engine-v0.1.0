@@ -1,12 +1,30 @@
 from __future__ import annotations
 
+import json
 import sqlite3
 from contextlib import closing, contextmanager
 from pathlib import Path
 from typing import Iterable
 
+from oslt_research.domain.enums import AuthorityLevel
 from oslt_research.domain.models import EvidenceObject, KernelResult, RunManifest, SynthesisOutcome
+from oslt_research.governance.authority import (
+    NOT_PREREGISTERED,
+    AuthorityPatch,
+    AuthorityRecord,
+    apply_authority_patch,
+)
 from oslt_research.ontology.entities import InstitutionalEntity, InstitutionalRelation
+
+
+class MissingRunManifestError(RuntimeError):
+    """Raised when a result is persisted for a run that has no sealed manifest.
+
+    Manifest sealing used to be a parallel step in one pipeline that any other caller could
+    simply forget - and every caller did, which is why `run_manifests` held zero rows while
+    `kernel_results` and `synthesis_outcomes` named a run. Making the manifest a precondition
+    of persistence means a result that cannot be traced to the run that produced it now
+    fails loudly at the write instead of surviving as an untraceable row."""
 
 
 class SQLiteStore:
@@ -55,6 +73,14 @@ class SQLiteStore:
                 CREATE TABLE IF NOT EXISTS run_manifests (
                     run_id TEXT PRIMARY KEY,
                     payload_json TEXT NOT NULL
+                );
+
+                CREATE TABLE IF NOT EXISTS authority_records (
+                    object_id TEXT NOT NULL,
+                    object_type TEXT NOT NULL,
+                    authority INTEGER NOT NULL,
+                    value_json TEXT NOT NULL,
+                    PRIMARY KEY (object_id, object_type)
                 );
 
                 CREATE TABLE IF NOT EXISTS kernel_results (
@@ -146,7 +172,118 @@ class SQLiteStore:
             rows = connection.execute(query, params).fetchall()
         return [EvidenceObject.model_validate_json(row["payload_json"]) for row in rows]
 
-    def save_run(self, manifest: RunManifest) -> None:
+    # ----------------------------------------------------------- authority lattice
+
+    _AUTHORITY_DDL = """
+        CREATE TABLE IF NOT EXISTS authority_records (
+            object_id TEXT NOT NULL,
+            object_type TEXT NOT NULL,
+            authority INTEGER NOT NULL,
+            value_json TEXT NOT NULL,
+            PRIMARY KEY (object_id, object_type)
+        )
+    """
+
+    def get_authority(self, object_id: str, object_type: str) -> AuthorityRecord | None:
+        """The authority level currently recorded for an object, or None if never claimed.
+
+        None is not "unauthorised" - it is "no claim yet", which the lattice treats as an
+        open slot. It is deliberately distinct from a recorded low authority, because the
+        two demand different answers when a higher-authority actor arrives.
+        """
+
+        with closing(self.connect()) as connection:
+            connection.execute(self._AUTHORITY_DDL)
+            row = connection.execute(
+                """
+                SELECT object_id, object_type, authority, value_json
+                FROM authority_records WHERE object_id = ? AND object_type = ?
+                """,
+                (object_id, object_type),
+            ).fetchone()
+        if row is None:
+            return None
+        return AuthorityRecord(
+            object_id=row["object_id"],
+            object_type=row["object_type"],
+            authority=AuthorityLevel(row["authority"]),
+            value=json.loads(row["value_json"]),
+        )
+
+    def apply_authority(self, patch: AuthorityPatch) -> AuthorityRecord:
+        """Run one mutation through the lattice and persist the resulting authority claim.
+
+        This is the enforcement point the lattice never had: `apply_authority_patch` was a
+        pure function nothing called, so no persisted object carried an authority level and
+        PROTECTED_TYPES gated nothing. Routing the mutation through the store means the
+        previous claim is real state that a later, lower-authority writer collides with,
+        rather than an argument the caller supplies about itself.
+
+        Raises AuthorityError (from the lattice) - deliberately not caught here, because a
+        refused governance mutation must abort the write rather than downgrade it.
+        """
+
+        existing = self.get_authority(patch.object_id, patch.object_type)
+        record = apply_authority_patch(existing, patch)
+        with self.transaction() as connection:
+            connection.execute(self._AUTHORITY_DDL)
+            connection.execute(
+                """
+                INSERT INTO authority_records(object_id, object_type, authority, value_json)
+                VALUES (?, ?, ?, ?)
+                ON CONFLICT(object_id, object_type) DO UPDATE SET
+                    authority=excluded.authority,
+                    value_json=excluded.value_json
+                """,
+                (
+                    record.object_id,
+                    record.object_type,
+                    int(record.authority),
+                    json.dumps(record.value, sort_keys=True, default=str),
+                ),
+            )
+        return record
+
+    # ------------------------------------------------------------------- run manifests
+
+    def save_run(
+        self,
+        manifest: RunManifest,
+        *,
+        authority: AuthorityLevel,
+        explicit_human_authorisation: bool = False,
+    ) -> None:
+        """Seal a run manifest, through the authority lattice.
+
+        `authority` is required with no default: the authority under which a run was sealed
+        is precisely the fact that must not be guessed, and any default here would be a
+        governance value invented by the persistence layer.
+
+        A manifest that binds a run to a frozen preregistration is a PREREGISTERED_SPECIFICATION
+        mutation and therefore protected: an A3 pipeline computation cannot declare its own run
+        confirmatory without explicit human authorisation. A manifest that records
+        NOT_PREREGISTERED claims nothing and is not protected, but its authority is still
+        recorded, so a later lower-authority writer cannot silently overwrite a sealed run.
+        """
+
+        object_type = (
+            "PREREGISTERED_SPECIFICATION"
+            if manifest.preregistration_ref not in (None, NOT_PREREGISTERED)
+            else "RUN_MANIFEST"
+        )
+        self.apply_authority(
+            AuthorityPatch(
+                object_id=manifest.run_id,
+                object_type=object_type,
+                proposer_authority=authority,
+                value={
+                    "preregistration_ref": manifest.preregistration_ref,
+                    "repository_commit": manifest.repository_commit,
+                    "constitution_hash": manifest.constitution_hash,
+                },
+                explicit_human_authorisation=explicit_human_authorisation,
+            )
+        )
         with self.transaction() as connection:
             connection.execute(
                 """
@@ -154,6 +291,19 @@ class SQLiteStore:
                 ON CONFLICT(run_id) DO UPDATE SET payload_json=excluded.payload_json
                 """,
                 (manifest.run_id, manifest.model_dump_json()),
+            )
+
+    def require_run_manifest(self, run_id: str) -> None:
+        """Fail closed unless `run_id` names a sealed manifest.
+
+        Called before any result is written. Reproducibility that depends on the caller
+        remembering a second step is not a control; this makes it one.
+        """
+
+        if self.get_run(run_id) is None:
+            raise MissingRunManifestError(
+                f"NO_RUN_MANIFEST_SEALED_FOR_RUN: {run_id!r}. Seal it with "
+                "save_run(build_run_manifest(...)) before persisting any result for this run."
             )
 
     def get_run(self, run_id: str) -> RunManifest | None:
@@ -247,6 +397,7 @@ class SQLiteStore:
         return [InstitutionalRelation.model_validate_json(row["payload_json"]) for row in rows]
 
     def save_kernel_result(self, result: KernelResult) -> None:
+        self.require_run_manifest(result.run_id)
         with self.transaction() as connection:
             connection.execute(
                 """
@@ -277,6 +428,7 @@ class SQLiteStore:
         return [KernelResult.model_validate_json(row["payload_json"]) for row in rows]
 
     def save_synthesis(self, outcome: SynthesisOutcome) -> None:
+        self.require_run_manifest(outcome.run_id)
         with self.transaction() as connection:
             connection.execute(
                 """
