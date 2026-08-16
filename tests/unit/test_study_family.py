@@ -43,6 +43,10 @@ def evidence(
         ("Smith, John A.", "smith,j"),
         ("John A. Smith", "smith,j"),
         ("de Vries, Annelou L. C.", "de vries,a"),
+        # Surname-first with a trailing initial is the dominant PubMed form. Parsing it as
+        # given-name-first keyed on the initial and merged unrelated author networks.
+        ("Thompson L", "thompson,l"),
+        ("Gillberg C.", "gillberg,c"),
         ("", ""),
     ],
 )
@@ -184,3 +188,20 @@ def test_resolver_rejects_invalid_thresholds():
         StudyFamilyResolver(min_shared_authors=0)
     with pytest.raises(ValueError):
         StudyFamilyResolver(author_jaccard_threshold=0)
+
+
+def test_initial_only_surnames_do_not_collide_across_unrelated_groups():
+    """Regression: 'Sharma D'/'Shah A'/'Gopalappa C.' once matched 'Thompson L' et al."""
+
+    resolver = StudyFamilyResolver()
+    resolution = resolver.resolve(
+        [
+            evidence(
+                "EV1",
+                authors=["Thompson L", "Sarovic D", "Wilson P", "Gillberg C."],
+            ),
+            evidence("EV2", authors=["Sharma D", "Shah A", "Gopalappa C."]),
+        ]
+    )
+    assert resolution.family_count == 2
+    assert "AUTHOR_NETWORK_OVERLAP" not in resolution.signal_counts

@@ -105,6 +105,7 @@ async def harvest_for_kernels(
     connectors: Iterable[SourceConnector],
     store=None,
     max_records_per_proposition: int = 100,
+    cohort_lexicon: Sequence[str] = (),
 ) -> KernelHarvestReport:
     """Harvest evidence for every proposition, tagging each record with its proposition.
 
@@ -128,7 +129,9 @@ async def harvest_for_kernels(
                 max_records=max_records_per_proposition,
             )
             try:
-                result = await execute_harvest(connector, query, store=store)
+                result = await execute_harvest(
+                    connector, query, store=store, cohort_lexicon=cohort_lexicon
+                )
             except Exception as exc:  # noqa: BLE001 - one source must not sink the sweep
                 errors.append(f"{connector.source_name}:{type(exc).__name__}")
                 continue

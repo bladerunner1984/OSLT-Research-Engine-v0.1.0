@@ -91,3 +91,43 @@ def test_harvested_record_with_no_cue_records_that_it_was_screened():
 
     assert item.lane is EvidenceLane.UNCLASSIFIED
     assert item.lane_coding is not None, "screened-but-uncoded must differ from never screened"
+
+
+async def test_execute_harvest_resolves_study_families():
+    """Regression: the resolver existed but was never called from the harvest path.
+
+    Symptom was invisible because dependency_family was populated - with the DOI - so the
+    corpus looked clustered while every record was its own "family".
+    """
+
+    connector = FixtureConnector(
+        [
+            {
+                "id": "1",
+                "title": "Trial report",
+                "content": "Primary results of NCT01234567 in adults.",
+                "identifiers": {"doi": "10.1/one"},
+            },
+            {
+                "id": "2",
+                "title": "Trial follow-up",
+                "content": "Two-year follow-up of NCT01234567.",
+                "identifiers": {"doi": "10.1/two"},
+            },
+            {
+                "id": "3",
+                "title": "Unrelated",
+                "content": "Nothing in common.",
+                "identifiers": {"doi": "10.1/three"},
+            },
+        ]
+    )
+    query = HarvestQuery(query_id="Q1", concept="test", proposition_ids=["MD11"])
+    result = await execute_harvest(connector, query)
+
+    families = {item.evidence_id: item.dependency_family for item in result.evidence}
+    assert len(set(families.values())) == 2
+    for item in result.evidence:
+        assert item.dependency_family.startswith("family:")
+        assert item.metadata["dedup_key"].startswith("doi:")
+        assert item.metadata["dependency_family_basis"]

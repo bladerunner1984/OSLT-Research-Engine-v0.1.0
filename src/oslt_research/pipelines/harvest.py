@@ -9,6 +9,7 @@ from oslt_research.domain.enums import AccessClass, EpistemicStatus, EvidenceLan
 from oslt_research.domain.models import EvidenceObject, ProvenanceRecord
 from oslt_research.evidence.lane_coding import apply_lane_assignment
 from oslt_research.evidence.provenance import admit_evidence, sha256_text
+from oslt_research.evidence.study_family import StudyFamilyResolver
 from oslt_research.persistence.sqlite import SQLiteStore
 
 
@@ -85,6 +86,9 @@ def raw_record_to_evidence(record: RawRecord, query: HarvestQuery) -> EvidenceOb
             "content_sha256": content_hash,
             "query_id": query.query_id,
             "connector_source": record.source_name,
+            # The naive identifier key, kept because dependency_family is about to be
+            # overwritten with the resolved study family.
+            "dedup_key": dependency_family_for(record),
         },
     )
     # Lane-code every harvested record at the point of construction. Without this the
@@ -112,6 +116,7 @@ async def execute_harvest(
     query: HarvestQuery,
     *,
     store: SQLiteStore | None = None,
+    cohort_lexicon: Iterable[str] = (),
 ) -> HarvestResult:
     harvested = await connector.harvest(query)
     raw = [
@@ -126,6 +131,10 @@ async def execute_harvest(
         for record in harvested
     ]
     evidence = [raw_record_to_evidence(record, query) for record in raw]
+    # Resolve study families before anything is persisted. Without this the corpus stores
+    # the DOI as its own "family", so three reports of one trial persist as three
+    # independent families and every downstream corroboration count is inflated.
+    evidence, _ = StudyFamilyResolver(cohort_lexicon=tuple(cohort_lexicon)).apply(evidence)
     if store:
         store.initialise()
         store.save_evidence_many(evidence)
