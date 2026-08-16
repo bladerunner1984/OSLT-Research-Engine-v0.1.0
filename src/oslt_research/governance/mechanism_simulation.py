@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from enum import StrEnum
 from typing import Callable, Sequence
 
 import numpy as np
@@ -26,7 +27,10 @@ CALIBRATION_DISCLOSURE = (
     + " This result is calibrated against an observed series, so a mechanism that cannot "
     "reproduce that series under any admitted parameter is genuinely disfavoured. The "
     "converse does not hold: reproducing the series is compatibility, not confirmation, "
-    "because rival mechanisms may reproduce it equally well."
+    "because rival mechanisms may reproduce it equally well. Every result also carries a "
+    "severity, computed from the test itself, so that surviving a test which could not "
+    "have failed is distinguishable from surviving one which most parameterisations would "
+    "have failed. Corroboration is always reported AT a severity and never as support."
 )
 
 
@@ -48,6 +52,143 @@ class ObservedSeries:
             raise ValueError("an observed series needs at least three points to constrain anything")
         if self.periods and len(self.periods) != len(self.values):
             raise ValueError("periods and values must be the same length")
+
+
+class SeverityBand(StrEnum):
+    """How hard a calibration test would have been to survive.
+
+    Severity is a property of the TEST, not of the mechanism. It answers Popper's
+    question - "could this have killed the hypothesis?" - before any question about what
+    the hypothesis did. A test that no admitted parameterisation could have failed is not
+    evidence about anything, however cleanly it passed.
+    """
+
+    #: The test could barely have failed: survival carries no information at all.
+    NEGLIGIBLE = "NEGLIGIBLE"
+    #: A weak constraint. Survival is compatibility and nothing more.
+    LOW = "LOW"
+    #: A real but partial constraint. Still short of corroboration.
+    MODERATE = "MODERATE"
+    #: Most admitted parameterisations would have failed, on a tight tolerance, against
+    #: a series with many independent periods. Survival here is hard-won.
+    HIGH = "HIGH"
+
+
+class Corroboration(StrEnum):
+    """The third outcome the v1 vocabulary lacked.
+
+    ``FindingDirection`` is the project-wide CLAIM vocabulary and deliberately has no
+    value meaning "survived a severe test". Promoting survival into ``SUPPORTS`` there
+    would be exactly the confirmationism the calibration disclosure forbids, because
+    reproducing one aggregate series is a weak constraint many mechanisms satisfy. So the
+    positive channel is opened here, in a simulation-only vocabulary, alongside an
+    unchanged ``finding_direction``: survival can now be distinguished from silence
+    without ever being reported as support for the proposition being true.
+    """
+
+    #: The mechanism was refuted; corroboration does not arise.
+    NOT_APPLICABLE_REFUTED = "NOT_APPLICABLE_REFUTED"
+    #: The mechanism survived a test it could hardly have failed. This is silence.
+    NO_CORROBORATION_TEST_NOT_SEVERE = "NO_CORROBORATION_TEST_NOT_SEVERE"
+    #: The mechanism survived a real but partial constraint. Compatibility, not more.
+    COMPATIBLE_ONLY = "COMPATIBLE_ONLY"
+    #: The mechanism survived a test most parameterisations would have failed. This is
+    #: corroboration AT A STATED SEVERITY - never a statement that the mechanism is true.
+    CORROBORATED_AT_HIGH_SEVERITY = "CORROBORATED_AT_HIGH_SEVERITY"
+
+
+#: Lower bounds on the severity index for each band. Declared here rather than tuned per
+#: run: a threshold chosen after seeing which side of it a result fell is not a threshold.
+SEVERITY_BANDS: tuple[tuple[float, SeverityBand], ...] = (
+    (0.60, SeverityBand.HIGH),
+    (0.35, SeverityBand.MODERATE),
+    (0.15, SeverityBand.LOW),
+    (0.00, SeverityBand.NEGLIGIBLE),
+)
+
+
+@dataclass(frozen=True)
+class TestSeverity:
+    """A measured, reproducible answer to "could this test have failed?".
+
+    Three factors, each in [0,1], combined as a geometric mean so that any one of them
+    being zero drives severity to zero. That is the intended behaviour: a test whose grid
+    could never have been rejected, or whose tolerance is wider than the series' own
+    variation, or which constrains almost no independent periods, is uninformative no
+    matter how well the other two factors score. An arithmetic mean would let two strong
+    factors launder one fatal weakness into a respectable-looking number.
+    """
+
+    #: Fraction of the declared grid the test actually rejected. This is the direct
+    #: answer to "what could have been killed here".
+    rejection_fraction: float
+    #: How tight the tolerance is relative to the observed series' own dispersion. At
+    #: zero, a flat line through the mean would have passed.
+    tolerance_tightness: float
+    #: How many independent periods the series constrains. Three points constrain almost
+    #: nothing; eighty-four constrain a great deal.
+    series_constraint: float
+    index: float
+    band: SeverityBand
+    periods: int
+
+    def explain(self) -> str:
+        return (
+            f"severity {self.index:.2f} ({self.band.value}): the test rejected "
+            f"{self.rejection_fraction:.0%} of the declared grid, its tolerance is "
+            f"{self.tolerance_tightness:.0%} tight against the series' own dispersion, "
+            f"and the series constrains {self.periods} periods"
+        )
+
+
+def _band_for(index: float) -> SeverityBand:
+    for threshold, band in SEVERITY_BANDS:
+        if index >= threshold:
+            return band
+    return SeverityBand.NEGLIGIBLE
+
+
+def assess_severity(
+    *,
+    grid_size: int,
+    accepted: int,
+    tolerance: float,
+    observed: ObservedSeries,
+) -> TestSeverity:
+    """Compute how severe a calibration test was, from the test itself.
+
+    Everything here is read off the run: the grid that was declared, the tolerance that
+    was declared, and the series that was used. Nothing is asserted by the analyst, which
+    is the point - a severity anyone can recompute cannot be talked up after the fact.
+    """
+
+    rejection_fraction = (grid_size - accepted) / grid_size if grid_size else 0.0
+
+    values = np.asarray(observed.values, dtype=float)
+    spread = float(values.max() - values.min())
+    if spread <= 0:
+        spread = float(abs(values.mean())) or 1.0
+    # Dispersion is expressed in the SAME units as normalised_rmse, so the comparison
+    # with the tolerance is like-for-like: a tolerance at or above the dispersion would
+    # admit a flat line at the series mean, which is no test at all.
+    dispersion = float(values.std()) / spread
+    tolerance_tightness = 0.0 if dispersion <= 0 else max(0.0, 1.0 - tolerance / dispersion)
+
+    periods = len(observed.values)
+    # Two points fix a level and a slope; only what is left over constrains a shape.
+    series_constraint = max(0.0, (periods - 2) / periods)
+
+    index = float(
+        (rejection_fraction * tolerance_tightness * series_constraint) ** (1.0 / 3.0)
+    )
+    return TestSeverity(
+        rejection_fraction=rejection_fraction,
+        tolerance_tightness=tolerance_tightness,
+        series_constraint=series_constraint,
+        index=index,
+        band=_band_for(index),
+        periods=periods,
+    )
 
 
 @dataclass(frozen=True)
@@ -83,6 +224,8 @@ class CalibrationResult:
     best_distance: float
     best_parameters: dict[str, float] = field(default_factory=dict)
     finding_direction: FindingDirection = FindingDirection.INCONCLUSIVE
+    corroboration: Corroboration = Corroboration.NOT_APPLICABLE_REFUTED
+    severity: TestSeverity | None = None
     narrative: str = ""
     epistemic_status: EpistemicStatus = field(default=EpistemicStatus.SIMULATION, init=False)
     claim_tier: ClaimTier = field(default=ClaimTier.SIMULATION_ONLY, init=False)
@@ -91,6 +234,24 @@ class CalibrationResult:
     @property
     def acceptance_rate(self) -> float:
         return self.accepted / self.grid_size if self.grid_size else 0.0
+
+    @property
+    def severity_band(self) -> SeverityBand:
+        return self.severity.band if self.severity else SeverityBand.NEGLIGIBLE
+
+    @property
+    def severity_index(self) -> float:
+        return self.severity.index if self.severity else 0.0
+
+    @property
+    def corroborated(self) -> bool:
+        """Survived a test most admitted parameterisations would have failed.
+
+        Read this as "corroborated at severity X", never as "supported". The distinction
+        is the whole reason the value lives in its own vocabulary.
+        """
+
+        return self.corroboration is Corroboration.CORROBORATED_AT_HIGH_SEVERITY
 
     @property
     def refuted(self) -> bool:
@@ -148,22 +309,55 @@ def calibrate_mechanism(
         if distance <= tolerance:
             accepted.append(point)
 
+    severity = assess_severity(
+        grid_size=len(points),
+        accepted=len(accepted),
+        tolerance=tolerance,
+        observed=observed,
+    )
+
     if not accepted:
         direction = FindingDirection.WEAKENS
+        corroboration = Corroboration.NOT_APPLICABLE_REFUTED
         narrative = (
             f"No parameterisation in the declared grid ({len(points)} points) reproduced "
             f"{observed.name} within a tolerance of {tolerance:.0%} of its range; the closest "
             f"managed {best_distance:.0%}. On this series and this grid the mechanism is "
             "disfavoured. Widening the grid after the fact would convert this into a fitting "
-            "exercise and is not a rebuttal."
+            "exercise and is not a rebuttal. " + severity.explain() + "."
         )
     else:
+        # The claim vocabulary does not move. Survival is recorded in `corroboration`,
+        # which is the only field allowed to register it, and only at HIGH severity.
         direction = FindingDirection.INCONCLUSIVE
+        if severity.band is SeverityBand.HIGH:
+            corroboration = Corroboration.CORROBORATED_AT_HIGH_SEVERITY
+            verdict = (
+                f"The mechanism is CORROBORATED AT SEVERITY {severity.index:.2f} "
+                f"({severity.band.value}): most admitted parameterisations would have "
+                "failed and this one did not. Corroboration-at-severity is a statement "
+                "about how hard the test was to survive, NOT a statement that the "
+                "mechanism is true or that the proposition is supported."
+            )
+        elif severity.band is SeverityBand.NEGLIGIBLE:
+            corroboration = Corroboration.NO_CORROBORATION_TEST_NOT_SEVERE
+            verdict = (
+                "The test was not severe enough to have failed, so survival carries no "
+                "information: this is silence, not a result."
+            )
+        else:
+            corroboration = Corroboration.COMPATIBLE_ONLY
+            verdict = (
+                f"Severity is {severity.band.value}, below the bar for corroboration. "
+                "The mechanism is COMPATIBLE with the observed series and no more."
+            )
         narrative = (
             f"{len(accepted)} of {len(points)} parameterisations reproduced {observed.name} "
-            f"within {tolerance:.0%}. The mechanism is COMPATIBLE with the observed series. "
+            f"within {tolerance:.0%}. {verdict} "
             "This is not support: compatibility is cheap, and rival mechanisms must be run "
-            "against the same series before any comparative statement is possible."
+            "against the same series before any comparative statement is possible. "
+            + severity.explain()
+            + "."
         )
 
     return CalibrationResult(
@@ -175,6 +369,8 @@ def calibrate_mechanism(
         best_distance=best_distance,
         best_parameters=best_parameters,
         finding_direction=direction,
+        corroboration=corroboration,
+        severity=severity,
         narrative=narrative,
     )
 
@@ -196,6 +392,7 @@ def compare_mechanisms(
     results = [calibrate_mechanism(item, observed, tolerance=tolerance) for item in candidates]
     refuted = [item.mechanism_id for item in results if item.refuted]
     survivors = [item.mechanism_id for item in results if not item.refuted]
+    corroborated = [item.mechanism_id for item in results if item.corroborated]
 
     return {
         "observed_series": observed.name,
@@ -203,12 +400,25 @@ def compare_mechanisms(
         "tolerance": tolerance,
         "refuted": refuted,
         "compatible": survivors,
+        "corroborated_at_high_severity": corroborated,
+        "severity": {
+            item.mechanism_id: {
+                "index": item.severity_index,
+                "band": item.severity_band.value,
+                "corroboration": item.corroboration.value,
+            }
+            for item in results
+        },
         "results": results,
         "interpretation_bound": (
             "Refuted mechanisms failed to reproduce a real observed series and are "
             "genuinely disfavoured. Compatible mechanisms are NOT ranked against each "
             "other: reproducing one aggregate series is a weak constraint that many "
-            "mechanisms satisfy. No compatible mechanism may be reported as supported."
+            "mechanisms satisfy. No compatible mechanism may be reported as supported. "
+            "Where a survivor is listed under corroborated_at_high_severity, that records "
+            "only that the test it survived was one most admitted parameterisations would "
+            "have failed; it is corroboration at a stated severity and still may not be "
+            "reported as support for the proposition being true."
         ),
         "claim_tier": ClaimTier.SIMULATION_ONLY.value,
     }

@@ -72,6 +72,19 @@ def _design_for(item: PropositionFeasibility) -> tuple[str, str, list[str]]:
                 "disclosure-checked outputs only",
             ],
         )
+    if item.reachability is Reachability.NEEDS_PREDICTOR_SOURCE:
+        # Not an access problem and not a design problem: the predictor exists somewhere,
+        # it is simply not in this proposition's required set. The fix is registry work
+        # plus a harvest, and pricing it as a cohort study would overstate it wildly.
+        return (
+            "open-data analysis, once a workstream carrying the named predictor is "
+            "required and harvested",
+            "no participant follow-up; the block is a missing predictor series, not access",
+            [
+                "registry amendment adding the workstream that carries the predictor",
+                "pre-registration of the direction test before the predictor is harvested",
+            ],
+        )
     return ("open-data analysis", "no restriction", [])
 
 

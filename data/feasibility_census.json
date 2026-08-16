@@ -1,7 +1,7 @@
 {
-  "assessed_at": "2026-08-16T03:05:41.781203+00:00",
+  "assessed_at": "2026-08-16T08:05:30.064324+00:00",
   "ballot": {
-    "asymmetry_changed": false,
+    "asymmetry_changed": true,
     "families_quoted_with_zero_still_zero": [
       "INTRINSIC_RECOGNITION",
       "MIXTURE_HETEROGENEITY",
@@ -11,13 +11,14 @@
       "ASCERTAINMENT_SERVICE": 12
     },
     "testable_by_family_now": {
-      "ASCERTAINMENT_SERVICE": 12,
-      "MULTIFACTORIAL_DEVELOPMENTAL_INSTITUTIONAL": 4
+      "ASCERTAINMENT_SERVICE": 8,
+      "MULTIFACTORIAL_DEVELOPMENTAL_INSTITUTIONAL": 2
     }
   },
-  "census_id": "FC-20260816030541",
+  "census_id": "FC-20260816080530",
   "connector_inventory": {
     "declared_source_ids": {
+      "clinical_guidance": "DS078",
       "clinicaltrials": "DS037",
       "companies_house_officers": "DS074",
       "contracts_finder": "DS070",
@@ -31,6 +32,7 @@
       "isrctn": "DS038",
       "legislation": "DS032",
       "media_discourse": "DS028",
+      "mhsds_local": "DS077",
       "nhs_statistics": "DS068",
       "nomis": "DS067",
       "ons_datasets": "DS014",
@@ -607,6 +609,78 @@
     },
     {
       "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "open-data analysis, once a workstream carrying the named predictor is required and harvested",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "registry amendment adding the workstream that carries the predictor",
+        "pre-registration of the direction test before the predictor is harvested"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "ASCERTAINMENT_SERVICE",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "AS04",
+      "reachability": "NEEDS_PREDICTOR_SOURCE"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "open-data analysis, once a workstream carrying the named predictor is required and harvested",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "registry amendment adding the workstream that carries the predictor",
+        "pre-registration of the direction test before the predictor is harvested"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "ASCERTAINMENT_SERVICE",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "AS05",
+      "reachability": "NEEDS_PREDICTOR_SOURCE"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "open-data analysis, once a workstream carrying the named predictor is required and harvested",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "registry amendment adding the workstream that carries the predictor",
+        "pre-registration of the direction test before the predictor is harvested"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "ASCERTAINMENT_SERVICE",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "AS07",
+      "reachability": "NEEDS_PREDICTOR_SOURCE"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "open-data analysis, once a workstream carrying the named predictor is required and harvested",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "registry amendment adding the workstream that carries the predictor",
+        "pre-registration of the direction test before the predictor is harvested"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "ASCERTAINMENT_SERVICE",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "AS12",
+      "reachability": "NEEDS_PREDICTOR_SOURCE"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
       "design_needed": "analysis within a secure environment or under licence",
       "epistemic_status": "SIMULATION",
       "governance_needed": [
@@ -971,6 +1045,24 @@
     },
     {
       "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "open-data analysis, once a workstream carrying the named predictor is required and harvested",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "registry amendment adding the workstream that carries the predictor",
+        "pre-registration of the direction test before the predictor is harvested"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "MULTIFACTORIAL_DEVELOPMENTAL_INSTITUTIONAL",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "TH05",
+      "reachability": "NEEDS_PREDICTOR_SOURCE"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
       "design_needed": "prospective cohort with recruited participants",
       "epistemic_status": "SIMULATION",
       "governance_needed": [
@@ -988,6 +1080,24 @@
       },
       "proposition_id": "TH06",
       "reachability": "NEEDS_PRIMARY_COLLECTION"
+    },
+    {
+      "claim_tier": "SIMULATION_ONLY",
+      "design_needed": "open-data analysis, once a workstream carrying the named predictor is required and harvested",
+      "epistemic_status": "SIMULATION",
+      "governance_needed": [
+        "registry amendment adding the workstream that carries the predictor",
+        "pre-registration of the direction test before the predictor is harvested"
+      ],
+      "minimum_detectable_or": 1.59619140625,
+      "model_family": "MULTIFACTORIAL_DEVELOPMENTAL_INSTITUTIONAL",
+      "participants_required": {
+        "OR_1.3": 1859,
+        "OR_1.5": 669,
+        "OR_2.0": 168
+      },
+      "proposition_id": "TH08",
+      "reachability": "NEEDS_PREDICTOR_SOURCE"
     }
   ],
   "drift_against_handoff": {
@@ -1007,8 +1117,8 @@
       "quoted": 16
     },
     "OPEN_TESTABLE": {
-      "changed": false,
-      "now": 16,
+      "changed": true,
+      "now": 10,
       "quoted": 16
     }
   },
@@ -1016,42 +1126,37 @@
     "hypotheses.csv": "eb1de4893fddc34169587f25e0a800aca19e19fd7c0cb00204ecc3af3dc62154",
     "workstreams.csv": "90c7a8e029c802d9f14e9aaaf403dba542910afdc852b3756f630aa3dac89e09"
   },
-  "run_id": "FEAS-20260816030541",
+  "run_id": "FEAS-20260816080530",
   "summary": {
     "by_reachability": {
       "NEEDS_INDIVIDUAL_LEVEL": 7,
+      "NEEDS_PREDICTOR_SOURCE": 6,
       "NEEDS_PRIMARY_COLLECTION": 25,
       "NEEDS_RESTRICTED_ACCESS": 16,
-      "OPEN_TESTABLE": 16
+      "OPEN_TESTABLE": 10
     },
     "coverage_asymmetry": [
       "MODEL_FAMILIES_WITH_NO_OPEN_TESTABLE_PROPOSITION:INTRINSIC_RECOGNITION,MIXTURE_HETEROGENEITY,NULL_OR_ALTERNATIVE",
-      "OPEN_TESTABLE_SET_DOMINATED_BY:ASCERTAINMENT_SERVICE:12/16",
+      "OPEN_TESTABLE_SET_DOMINATED_BY:ASCERTAINMENT_SERVICE:8/10",
       "COMPARATIVE_SUPPORT_OVER_AN_UNEQUAL_BALLOT_MEASURES_DATA_ACCESS_NOT_EXPLANATION"
     ],
     "propositions": 64,
     "testable_by_model_family": {
-      "ASCERTAINMENT_SERVICE": 12,
-      "MULTIFACTORIAL_DEVELOPMENTAL_INSTITUTIONAL": 4
+      "ASCERTAINMENT_SERVICE": 8,
+      "MULTIFACTORIAL_DEVELOPMENTAL_INSTITUTIONAL": 2
     },
-    "testable_from_open_sources": 16,
+    "testable_from_open_sources": 10,
     "testable_ids": [
       "AS01",
       "AS02",
       "AS03",
-      "AS04",
-      "AS05",
       "AS06",
-      "AS07",
       "AS08",
       "AS09",
       "AS10",
       "AS11",
-      "AS12",
       "TH04",
-      "TH05",
-      "TH07",
-      "TH08"
+      "TH07"
     ]
   },
   "workstream_source_coverage": {

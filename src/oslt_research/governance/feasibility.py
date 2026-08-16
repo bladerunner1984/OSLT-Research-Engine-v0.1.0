@@ -24,6 +24,13 @@ class Reachability(StrEnum):
     #: Requires collecting new data from participants: recruitment, consent, ethics.
     NEEDS_PRIMARY_COLLECTION = "NEEDS_PRIMARY_COLLECTION"
 
+    #: Every required workstream is open, but none of them carries the predictor the
+    #: proposition's own prediction names. The test cannot be run as registered: one of
+    #: its two terms is missing. Being honestly blocked is more useful than being
+    #: falsely testable, because a "testable" proposition with no predictor consumes a
+    #: run and returns INCONCLUSIVE for a reason that was knowable in advance.
+    NEEDS_PREDICTOR_SOURCE = "NEEDS_PREDICTOR_SOURCE"
+
 
 #: Access tokens in workstreams.csv that represent a route requiring no agreement.
 OPEN_TOKENS = frozenset(
@@ -42,6 +49,119 @@ INDIVIDUAL_LEVEL_REQUIREMENTS = (
 
 
 @dataclass(frozen=True)
+class PredictorConcept:
+    """One predictor a prediction can name, and the registry words that would carry it.
+
+    Both halves are declared, narrow and reviewable. The alternative - scoring free-text
+    similarity between a prediction and a workstream blurb - would manufacture confident
+    answers out of vocabulary overlap, which is the plausible-default failure this project
+    keeps finding. A concept that no prediction names costs nothing; a concept that fires
+    on the wrong proposition is visible in one line of this table.
+    """
+
+    concept_id: str
+    #: Phrases whose presence in the prediction means the prediction NAMES this predictor.
+    prediction_terms: tuple[str, ...]
+    #: Phrases in a workstream's ``data_to_accumulate`` (or its title) that mean the
+    #: workstream CARRIES this predictor.
+    data_terms: tuple[str, ...]
+    #: What is actually missing, in words a reader can act on.
+    describes: str
+
+
+#: The declared predictor lexicon.
+#:
+#: Deliberately small. It covers only predictors that some proposition's registered
+#: prediction names explicitly and that a reader can check against workstreams.csv in
+#: seconds. Anything a prediction names that is NOT in this table is treated as UNKNOWN
+#: and does not block - absence of a lexicon entry is not evidence of absence of data,
+#: and this check exists to remove false testability, not to manufacture false blockage.
+PREDICTOR_LEXICON: tuple[PredictorConcept, ...] = (
+    PredictorConcept(
+        concept_id="DISCLOSURE_OR_HELP_SEEKING",
+        prediction_terms=("disclosure", "help-seeking", "help seeking"),
+        data_terms=("disclosure", "help-seeking", "narrative", "interview"),
+        describes="a disclosure or help-seeking indicator",
+    ),
+    PredictorConcept(
+        concept_id="AWARENESS_OR_MEDIA_ATTENTION",
+        prediction_terms=("awareness", "media attention", "search/media"),
+        data_terms=(
+            "search behaviour",
+            "media-use",
+            "news corpora",
+            "gdelt",
+            "framing",
+            "platform use",
+            "web archives",
+        ),
+        describes="a search-volume, media-attention or professional-awareness measure",
+    ),
+    PredictorConcept(
+        concept_id="ACCESS_GRADIENT",
+        prediction_terms=("variation in access", "access predicts", "distance", "travel"),
+        data_terms=("distance", "travel time", "need proxy", "access gradient"),
+        describes="a distance-to-service or need-proxy measure separable from geography",
+    ),
+    PredictorConcept(
+        concept_id="FOLLOW_UP_OF_INDIVIDUALS",
+        prediction_terms=("attrition", "ipw", "mnar", "missingness", "follow-up"),
+        data_terms=("repeated measures", "longitudinal", "cohort", "follow-up"),
+        describes="a cohort followed through time, so that attrition has an estimate to move",
+    ),
+    PredictorConcept(
+        concept_id="ADOPTION_OUTCOME_PER_NODE",
+        prediction_terms=("adoption",),
+        data_terms=("adoption", "uptake", "implementation outcome"),
+        describes="a per-node adoption or uptake outcome the network could predict",
+    ),
+    PredictorConcept(
+        concept_id="CROSS_JURISDICTION_PANEL",
+        prediction_terms=("cross-jurisdiction", "cross jurisdiction", "macro longitudinal"),
+        data_terms=("cross-jurisdiction", "international", "country-level", "comparative"),
+        describes="a cross-jurisdiction or macro longitudinal panel",
+    ),
+)
+
+
+def named_predictors(prediction: str) -> list[PredictorConcept]:
+    """Which lexicon concepts a registered prediction explicitly names."""
+
+    text = (prediction or "").casefold()
+    return [
+        concept
+        for concept in PREDICTOR_LEXICON
+        if any(term in text for term in concept.prediction_terms)
+    ]
+
+
+def _carries(concept: PredictorConcept, workstream: dict[str, str]) -> bool:
+    haystack = " ".join(
+        (workstream.get(name) or "") for name in ("data_to_accumulate", "workstream")
+    ).casefold()
+    return any(term in haystack for term in concept.data_terms)
+
+
+def missing_predictors(
+    prediction: str, required: list[str], workstreams: dict[str, dict[str, str]]
+) -> list[PredictorConcept]:
+    """Predictors the prediction names that no required workstream carries.
+
+    Reads ``data_to_accumulate``, which is what the registry actually has. If that column
+    is absent the function returns nothing: an unpopulated registry must not be read as a
+    registry full of holes.
+    """
+
+    if not any("data_to_accumulate" in row for row in workstreams.values()):
+        return []
+    return [
+        concept
+        for concept in named_predictors(prediction)
+        if not any(_carries(concept, workstreams[wid]) for wid in required if wid in workstreams)
+    ]
+
+
+@dataclass(frozen=True)
 class PropositionFeasibility:
     proposition_id: str
     model_family: str
@@ -52,6 +172,7 @@ class PropositionFeasibility:
     temporal_requirement: str = ""
     maximum_claim_state: str = ""
     reason: str = ""
+    missing_predictors: list[str] = field(default_factory=list)
 
     @property
     def testable_now(self) -> bool:
@@ -160,6 +281,7 @@ def assess_feasibility(registry_root: str | Path) -> FeasibilityCensus:
             elif not tokens & OPEN_TOKENS:
                 blocking.append(workstream_id)
 
+        missing = missing_predictors(row.get("prediction", ""), required, workstreams)
         temporal = row.get("temporal_requirement", "")
         needs_individual = any(
             marker in temporal for marker in INDIVIDUAL_LEVEL_REQUIREMENTS
@@ -183,6 +305,16 @@ def assess_feasibility(registry_root: str | Path) -> FeasibilityCensus:
                 f"design requires '{temporal}', which is a statement about ordering within "
                 "individuals; open aggregate statistics cannot answer it at any sample size"
             )
+        elif missing:
+            reachability = Reachability.NEEDS_PREDICTOR_SOURCE
+            reason = (
+                "every required workstream is open, but none of "
+                + ", ".join(required)
+                + " carries "
+                + "; ".join(concept.describes for concept in missing)
+                + " - the prediction names a predictor the required set does not hold, so "
+                "the test cannot be run as registered"
+            )
         else:
             reachability = Reachability.OPEN_TESTABLE
             reason = "all required workstreams have an open route and the design is not individual-level"
@@ -198,6 +330,7 @@ def assess_feasibility(registry_root: str | Path) -> FeasibilityCensus:
                 temporal_requirement=temporal,
                 maximum_claim_state=row.get("maximum_claim_state", ""),
                 reason=reason,
+                missing_predictors=[concept.concept_id for concept in missing],
             )
         )
 
