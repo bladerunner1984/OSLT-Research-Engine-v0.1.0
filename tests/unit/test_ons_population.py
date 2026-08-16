@@ -116,3 +116,15 @@ def test_unparseable_rows_are_skipped_rather_than_counted_as_zero():
     source = csv_rows(row(220, 2001), row("not-a-number", 2002))
     result = connector().slice_population(source, geography="Leeds")
     assert result.by_year == {2001: 220}
+
+
+def test_population_estimates_are_not_labelled_as_the_census_gender_identity_row():
+    """DS014 is the Census 2021 gender identity publication, retrieved by a different
+    connector. Sharing one id made two unrelated ONS products indistinguishable in
+    provenance, and would have let them corroborate each other."""
+
+    from oslt_research.connectors import ons_datasets, ons_population
+
+    assert ons_population.SOURCE_ID == "DS076"
+    assert ons_datasets.SOURCE_ID == "DS014"
+    assert ons_population.SOURCE_ID != ons_datasets.SOURCE_ID

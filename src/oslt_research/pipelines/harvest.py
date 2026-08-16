@@ -18,7 +18,10 @@ SOURCE_IDS = {
     "Crossref": "DS034",
     "PubMed": "DS036",
     "EuropePMC": "DS035",
-    "OpenAIRE": "DS041",
+    # DS075 (OpenAIRE Graph). This was DS041 until 2026-08-16 - DS041 is OSF
+    # Registries, a different organisation - so records harvested before that date
+    # would have carried a false provenance claim. The live store held none.
+    "OpenAIRE": "DS075",
     "ClinicalTrials.gov": "DS037",
     "Fixture": "FIXTURE",
 }

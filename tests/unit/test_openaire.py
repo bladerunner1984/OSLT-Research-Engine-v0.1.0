@@ -270,3 +270,19 @@ async def test_http_error_propagates() -> None:
     )
     with pytest.raises(httpx.HTTPStatusError):
         await connector.harvest(query())
+
+
+def test_harvest_labels_openaire_records_with_its_own_registry_row_not_osf():
+    """DS041 is OSF Registries, a different organisation.
+
+    Until 2026-08-16 the harvest pipeline stamped OpenAIRE records with DS041, so a
+    record asserted it came from a register it had never touched. Provenance is what
+    the admission gate and the dependency-family logic read, so this is not cosmetic.
+    """
+
+    from oslt_research.connectors import openaire
+    from oslt_research.pipelines.harvest import SOURCE_IDS
+
+    assert SOURCE_IDS["OpenAIRE"] == "DS075"
+    assert SOURCE_IDS["OpenAIRE"] == openaire.SOURCE_ID
+    assert SOURCE_IDS["OpenAIRE"] != "DS041"

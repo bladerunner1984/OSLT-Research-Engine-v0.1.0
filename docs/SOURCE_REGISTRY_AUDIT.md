@@ -189,3 +189,102 @@ Two assertions were updated because the id **genuinely changed**, not to accommo
 
 No test was weakened. Full suite: **857 passed, 3 xfailed** (the three xfails are the
 pre-existing `WIRING_AUDIT` ones), exit code 0.
+
+---
+
+# Resolution of the three open items
+
+**Date:** 2026-08-16. All three items above are now closed. `registries/hypotheses.csv` and
+every `access_summary` value were again untouched.
+
+## Item 1 — connectors credited to their workstreams (`registries/workstreams.csv`)
+
+`source_ids` only. Five workstreams had the same omission: a connector was harvesting for
+them and the workstream's source list predated its registry row.
+
+| Workstream | Added | Why it genuinely serves it |
+|---|---|---|
+| W01 | `DS067`, `DS076` | NOMIS and the mid-year estimates bulk CSV are the population denominators W01 exists to hold |
+| W02 | `DS066`, `DS068` | Fingertips (218 harvested series) and the NHS England open route are W02's aggregate route |
+| W05 | `DS069` | DfE Explore Education Statistics is W05's dated aggregate education series |
+| W07 | `DS075` | OpenAIRE Graph is works metadata, W07's subject matter |
+| W10 | `DS072` | Committee written evidence is part of the parliamentary policy corpus W10 accumulates |
+
+**Deliberately not credited.** `DS070` (Contracts Finder), `DS071` (Find a Tender),
+`DS073` (360Giving) and `DS074` (Companies House officers/PSC) are the institutional-graph
+connectors. No workstream's `data_to_accumulate` covers procurement, grant-making or
+directorships; W07 is about publication selection, not corporate structure. Adding them
+would have inflated coverage by redefining what those workstreams accumulate, which is the
+exact failure this audit was written against. They stay uncredited until a workstream
+genuinely claims them.
+
+Census after the edit, from `scripts/run_feasibility_census.py`: **OPEN_TESTABLE 16 /
+NEEDS_PRIMARY_COLLECTION 25 / NEEDS_RESTRICTED_ACCESS 16 / NEEDS_INDIVIDUAL_LEVEL 7**, with
+`asymmetry_changed: false`. Reachability did not move, which is the evidence that a
+source-list column was edited and not an access column.
+
+The stored census was re-sealed with `--apply` (`FC-20260816030541`) because
+`registry_digest` hashes `workstreams.csv` and the file legitimately changed. The counts it
+records are identical to those it replaced.
+
+## Item 2 — OpenAIRE provenance (`DS041` → `DS075`)
+
+**Forward path fixed.** `pipelines/harvest.SOURCE_IDS["OpenAIRE"]` now stamps `DS075`,
+matching `connectors.openaire.SOURCE_ID`. The stale note in `openaire.py` was replaced by a
+record of the correction rather than deleted.
+
+**Stored records affected: zero.** `runtime/oslt.db` was backed up to
+`runtime/oslt.db.pre-provenance-fix` first, then queried across all 7,071 rows in
+`evidence_objects`:
+
+- `source_id` distribution is `DS035` 6,651, `DS033` 179, `DS034` 120, `DS036` 116,
+  `DS037` 5 — **no `DS041` row at all**;
+- no payload contains the string `DS041` anywhere, including nested provenance;
+- no payload mentions OpenAIRE, and no record carries `metadata.connector_source` naming
+  the OpenAIRE connector.
+
+The mislabel was therefore latent: it would have falsified the provenance of the first
+OpenAIRE harvest, but no such harvest has been persisted. **Nothing was corrected because
+nothing was wrong in the store**, and no record was rewritten — so there is no
+`provenance_corrected_from` marker anywhere, which is the honest outcome rather than an
+absence of diligence. Had any record been ambiguous, it would have been left and named here.
+
+The `DS075` row's `major_limitations` no longer advertises a "KNOWN DEFECT"; it now states
+what was corrected, when, and that no stored provenance was rewritten.
+
+## Item 3 — `DS014` shared by two ONS connectors
+
+`DS014` is the **Census 2021 gender identity publication**. `ons_datasets` discovers and
+retrieves exactly that, through the ONS dataset/version API, and keeps `DS014`.
+`ons_population` streams the **mid-year population estimates bulk CSV** — a different
+product, different cadence, different dimensions, revised and rebased on its own schedule.
+It gets a new row, **`DS076`**, the next free number after `DS075`.
+
+The tell was already in the register: `DS067` (NOMIS) describes itself as "the query-API
+counterpart of the bulk CSV streamed by `connectors.ons_population`", reconciling at England
+2021 = 56,554,891. A source that reconciles with NOMIS population tables is not a gender
+identity publication.
+
+`DS076` records its limits as the other rows do: aggregate counts only; the overlapping
+`sex`/`single-year-of-age` aggregates that tripled Leeds' population before they were
+caught; a ~123MB cached file that can silently serve superseded estimates; rebasing that
+breaks like-for-like trends; and the explicit warning that DS076 and DS067 are two routes to
+the same figures and must not be double-counted as independent evidence. `DS014`'s own
+limitations now state its scope and point at `DS076`.
+
+**Stored records affected: zero** — no payload in `evidence_objects` contains `DS014`. No
+correction marker was needed. Both module-level comments record the change rather than
+quietly presenting the new id as if it had always been there.
+
+## Mechanical consequences
+
+- `registries/sources.csv` grew 75 → 76 rows; `pipelines/registries.EXPECTED_COUNTS`
+  updated 75 → 76, exactly. Still an equality check.
+- `run_manifest` hashes all `registries/*.csv`, so those hashes changed. Expected.
+- Two tests added, none weakened:
+  `tests/unit/test_openaire.py::test_harvest_labels_openaire_records_with_its_own_registry_row_not_osf`
+  and
+  `tests/unit/test_ons_population.py::test_population_estimates_are_not_labelled_as_the_census_gender_identity_row`.
+  Both pin the corrected ids so neither defect can silently return.
+- Full suite: **859 passed, 3 xfailed**, exit code 0 (the three xfails are the pre-existing
+  `WIRING_AUDIT` ones).

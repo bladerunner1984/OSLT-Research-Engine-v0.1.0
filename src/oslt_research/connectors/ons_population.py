@@ -17,7 +17,11 @@ from oslt_research.governance.mechanism_simulation import ObservedSeries
 #: The ascertainment propositions are claims about RATES. Without a denominator a
 #: referral count cannot be distinguished from a referral rate, and every one of them is
 #: about exactly that distinction.
-SOURCE_ID = "DS014"
+#: DS076 in the source register: the ONS MID-YEAR POPULATION ESTIMATES bulk CSV.
+#: This declared DS014 until 2026-08-16, but DS014 is the Census 2021 gender identity
+#: publication - a different product retrieved by connectors.ons_datasets. DS076 was
+#: split out so the two are not read as one source.
+SOURCE_ID = "DS076"
 
 #: The ONS mid-year estimates CSV is ~123MB and 2.35M rows. It is streamed and aggregated
 #: rather than loaded, and cached locally, because re-downloading it per query would make

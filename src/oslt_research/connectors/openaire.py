@@ -12,9 +12,9 @@ from .base import HarvestQuery, RawRecord, SourceConnector
 
 #: DS075 in the source register (added 2026-08). OpenAIRE AGGREGATES Crossref (DS034),
 #: PubMed (DS036) and repository records, so records from here are not independent
-#: corroboration of those sources. NOTE: ``pipelines.harvest.SOURCE_IDS`` still maps
-#: "OpenAIRE" to DS041, which is OSF Registries - a mislabel flagged for human
-#: correction; it is not changed here because it relabels already-stored provenance.
+#: corroboration of those sources. ``pipelines.harvest.SOURCE_IDS`` mapped "OpenAIRE" to
+#: DS041 (OSF Registries) until 2026-08-16 and now agrees with this constant; the live
+#: store held no OpenAIRE-derived records, so no stored provenance was rewritten.
 SOURCE_ID = "DS075"
 
 

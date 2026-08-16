@@ -6,7 +6,9 @@ from typing import Any
 import httpx
 
 
-#: DS013/DS014 in the source register, open aggregate portion. This is the published,
+#: DS014 in the source register (the Census 2021 gender identity publication),
+#: open aggregate portion. The mid-year population estimates streamed by
+#: connectors.ons_population are DS076, not this row. This is the published,
 #: openly accessible part of ONS - not the Secure Research Service, which needs
 #: accreditation. Population estimates matter most: the ascertainment propositions are
 #: about RATES, and a rate without a denominator is a count wearing a percentage sign.

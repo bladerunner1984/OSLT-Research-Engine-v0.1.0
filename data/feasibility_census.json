@@ -1,5 +1,5 @@
 {
-  "assessed_at": "2026-08-16T02:59:41.495853+00:00",
+  "assessed_at": "2026-08-16T03:05:41.781203+00:00",
   "ballot": {
     "asymmetry_changed": false,
     "families_quoted_with_zero_still_zero": [
@@ -15,7 +15,7 @@
       "MULTIFACTORIAL_DEVELOPMENTAL_INSTITUTIONAL": 4
     }
   },
-  "census_id": "FC-20260816025941",
+  "census_id": "FC-20260816030541",
   "connector_inventory": {
     "declared_source_ids": {
       "clinicaltrials": "DS037",
@@ -34,7 +34,7 @@
       "nhs_statistics": "DS068",
       "nomis": "DS067",
       "ons_datasets": "DS014",
-      "ons_population": "DS014",
+      "ons_population": "DS076",
       "openaire": "DS075",
       "openalex": "DS033",
       "parliament_evidence": "DS072",
@@ -1014,9 +1014,9 @@
   },
   "registry_digest": {
     "hypotheses.csv": "eb1de4893fddc34169587f25e0a800aca19e19fd7c0cb00204ecc3af3dc62154",
-    "workstreams.csv": "38f4b03950f8d9eb68705baa29aa7bc18b6910eec75fd6b72c32c863a6b308e6"
+    "workstreams.csv": "90c7a8e029c802d9f14e9aaaf403dba542910afdc852b3756f630aa3dac89e09"
   },
-  "run_id": "NOT_PERSISTED",
+  "run_id": "FEAS-20260816030541",
   "summary": {
     "by_reachability": {
       "NEEDS_INDIVIDUAL_LEVEL": 7,
@@ -1063,10 +1063,14 @@
       "declared_source_ids": [
         "DS013",
         "DS014",
-        "DS015"
+        "DS015",
+        "DS067",
+        "DS076"
       ],
       "with_connector": [
-        "DS014"
+        "DS014",
+        "DS067",
+        "DS076"
       ],
       "with_records_in_store": []
     },
@@ -1087,9 +1091,14 @@
         "DS004",
         "DS047",
         "DS061",
-        "DS062"
+        "DS062",
+        "DS066",
+        "DS068"
       ],
-      "with_connector": [],
+      "with_connector": [
+        "DS066",
+        "DS068"
+      ],
       "with_records_in_store": []
     },
     "W03": {
@@ -1141,9 +1150,12 @@
         "DS054",
         "DS055",
         "DS056",
-        "DS057"
+        "DS057",
+        "DS069"
       ],
-      "with_connector": [],
+      "with_connector": [
+        "DS069"
+      ],
       "with_records_in_store": []
     },
     "W06": {
@@ -1186,7 +1198,8 @@
         "DS042",
         "DS043",
         "DS044",
-        "DS059"
+        "DS059",
+        "DS075"
       ],
       "with_connector": [
         "DS033",
@@ -1197,7 +1210,8 @@
         "DS038",
         "DS042",
         "DS043",
-        "DS059"
+        "DS059",
+        "DS075"
       ],
       "with_records_in_store": [
         "DS033",
@@ -1253,12 +1267,14 @@
         "DS030",
         "DS031",
         "DS032",
-        "DS057"
+        "DS057",
+        "DS072"
       ],
       "with_connector": [
         "DS030",
         "DS031",
-        "DS032"
+        "DS032",
+        "DS072"
       ],
       "with_records_in_store": []
     },
