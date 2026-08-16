@@ -67,11 +67,10 @@ import httpx
 
 from oslt_research.governance.mechanism_simulation import ObservedSeries
 
-#: The DfE statistics API is not yet a row in ``registries/sources.csv``. The W05 rows
-#: (DS054, DS055) describe guidance CORPORA, and labelling a statistical series with a
-#: document corpus's id would misattribute its provenance. Callers get this explicit
-#: placeholder so a series is visibly unregistered until the register catches up.
-SOURCE_ID = "UNREGISTERED:DFE-EES"
+#: DS069 in the source register (added 2026-08). Deliberately its own row rather than
+#: DS054/DS055: those W05 rows describe guidance CORPORA, and labelling a statistical
+#: series with a document corpus's id would misattribute its provenance.
+SOURCE_ID = "DS069"
 
 #: Registered W05 rows that this connector intentionally does not serve, and where they
 #: are already served from.

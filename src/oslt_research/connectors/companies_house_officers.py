@@ -45,6 +45,11 @@ from oslt_research.ontology.entities import (
 
 from .companies_house import DEFAULT_MIN_INTERVAL_SECONDS, CompaniesHouseResolver
 
+
+#: DS074 in the source register (added 2026-08). Appointments and control for UK
+#: companies only. A shared director is a structural tie, not evidence of coordination.
+SOURCE_ID = "DS074"
+
 #: One register, one dependency family. An officer edge and a PSC edge both come from
 #: the Companies House register, so they can never corroborate each other.
 DEPENDENCY_FAMILY = "register:companies-house-officers-psc"

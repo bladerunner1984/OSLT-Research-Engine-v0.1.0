@@ -10,6 +10,11 @@ from oslt_research.evidence.provenance import sha256_text
 from .base import HarvestQuery, RawRecord, SourceConnector
 
 
+#: DS037 in the source register. Registered trial protocols and summary results; a
+#: registration is a statement of intent, not evidence that the trial ran or reported.
+SOURCE_ID = "DS037"
+
+
 class ClinicalTrialsConnector(SourceConnector):
     source_name = "ClinicalTrials.gov"
     connector_version = "1"

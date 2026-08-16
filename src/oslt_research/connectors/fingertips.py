@@ -37,10 +37,12 @@ import httpx
 
 from oslt_research.governance.mechanism_simulation import ObservedSeries
 
-#: Not in the source register yet; declared explicitly rather than borrowed from a
-#: neighbouring DS number, so a downstream provenance check fails loudly instead of
-#: attributing Fingertips data to some other dataset.
-SOURCE_ID = "UNREGISTERED:OHID-FINGERTIPS"
+#: DS066 in the source register (added 2026-08, closing the UNREGISTERED gap the
+#: feasibility overlay exposed). The row records what this actually retrieves: AGGREGATE
+#: area-level public health indicators, and no gender-service referral, diagnosis or
+#: pathway measure. Registering it credits the connector to a source; it does not make any
+#: proposition testable, and nothing in the reachability census reads this constant.
+SOURCE_ID = "DS066"
 
 BASE_URL = "https://fingertips.phe.org.uk/api"
 

@@ -21,6 +21,11 @@ from oslt_research.ontology.entities import (
 from .ocds import parse_ocds_date
 
 
+#: DS072 in the source register (added 2026-08). Evidences that an organisation
+#: SUBMITTED to an inquiry, never that it influenced the outcome; submitters self-select.
+SOURCE_ID = "DS072"
+
+
 #: A fourth register, and the only current source of a tie that crosses from outside
 #: government into policy formation.
 DEPENDENCY_FAMILY = "register:uk-parliament-written-evidence"

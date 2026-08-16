@@ -530,7 +530,8 @@ def test_observed_series_carries_the_real_england_population_and_source_id() -> 
         dates=list(REAL_ENGLAND_SERIES),
         dimensions={"gender": 0, "c_age": 200},
     ).observed()
-    assert observed.source_id == SOURCE_ID == "UNREGISTERED:NOMIS"
+    # DS067 allocated 2026-08-16; the id genuinely changed from "UNREGISTERED:NOMIS".
+    assert observed.source_id == SOURCE_ID == "DS067"
     assert observed.periods == tuple(REAL_ENGLAND_SERIES)
     assert observed.values[6] == 56554891.0  # 2021, matching the ons_population CSV route
     assert len(observed.values) == len(observed.periods)

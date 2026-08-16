@@ -21,6 +21,11 @@ from oslt_research.ontology.entities import (
     SystemDomain,
 )
 
+
+#: DS073 in the source register (added 2026-08). Voluntary self-publication by
+#: grant-makers: a missing grant is not evidence that no grant was made.
+SOURCE_ID = "DS073"
+
 #: 360Giving is a *philanthropic* grants register, published by the grant-makers
 #: themselves rather than by government. That makes it independent of both the
 #: procurement feeds and of UKRI Gateway to Research: UKRI supplies public research

@@ -10,6 +10,11 @@ from oslt_research.evidence.provenance import sha256_text
 from .base import HarvestQuery, RawRecord, SourceConnector
 
 
+#: DS034 in the source register. Crossref is a DOI registration agency: it describes
+#: works its members deposited, so coverage follows publisher membership, not the field.
+SOURCE_ID = "DS034"
+
+
 class CrossrefConnector(SourceConnector):
     source_name = "Crossref"
     connector_version = "2"

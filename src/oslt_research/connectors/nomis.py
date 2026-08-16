@@ -62,10 +62,12 @@ import httpx
 
 from oslt_research.governance.mechanism_simulation import ObservedSeries
 
-#: Not in the source register. Declared explicitly rather than borrowed from a neighbouring
-#: DS number, following the ``education_data`` and ``fingertips`` precedent, so a
-#: provenance check fails loudly instead of attributing NOMIS data to another dataset.
-SOURCE_ID = "UNREGISTERED:NOMIS"
+#: DS067 in the source register (added 2026-08). Distinct from DS014, which is the ONS
+#: Census 2021 gender identity publication: the NOMIS tables OVERLAP it and inherit its
+#: validity problem, recorded on both rows - OSR removed the accreditation of the Census
+#: 2021 gender identity statistics on 12 September 2024 and they are now "official
+#: statistics in development".
+SOURCE_ID = "DS067"
 
 BASE_URL = "https://www.nomisweb.co.uk/api/v01"
 

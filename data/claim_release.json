@@ -1,5 +1,5 @@
 {
-  "assessed_at": "2026-08-16T02:33:28.936117+00:00",
+  "assessed_at": "2026-08-16T02:40:23.629911+00:00",
   "assessments": [
     {
       "advisory_prohibited_hits": [],
@@ -8,18 +8,13 @@
       "claim_ref": "DOC:docs/REFERRAL_BASELINE.md",
       "declared_tier": "DESCRIPTIVE_EVIDENCE_ONLY",
       "failures": [
-        "WORDING_EXCEEDS_CLAIM_TIER:because of,predicts,effect of",
         "NO_PERSISTED_RESULT_FOR_CLAIM"
       ],
-      "prohibited_hits": [
-        "because of",
-        "predicts",
-        "effect of"
-      ],
+      "prohibited_hits": [],
       "released": false,
       "source_document": "docs/REFERRAL_BASELINE.md",
       "tier_source": "declared in the document header: \"**Status:** descriptive, no mechanism calibrated.\"",
-      "wording_acceptable": false
+      "wording_acceptable": true
     },
     {
       "advisory_prohibited_hits": [],
@@ -103,16 +98,13 @@
       "claim_ref": "REFERRAL-BASELINE-NICE",
       "declared_tier": "DESCRIPTIVE_EVIDENCE_ONLY",
       "failures": [
-        "WORDING_EXCEEDS_CLAIM_TIER:effect of",
         "NO_PERSISTED_RESULT_FOR_CLAIM"
       ],
-      "prohibited_hits": [
-        "effect of"
-      ],
+      "prohibited_hits": [],
       "released": false,
       "source_document": "docs/REFERRAL_BASELINE.md",
       "tier_source": "declared in the document header: \"**Status:** descriptive, no mechanism calibrated.\"",
-      "wording_acceptable": false
+      "wording_acceptable": true
     },
     {
       "advisory_prohibited_hits": [],
@@ -121,16 +113,13 @@
       "claim_ref": "REFERRAL-BASELINE-BALLOT",
       "declared_tier": "DESCRIPTIVE_EVIDENCE_ONLY",
       "failures": [
-        "WORDING_EXCEEDS_CLAIM_TIER:predicts",
         "NO_PERSISTED_RESULT_FOR_CLAIM"
       ],
-      "prohibited_hits": [
-        "predicts"
-      ],
+      "prohibited_hits": [],
       "released": false,
       "source_document": "docs/REFERRAL_BASELINE.md",
       "tier_source": "declared in the document header: \"**Status:** descriptive, no mechanism calibrated.\"",
-      "wording_acceptable": false
+      "wording_acceptable": true
     },
     {
       "advisory_prohibited_hits": [],
@@ -184,19 +173,7 @@
     "DOC:docs/CENSUS_2021_GENDER_IDENTITY.md": {},
     "DOC:docs/COUNTEREVIDENCE_RUN.md": {},
     "DOC:docs/MX09_FALSIFICATION_RUN.md": {},
-    "DOC:docs/REFERRAL_BASELINE.md": {
-      "because of": [
-        "line 55: recorded here because of what it implies for **method**."
-      ],
-      "effect of": [
-        "line 54: documented effect of successive NICE guideline revisions and awareness campaigns. It is"
-      ],
-      "predicts": [
-        "line 76: - **ASCERTAINMENT_SERVICE** predicts referral growth accompanied by falling yield or",
-        "line 77: threshold-consistent shifts, and predicts it should appear across domains. The baseline",
-        "line 198: social-transmission account predicts should move at all, and **91871**, school SEMH needs"
-      ]
-    }
+    "DOC:docs/REFERRAL_BASELINE.md": {}
   },
   "refused": [
     "DOC:docs/REFERRAL_BASELINE.md",
@@ -212,5 +189,5 @@
     "RESULT:KR-P1-20260815123808-MX14"
   ],
   "released": [],
-  "run_id": "REL-20260816023328"
+  "run_id": "NOT_PERSISTED"
 }

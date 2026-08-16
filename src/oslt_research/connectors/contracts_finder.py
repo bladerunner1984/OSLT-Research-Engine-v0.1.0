@@ -21,6 +21,11 @@ from oslt_research.ontology.entities import (
 from .ocds import identifiers_from_party, parse_ocds_date
 
 
+#: DS070 in the source register (added 2026-08). Contract AWARDS only: a purchase is
+#: not influence, and one register is one dependency family.
+SOURCE_ID = "DS070"
+
+
 #: One register, one dependency family. Two ties evidenced only by Contracts Finder are
 #: not independent of each other, however many rows they occupy.
 DEPENDENCY_FAMILY = "register:contracts-finder-ocds"

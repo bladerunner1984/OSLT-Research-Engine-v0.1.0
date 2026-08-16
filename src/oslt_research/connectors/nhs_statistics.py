@@ -72,10 +72,11 @@ import httpx
 
 from oslt_research.governance.mechanism_simulation import ObservedSeries
 
-#: Not in the source register yet. Declared explicitly, following the ``education_data``
-#: and ``fingertips`` precedent, so a downstream provenance check fails loudly rather than
-#: attributing NHS aggregates to some neighbouring DS number.
-SOURCE_ID = "UNREGISTERED:NHS-ENGLAND-OPEN"
+#: DS068 in the source register (added 2026-08). The row states the two limits that
+#: matter: ODS supplies ORGANISATION REFERENCE DATA, not clinical activity, and the
+#: statistics route INDEXES files without fetching them, because files.digital.nhs.uk
+#: disallows automated retrieval.
+SOURCE_ID = "DS068"
 
 #: The ODS ORD API. Version is pinned in the path: 2-0-0 is the current published major.
 ODS_BASE_URL = "https://directory.spineservices.nhs.uk/ORD/2-0-0"

@@ -10,6 +10,11 @@ from oslt_research.evidence.provenance import sha256_text
 from .base import HarvestQuery, RawRecord, SourceConnector
 
 
+#: DS035 in the source register, as the class docstring already states. Declared as a
+#: module constant so the connector inventory can see it.
+SOURCE_ID = "DS035"
+
+
 class EuropePmcConnector(SourceConnector):
     """Europe PMC search. DS035 in the source register, priority P0.
 

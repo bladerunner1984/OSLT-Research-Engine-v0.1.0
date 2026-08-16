@@ -21,6 +21,11 @@ from oslt_research.ontology.entities import (
 )
 
 
+#: DS042 in the source register. UKRI-funded research only, so absence of a grant here
+#: is not absence of funding.
+SOURCE_ID = "DS042"
+
+
 #: A research-funding register, publicationally independent of the two procurement
 #: feeds (Contracts Finder, Find a Tender). It is also a genuinely different *tie type*:
 #: a grant is not a purchase. MD15 requires a connected component built from more than

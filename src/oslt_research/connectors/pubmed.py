@@ -10,6 +10,11 @@ from oslt_research.evidence.provenance import sha256_text
 from .base import HarvestQuery, RawRecord, SourceConnector
 
 
+#: DS036 in the source register. Biomedical literature metadata only; indexing decisions
+#: are NLM's, so absence from PubMed is not absence from the literature.
+SOURCE_ID = "DS036"
+
+
 class PubMedConnector(SourceConnector):
     source_name = "PubMed"
     connector_version = "2"

@@ -396,9 +396,12 @@ def test_w05_document_rows_are_declared_as_served_by_the_existing_govuk_connecto
 
 def test_series_is_not_labelled_with_a_document_corpus_source_id():
     # DS054/DS055 are guidance corpora; tagging a statistical series with either would
-    # misattribute its provenance.
+    # misattribute its provenance. DS069 was allocated to this API on 2026-08-16, so the
+    # assertion tightened from "not a document corpus and visibly unregistered" to "not a
+    # document corpus and registered as its own row".
     assert SOURCE_ID not in {"DS054", "DS055"}
-    assert SOURCE_ID.startswith("UNREGISTERED:")
+    assert SOURCE_ID == "DS069"
+    assert not SOURCE_ID.startswith("UNREGISTERED:")
 
 
 def test_series_point_usability_flag():

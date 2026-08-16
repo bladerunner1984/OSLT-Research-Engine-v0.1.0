@@ -10,6 +10,11 @@ from oslt_research.evidence.provenance import sha256_text
 from .base import HarvestQuery, RawRecord, SourceConnector
 
 
+#: DS033 in the source register. OpenAlex is the widest open scholarly index; it
+#: supplies bibliographic metadata only, never clinical or population data.
+SOURCE_ID = "DS033"
+
+
 class OpenAlexConnector(SourceConnector):
     source_name = "OpenAlex"
     connector_version = "2"

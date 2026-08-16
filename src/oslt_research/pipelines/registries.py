@@ -11,7 +11,7 @@ from oslt_research.domain.models import HypothesisProposition
 EXPECTED_COUNTS = {
     "hypotheses.csv": 64,
     "variables.csv": 640,
-    "sources.csv": 65,
+    "sources.csv": 75,
     "methods.csv": 100,
     "workstreams.csv": 13,
 }

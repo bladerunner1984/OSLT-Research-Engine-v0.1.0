@@ -21,6 +21,11 @@ from oslt_research.ontology.entities import (
 from .ocds import identifiers_from_party, index_parties, parse_ocds_date
 
 
+#: DS071 in the source register (added 2026-08). Above-threshold notices only, so this
+#: is not a census of public spending.
+SOURCE_ID = "DS071"
+
+
 #: A publication pipeline distinct from Contracts Finder, so ties evidenced by both
 #: registers sit in two families and can corroborate one another.
 DEPENDENCY_FAMILY = "register:find-a-tender-ocds"

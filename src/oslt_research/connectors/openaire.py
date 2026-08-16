@@ -10,6 +10,14 @@ from oslt_research.evidence.provenance import sha256_text
 from .base import HarvestQuery, RawRecord, SourceConnector
 
 
+#: DS075 in the source register (added 2026-08). OpenAIRE AGGREGATES Crossref (DS034),
+#: PubMed (DS036) and repository records, so records from here are not independent
+#: corroboration of those sources. NOTE: ``pipelines.harvest.SOURCE_IDS`` still maps
+#: "OpenAIRE" to DS041, which is OSF Registries - a mislabel flagged for human
+#: correction; it is not changed here because it relabels already-stored provenance.
+SOURCE_ID = "DS075"
+
+
 def _unwrap(value: Any) -> Any:
     """Strip OpenAIRE's ``{"$": ...}`` scalar wrapper.
 

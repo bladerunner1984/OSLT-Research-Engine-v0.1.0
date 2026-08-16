@@ -21,6 +21,10 @@ from oslt_research.ontology.entities import (
 from .ocds import parse_ocds_date
 
 
+#: DS030 in the source register, as ``DEPENDENCY_FAMILY`` below already notes.
+SOURCE_ID = "DS030"
+
+
 #: DS030 in the source register. A fifth register and, more importantly, the only
 #: ISSUES_GUIDANCE_TO source in the project.
 DEPENDENCY_FAMILY = "register:govuk-publications"
