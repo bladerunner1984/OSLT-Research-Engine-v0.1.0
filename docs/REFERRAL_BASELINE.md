@@ -145,11 +145,32 @@ merely degrading it.
 > Across the exact window used below, **submitting providers rose ×3.76 while the referral
 > rate rose ×2.02.** The ascertainment ramp is nearly twice the apparent trend.
 >
+> **UPDATE, later the same day — the confounder is UNTESTABLE, not merely unchecked.**
+> See `MHSDS_CYP_ANALYSIS.md`. MHSDS carries **no provider-by-age breakdown**: age exists only
+> as `England; Age`, which has no provider dimension, and every provider-level age split
+> begins 2023-04, after this window closes. So the fixed-cohort restriction that settled AS08
+> for all ages **cannot be run on the under-18 band at all**. Separately, `England; Age` and
+> `England; Gender` are never crossed, so the *female excess within the adolescent band* has
+> no MHSDS test at any cohort size — that half is untestable, not unchecked.
+>
+> A promising correlation was tested and discarded: later-joining providers *appear* far more
+> CYP-focused (Spearman ρ +0.589, p = 0.00005), but that is **confounded by provider size**
+> (ρ(join, log size) = −0.743) and the partial correlation controlling for size collapses to
+> **+0.039**. The smallest size tertile contains no continuous-cohort providers at all, so
+> over most of the joiners' range there is no common support and no adjustment can compare
+> them.
+>
+> **The withdrawal below therefore STANDS — but as unresolved, not as demonstrated.** The
+> stated defeater cannot be excluded from this source, and "we could not tell" is not grounds
+> for reinstatement. What would settle it is a provider-by-age MHSDS extract for
+> 2017/18–2023/24, which is a data request on the same route as the drafted FOI.
+>
 > **What this does to the finding.** The under-18 rise, the monotonic age gradient and the
 > emerging female excess are all consistent with a growing share of activity simply becoming
 > *visible* to the collection, rather than with any change in referral behaviour. If the
 > providers joining later were disproportionately children and young people's services — which
-> is plausible and has not been checked — that would inflate the under-18 band specifically,
+> is plausible and, per the update above, cannot be checked from this source — that would
+> inflate the under-18 band specifically,
 > which is precisely the stratum the argument rested on.
 >
 > **The claim built on this comparator is withdrawn.** The section below argued that
