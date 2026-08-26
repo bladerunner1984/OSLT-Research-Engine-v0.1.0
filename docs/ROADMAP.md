@@ -1,5 +1,14 @@
 # OSLT executable roadmap
 
+> **Historical roadmap notice (2026-08-26):** This file is retained to preserve the
+> implementation lineage that led to the current engine. It is no longer the operational
+> research queue. The founder-authorised, result-producing programme is
+> [`EXECUTABLE_RESEARCH_ROADMAP.md`](EXECUTABLE_RESEARCH_ROADMAP.md); the complete
+> proposition reconciliation is
+> [`FEASIBILITY_RECONCILIATION_2026-08-26.md`](FEASIBILITY_RECONCILIATION_2026-08-26.md).
+> All 64 scientific propositions remain in the registry. Category-C participant research
+> is parked and creates no implementation work.
+
 ## Milestone 0 — repository foundation (this release)
 
 Governed contracts, immutable lineage, CI, provenance, persistence, four public connectors, Pilot 1

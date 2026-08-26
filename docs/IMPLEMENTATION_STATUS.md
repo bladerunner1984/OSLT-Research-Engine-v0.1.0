@@ -2,20 +2,26 @@
 
 **Release:** GitHub bootstrap v0.1.0 plus the 2026-08-15 and 2026-08-16 builds
 **Lineage:** OSLT Research Engine v2.4 RC1
-**Revised:** 2026-08-16
+**Revised:** 2026-08-26
 **Purpose:** establish a governed public-evidence execution platform and the first runnable
 vertical slices.
+
+**Current operational programme:** all 64 scientific propositions remain registered, but the
+immediate queue is the five bounded result packages in
+[`EXECUTABLE_RESEARCH_ROADMAP.md`](EXECUTABLE_RESEARCH_ROADMAP.md). The durable feasibility
+companion is `registries/proposition_feasibility.csv`. New human-participant research is outside
+the founder's operational capability; all seven category-C propositions are preserved and parked.
 
 ## Verified state
 
 | Measure | Value | How to check |
 |---|---|---|
-| Tests collected | **756** | `pytest --collect-only -q` |
+| Tests collected | **1,022** | `pytest --collect-only -q` on the 2026-08-26 reconciliation candidate |
 | Source connector modules | **26** (+ a shared OCDS resolution module, a base and a fixture) | `ls src/oslt_research/connectors/` |
 | Admitted evidence records | **6,428** (6 refused: retracted) | `runtime/oslt.db`, `evidence_objects` |
 | Institutional entities | **824** | `institutional_entities` |
 | Institutional relations | **1,286** — FUNDS 926, ADVISES 227, CONTRACTS_WITH 103, ISSUES_GUIDANCE_TO 30 | `institutional_relations` |
-| Propositions | 64; 16 `OPEN_TESTABLE`, 25 `NEEDS_PRIMARY_COLLECTION`, 16 `NEEDS_RESTRICTED_ACCESS`, 7 `NEEDS_INDIVIDUAL_LEVEL` | `assess_feasibility('registries')` |
+| Propositions | **64 preserved**; A public now **26**, B existing secondary access **25**, C primary human research parked **7**, D not identifiable **5**, E duplicative **1** | `load_programme_feasibility('registries')` |
 | Propositions answered | **0 of 64** | — |
 | W02 usable calibration series | **218** (56 + 162) | `data/fingertips_w02.json`, `data/fingertips_w02_recovery.json` |
 | Census 2021 gender identity cells | **517** across 13 of 24 tables | `data/census_2021_gender_identity.json` |
@@ -55,7 +61,8 @@ refuses declined hosts), `education_data` (DfE Explore Education Statistics),
 - **W11 media/discourse** — covered (`media_discourse`).
 - **Strand B institutional registers** — covered across four register families, but **no
   Strand B graph is topic-scoped** (see limits below).
-- Remaining workstreams are access-gated; see the feasibility census.
+- Remaining workstreams are access-gated; see the proposition-level reconciliation rather than
+  treating the historical workstream-token census as the operational queue.
 
 ## What runs
 
@@ -162,7 +169,8 @@ production research cloud. It does not yet include:
 - all 15 specialist domain kernels as empirical implementations;
 - TRE/SDE deployment or approved NHS/DfE/ONS analysis packages;
 - a production Postgres/object-store/job-queue estate;
-- participant recruitment, consent or private digital-history collection;
+- participant recruitment, consent, interviews, surveys, exposure experiments or new longitudinal
+  follow-up. These are now a hard programme exclusion rather than a deferred engineering feature;
 - independent statistical, clinical, ethical or publication peer review;
 - evidence supporting any substantive conclusion about gender-related population change.
 
@@ -223,17 +231,25 @@ merges made on a naming coincidence were admitted, and reversed to MX09 under an
 requirement. The surviving MX09-over-MD15 disposition rests on a 337-relation graph; the store
 now holds 1,286 relations and has not been re-adjudicated.
 
+The 2026-08-26 programme reconciliation does not upgrade any exploratory object into a result. It
+adds a separately validated operational classification for all 64 propositions and selects Census
+instrument sensitivity/validity as the first result package. The existing 517-cell harvest
+predates that specification and remains exploratory; confirmatory data must be retrieved again
+after the committed freeze. “Impact on consciousness” is not an outcome. Public media, policy,
+network and service series may support aggregate diffusion, framing, attention, adoption and
+measurement claims only.
+
 ## Next implementation increment
 
-1. Send the drafted FOI request — free, statutory, and the gate on the whole comparison.
-2. Manual MHSDS download plus a local-file reader on the `ons_population.py` precedent.
-3. Re-run the MD15/MX09 coupling test against the current 1,286-relation graph.
-4. Date-paged retrieval so the registers can be scoped to a period and topic.
-5. Persist lane-classifier output, then blind dual coding against a human-coded validation
-   sample.
-6. Wire the register, statistics and harvest connectors into the CLI, and promote the three
-   analysis scripts to commands.
-7. Registration-to-publication linkage at study scale under the frozen specification.
-8. Human review of the frozen Pilot 1 specification by a methodologist.
-9. Activate master synthesis only after three independently tested kernel result families
-   exist.
+1. Run the exact-count/coverage tests for `registries/proposition_feasibility.csv`; category C
+   remains parked and TH07 remains mapped to MD15.
+2. Freeze the Census instrument-sensitivity specification before any confirmatory retrieval.
+3. Re-retrieve its public NOMIS/ONS/OSR inputs into a clean manifest after the freeze.
+4. Produce and release the first complete package under the DONE contract in
+   `docs/EXECUTABLE_RESEARCH_ROADMAP.md`, regardless of result direction.
+5. Freeze and run the public-service measurement decomposition as the second independent result.
+6. Continue secondary-data field audits and access work in a non-blocking lane; access refusal or
+   missing joint variables may reclassify a proposition but never authorises primary collection.
+
+The 2026-08-16 implementation list remains inspectable in Git history and the retained historical
+roadmap. It no longer controls the immediate research queue.

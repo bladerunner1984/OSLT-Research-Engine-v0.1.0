@@ -1,5 +1,10 @@
 # Candidate findings for the sixteen open-testable propositions
 
+> **Historical run notice (2026-08-26):** “Open-testable” below is the label produced by the
+> former workstream-token census for this sealed 2026-08-16 run. It is not the current operational
+> A/B/C/D/E classification. These objects remain unreleased and exploratory; use
+> [`EXECUTABLE_RESEARCH_ROADMAP.md`](EXECUTABLE_RESEARCH_ROADMAP.md) for the result queue.
+
 **Run:** 2026-08-16. **Script:** `scripts/answer_open_testable.py`.
 **Output:** `data/open_testable_findings.json`.
 **Maximum claim tier reached anywhere below: DESCRIPTIVE_EVIDENCE_ONLY.**

@@ -80,5 +80,8 @@ See `GOVERNANCE.md`, `SECURITY.md`, and `docs/architecture/SERVERITY_LESSONS_ADO
 
 This bootstrap is a governed executable foundation, not a completed study or validated causal
 system. See [`docs/IMPLEMENTATION_STATUS.md`](docs/IMPLEMENTATION_STATUS.md),
-[`docs/ROADMAP.md`](docs/ROADMAP.md), and the
+the canonical [`docs/EXECUTABLE_RESEARCH_ROADMAP.md`](docs/EXECUTABLE_RESEARCH_ROADMAP.md),
+the complete
+[`docs/FEASIBILITY_RECONCILIATION_2026-08-26.md`](docs/FEASIBILITY_RECONCILIATION_2026-08-26.md),
+the retained historical [`docs/ROADMAP.md`](docs/ROADMAP.md), and the
 [`GitHub bootstrap runbook`](docs/runbooks/GITHUB_BOOTSTRAP.md).
