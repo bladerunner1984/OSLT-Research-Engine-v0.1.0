@@ -1,5 +1,11 @@
 # Project specification v2 — a measurement-validity and decomposition study
 
+> **Programme-status notice (2026-08-26):** This specification is retained as the historical
+> source for the public measurement/decomposition package. Its old feasibility totals and any
+> participant-research implications do not control the current programme. See
+> [`EXECUTABLE_RESEARCH_ROADMAP.md`](EXECUTABLE_RESEARCH_ROADMAP.md) and
+> [`FEASIBILITY_RECONCILIATION_2026-08-26.md`](FEASIBILITY_RECONCILIATION_2026-08-26.md).
+
 **Status:** proposed re-scope, 2026-08-16. Supersedes the five-family contest as the
 headline design. Does not discard v1's propositions or machinery; re-purposes both.
 

@@ -1,5 +1,13 @@
 # Academic handoff dossier
 
+> **Programme-status notice (2026-08-26):** This handoff is retained as historical scientific
+> and implementation lineage. Its workstream-derived feasibility counts and proposed primary
+> participant programme are superseded operationally by
+> [`FEASIBILITY_RECONCILIATION_2026-08-26.md`](FEASIBILITY_RECONCILIATION_2026-08-26.md) and
+> [`EXECUTABLE_RESEARCH_ROADMAP.md`](EXECUTABLE_RESEARCH_ROADMAP.md). All 64 hypotheses remain;
+> the seven current category-C propositions are parked, and no recruitment, survey, interview,
+> exposure experiment or new longitudinal participant study is authorised.
+
 **Prepared:** 2026-08-15 · **Revised:** 2026-08-16 · **Repository:** `bladerunner1984/OSLT-Research-Engine-v0.1.0`
 **Status:** instrument built and running; three descriptive comparator analyses complete;
 **no proposition answered**; no mechanism calibrated.

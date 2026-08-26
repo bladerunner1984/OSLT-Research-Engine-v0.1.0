@@ -1,5 +1,13 @@
 # Feasibility census and claim release — two islands wired
 
+> **Historical-mechanical-census notice (2026-08-26):** The counts below remain valid for the
+> workstream-token algorithm and its sealed 2026-08-16 run. They are not the current operational
+> research classification. The founder-authorised proposition-level reconciliation is
+> [`FEASIBILITY_RECONCILIATION_2026-08-26.md`](FEASIBILITY_RECONCILIATION_2026-08-26.md) and
+> `registries/proposition_feasibility.csv` (A 26, B 25, C parked 7, D 5, E 1). The historical
+> census is preserved because it explains prior decisions and remains useful as an access-token
+> diagnostic; it must not create participant-research work or overwrite the 64 hypotheses.
+
 **Date:** 2026-08-16 · **Store:** `runtime/oslt.db` (backed up to `runtime/oslt.db.pre-feasibility`)
 **Runs sealed:** `FEAS-20260816023725` (census, `FC-20260816023725`), `REL-20260816023328` (claim release)
 **Artefacts:** `data/feasibility_census.json`, `data/claim_release.json`,

@@ -32,6 +32,37 @@ class Reachability(StrEnum):
     NEEDS_PREDICTOR_SOURCE = "NEEDS_PREDICTOR_SOURCE"
 
 
+class ProgrammeFeasibilityClass(StrEnum):
+    """Founder-authorised operational disposition of a registered proposition.
+
+    ``Reachability`` above remains available as the historical, mechanically-derived
+    workstream census.  It must not be mistaken for the executable programme: that
+    census cannot distinguish a public document-level estimand from an individual
+    causal estimand when both propositions reuse the same workstream or temporal text.
+    This enum is the durable, proposition-level reconciliation that applies the hard
+    no-new-human-participant-research constraint without rewriting any hypothesis.
+    """
+
+    EXECUTABLE_NOW_PUBLIC_DATA = "EXECUTABLE_NOW_PUBLIC_DATA"
+    EXECUTABLE_WITH_EXISTING_SECONDARY_DATA_ACCESS = (
+        "EXECUTABLE_WITH_EXISTING_SECONDARY_DATA_ACCESS"
+    )
+    PRIMARY_HUMAN_RESEARCH_REQUIRED = "PRIMARY_HUMAN_RESEARCH_REQUIRED"
+    NOT_IDENTIFIABLE_WITH_CURRENT_DATA = "NOT_IDENTIFIABLE_WITH_CURRENT_DATA"
+    DUPLICATIVE = "DUPLICATIVE"
+
+
+PROGRAMME_CLASS_BY_CODE = {
+    "A": ProgrammeFeasibilityClass.EXECUTABLE_NOW_PUBLIC_DATA,
+    "B": ProgrammeFeasibilityClass.EXECUTABLE_WITH_EXISTING_SECONDARY_DATA_ACCESS,
+    "C": ProgrammeFeasibilityClass.PRIMARY_HUMAN_RESEARCH_REQUIRED,
+    "D": ProgrammeFeasibilityClass.NOT_IDENTIFIABLE_WITH_CURRENT_DATA,
+    "E": ProgrammeFeasibilityClass.DUPLICATIVE,
+}
+
+EXPECTED_PROGRAMME_COUNTS = {"A": 26, "B": 25, "C": 7, "D": 5, "E": 1}
+
+
 #: Access tokens in workstreams.csv that represent a route requiring no agreement.
 OPEN_TOKENS = frozenset(
     {"OPEN", "OPEN_AGGREGATE", "OPEN_API", "OPEN_ARCHIVE", "OPEN_CORPUS", "PUBLIC_WEB"}
@@ -241,6 +272,136 @@ class FeasibilityCensus:
             "testable_by_model_family": self.testable_by_model_family(),
             "coverage_asymmetry": self.coverage_asymmetry(),
         }
+
+
+@dataclass(frozen=True)
+class ProgrammePropositionFeasibility:
+    """One row of the durable executable-programme reconciliation."""
+
+    proposition_id: str
+    classification_code: str
+    classification: ProgrammeFeasibilityClass
+    executable_target: str
+    basis_and_limit: str
+    mapped_to: str | None
+    programme_status: str
+
+    @property
+    def can_run_now(self) -> bool:
+        return self.classification is ProgrammeFeasibilityClass.EXECUTABLE_NOW_PUBLIC_DATA
+
+    @property
+    def parked(self) -> bool:
+        return self.classification is ProgrammeFeasibilityClass.PRIMARY_HUMAN_RESEARCH_REQUIRED
+
+
+@dataclass(frozen=True)
+class ProgrammeFeasibilityRegister:
+    """Validated companion to the immutable 64-proposition scientific registry."""
+
+    results: list[ProgrammePropositionFeasibility] = field(default_factory=list)
+
+    def counts(self) -> dict[str, int]:
+        tally = {code: 0 for code in EXPECTED_PROGRAMME_COUNTS}
+        for item in self.results:
+            tally[item.classification_code] += 1
+        return tally
+
+    def by_id(self) -> dict[str, ProgrammePropositionFeasibility]:
+        return {item.proposition_id: item for item in self.results}
+
+    def runnable_now(self) -> list[ProgrammePropositionFeasibility]:
+        return [item for item in self.results if item.can_run_now]
+
+    def parked(self) -> list[ProgrammePropositionFeasibility]:
+        return [item for item in self.results if item.parked]
+
+    def summary(self) -> dict[str, object]:
+        return {
+            "propositions": len(self.results),
+            "by_classification": self.counts(),
+            "runnable_now_ids": [item.proposition_id for item in self.runnable_now()],
+            "parked_ids": [item.proposition_id for item in self.parked()],
+            "mappings": {
+                item.proposition_id: item.mapped_to
+                for item in self.results
+                if item.mapped_to is not None
+            },
+        }
+
+
+def load_programme_feasibility(
+    registry_root: str | Path,
+    *,
+    validate_authorised_counts: bool = True,
+) -> ProgrammeFeasibilityRegister:
+    """Load and fail-closed validate ``proposition_feasibility.csv``.
+
+    The companion must account for exactly the hypothesis IDs in ``hypotheses.csv``.
+    It may classify or map a proposition, but it may never create, delete, or rename a
+    scientific proposition.  Category C is also mechanically required to remain parked,
+    so a future backlog edit cannot quietly turn the founder's human-participant
+    constraint into implementation work.
+    """
+
+    root = Path(registry_root)
+    hypothesis_rows = list(
+        csv.DictReader((root / "hypotheses.csv").open(encoding="utf-8-sig"))
+    )
+    feasibility_rows = list(
+        csv.DictReader((root / "proposition_feasibility.csv").open(encoding="utf-8-sig"))
+    )
+
+    hypothesis_ids = [row["proposition_id"] for row in hypothesis_rows]
+    feasibility_ids = [row.get("proposition_id", "") for row in feasibility_rows]
+    duplicate_ids = sorted(
+        proposition_id
+        for proposition_id in set(feasibility_ids)
+        if feasibility_ids.count(proposition_id) != 1
+    )
+    if duplicate_ids:
+        raise ValueError("duplicate proposition feasibility rows: " + ",".join(duplicate_ids))
+    if set(feasibility_ids) != set(hypothesis_ids):
+        missing = sorted(set(hypothesis_ids) - set(feasibility_ids))
+        extra = sorted(set(feasibility_ids) - set(hypothesis_ids))
+        raise ValueError(f"proposition feasibility coverage mismatch: missing={missing}, extra={extra}")
+
+    results: list[ProgrammePropositionFeasibility] = []
+    for row in feasibility_rows:
+        code = (row.get("classification") or "").strip().upper()
+        if code not in PROGRAMME_CLASS_BY_CODE:
+            raise ValueError(
+                f"unknown programme feasibility classification for {row.get('proposition_id')}: {code}"
+            )
+        mapped_to = (row.get("mapped_to") or "").strip() or None
+        if mapped_to is not None and mapped_to not in hypothesis_ids:
+            raise ValueError(f"unknown mapped proposition for {row['proposition_id']}: {mapped_to}")
+        if code == "E" and mapped_to is None:
+            raise ValueError(f"duplicative proposition lacks mapped_to: {row['proposition_id']}")
+        status = (row.get("programme_status") or "").strip()
+        if code == "C" and status != "PARKED_NO_PRIMARY_IMPLEMENTATION":
+            raise ValueError(
+                f"primary-human-research proposition is not parked: {row['proposition_id']}"
+            )
+        results.append(
+            ProgrammePropositionFeasibility(
+                proposition_id=row["proposition_id"],
+                classification_code=code,
+                classification=PROGRAMME_CLASS_BY_CODE[code],
+                executable_target=row.get("executable_target", ""),
+                basis_and_limit=row.get("basis_and_limit", ""),
+                mapped_to=mapped_to,
+                programme_status=status,
+            )
+        )
+
+    register = ProgrammeFeasibilityRegister(results=results)
+    if validate_authorised_counts and register.counts() != EXPECTED_PROGRAMME_COUNTS:
+        raise ValueError(
+            "authorised programme feasibility count drift: "
+            f"expected={EXPECTED_PROGRAMME_COUNTS}, observed={register.counts()}"
+        )
+    return register
 
 
 def _split(value: str) -> list[str]:
